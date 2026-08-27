@@ -1,0 +1,62 @@
+<script>
+/* Image fallback — logo/photos na ho to sundar placeholder dikhata hai */
+window.imgFallback = window.imgFallback || function (img) {
+  var ph = document.createElement('span');
+  ph.className = 'ph-fallback ' + (img.closest('.brand') ? 'logo-ph' : 'media-ph');
+  ph.textContent = img.dataset.fallback || 'SG';
+  img.replaceWith(ph);
+};
+</script>
+<!-- ============ TOP BAR + MAIN HEADER (sab pages par same) ============ -->
+<!-- ============ TOP BAR + MAIN HEADER (sab pages par same) ============ -->
+<header class="site-header" id="top">
+
+  <!-- Top strip: phone / email / tagline -->
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <div class="topbar-links">
+        <span>📍 Serving clients across India</span>
+        <a href="tel:+919000000000">📞 +91 90000 00000</a>
+        <a href="mailto:hello@shaunixgroup.com">✉️ hello@shaunixgroup.com</a>
+      </div>
+      <span class="topbar-tag">Technology • Digital • Services • Education • Sustainability</span>
+    </div>
+  </div>
+
+  <!-- Main nav -->
+  <nav class="navbar container" aria-label="Main navigation">
+    <a href="/" class="brand" aria-label="SHAUNIX GROUP home">
+      <img src="/images/logo/shaunix-group-logo.png" alt="SHAUNIX GROUP logo"
+           data-fallback="SG" onerror="imgFallback(this)">
+      <span class="brand-text">
+        <strong>SHAUNIX <em>GROUP</em></strong>
+        <small>Technology. Solutions. Growth.</small>
+      </span>
+    </a>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/" data-nav="/">Home</a></li>
+      <li class="has-drop">
+        <a href="#services" data-nav="services" aria-haspopup="true">Services <span class="caret">▾</span></a>
+        <ul class="dropdown">
+          <li><a href="/tech"><i class="dot dot-tech"></i>SHAUNIX TECH<span>Laptops • Desktops • Accessories</span></a></li>
+          <li><a href="/care"><i class="dot dot-care"></i>SHAUNIX CARE<span>Laptop &amp; Printer Repairs</span></a></li>
+          <li><a href="/digital"><i class="dot dot-digital"></i>SHAUNIX DIGITAL<span>Websites • Apps • Branding</span></a></li>
+          <li><a href="/print"><i class="dot dot-print"></i>SHAUNIX PRINT<span>Cards • Brochures • Flyers</span></a></li>
+          <li><a href="/academy"><i class="dot dot-academy"></i>SHAUNIX ACADEMY<span>MERN • Python • Data Science</span></a></li>
+          <li><a href="/reclaim"><i class="dot dot-reclaim"></i>SHAUNIX RECLAIM<span>E-Waste • IT Recovery</span></a></li>
+        </ul>
+      </li>
+      <li><a href="/about" data-nav="/about">About</a></li>
+      <li><a href="/contact" data-nav="/contact">Contact</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <a class="btn btn-ghost btn-sm hide-sm" href="tel:+919000000000">📞 Call Now</a>
+      <a class="btn btn-primary btn-sm" href="/contact">Get a Quote</a>
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+</header>
