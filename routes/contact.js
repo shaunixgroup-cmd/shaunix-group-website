@@ -6,6 +6,7 @@ const path    = require('path');
 const { renderPage } = require('./render');
 
 const router = express.Router();
+const CFG    = require('../config');   // config.js ka business data
 
 // ---------- CONTACT PAGE ----------
 router.get('/', (req, res) => {
@@ -75,7 +76,7 @@ function sendEnquiryEmail(entry) {
       auth: { user: SMTP_USER, pass: SMTP_PASS }
     });
 
-    const to = ADMIN_EMAIL || BUSINESS_EMAIL || SMTP_USER;
+    const to = ADMIN_EMAIL || CFG.email || BUSINESS_EMAIL || SMTP_USER;
 
     transporter
       .sendMail({

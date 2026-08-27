@@ -7,9 +7,11 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   /* -------------------------------------------------
-   * 0) QUICK CONFIG
+   * 0) SITE DATA — /config.js se aata hai (ek hi jagah!)
    * ------------------------------------------------- */
-  const WHATSAPP_NUMBER = '919000000000'; // country code + number
+  const SITE = window.SITE || {};
+  const WHATSAPP_NUMBER = SITE.wa || '919000000000';
+  const SITE_PHONE      = SITE.phone || '';
 
   /* -------------------------------------------------
    * 1) IMAGE FALLBACK — logo/images na ho to sundar placeholder
@@ -202,7 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
     sentZone.innerHTML =
       `<div class="sent-banner">✅ <b>Message mil gaya!</b> Hamari team jald reply karegi.
        Urgent ho to WhatsApp 👉
-       <a href="https://wa.me/${WHATSAPP_NUMBER}" target="_blank" rel="noopener"><b>+91 90000 00000</b></a></div>`;
+       <a href="https://wa.me/${WHATSAPP_NUMBER}" target="_blank" rel="noopener"><b>${SITE_PHONE}</b></a></div>`;
   }
 });
 

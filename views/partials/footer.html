@@ -44,10 +44,10 @@
     <div class="footer-col">
       <h4>Contact Us</h4>
       <ul class="contact-mini">
-        <li>📞 <a href="tel:+919000000000">+91 90000 00000</a></li>
-        <li>💬 <a href="https://wa.me/919000000000?text=Hi%20SHAUNIX%20GROUP!" target="_blank" rel="noopener">WhatsApp Us</a></li>
-        <li>✉️ <a href="mailto:hello@shaunixgroup.com">hello@shaunixgroup.com</a></li>
-        <li>🕒 Mon – Sat : 10 AM – 7 PM</li>
+        <li>📞 <a href="tel:+{{PHONE_DIGITS}}">{{PHONE}}</a></li>
+        <li>💬 <a href="{{WA_LINK}}" target="_blank" rel="noopener">WhatsApp Us</a></li>
+        <li>✉️ <a href="mailto:{{EMAIL}}">{{EMAIL}}</a></li>
+        <li>🕒 {{HOURS}}</li>
       </ul>
       <div class="socials">
         <a href="#" title="Instagram">◎</a>
@@ -67,7 +67,7 @@
 </footer>
 
 <!-- Floating buttons: WhatsApp + Back to top -->
-<a class="wa-float" id="waFloat" href="https://wa.me/919000000000?text=Hi%20SHAUNIX%20GROUP!%20I%20want%20to%20know%20more."
+<a class="wa-float" id="waFloat" href="{{WA_LINK}}"
    target="_blank" rel="noopener" aria-label="Chat with SHAUNIX GROUP on WhatsApp">
   <svg viewBox="0 0 32 32" width="30" height="30" fill="#fff" aria-hidden="true">
     <path d="M16 3C9.4 3 4 8.3 4 14.9c0 2.1.6 4.1 1.6 5.9L4 29l8.4-1.5c1.7.9 3.6 1.4 5.6 1.4h.1c6.6 0 12-5.3 12-11.9C29.9 8.3 22.6 3 16 3zm0 21.8c-1.8 0-3.5-.5-5-1.4l-.4-.2-5 .9 1-4.8-.3-.4c-1.1-1.7-1.6-3.5-1.6-5.4C4.7 8.7 9.8 4.7 16 4.7c5.4 0 10.2 4.2 10.2 9.8 0 5.7-4.8 10.3-10.2 10.3zm5.6-7.4c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.2-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.6c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.6l-1-2.3c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.1 1.1-1.1 2.6s1.1 3 1.3 3.2c.2.2 2.2 3.4 5.3 4.8.7.3 1.3.5 1.8.7.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.2-.3-.2-.6-.4z"/>

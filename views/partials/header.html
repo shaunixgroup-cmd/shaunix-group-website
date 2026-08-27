@@ -7,7 +7,10 @@ window.imgFallback = window.imgFallback || function (img) {
   img.replaceWith(ph);
 };
 </script>
-<!-- ============ TOP BAR + MAIN HEADER (sab pages par same) ============ -->
+<script>
+/* Site-wide data — project root /config.js se inject hota hai (SIRF WAHAN EDIT KARO) */
+window.SITE = { wa:"{{WA_NUM}}", phone:"{{PHONE}}", email:"{{EMAIL}}" };
+</script>
 <!-- ============ TOP BAR + MAIN HEADER (sab pages par same) ============ -->
 <header class="site-header" id="top">
 
@@ -16,8 +19,8 @@ window.imgFallback = window.imgFallback || function (img) {
     <div class="container topbar-inner">
       <div class="topbar-links">
         <span>📍 Serving clients across India</span>
-        <a href="tel:+919000000000">📞 +91 90000 00000</a>
-        <a href="mailto:hello@shaunixgroup.com">✉️ hello@shaunixgroup.com</a>
+        <a href="tel:+{{PHONE_DIGITS}}">📞 {{PHONE}}</a>
+        <a href="mailto:{{EMAIL}}">✉️ {{EMAIL}}</a>
       </div>
       <span class="topbar-tag">Technology • Digital • Services • Education • Sustainability</span>
     </div>

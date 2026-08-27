@@ -56,12 +56,26 @@ Browser me kholo → **http://localhost:3000**
 
 ## 🔧 Common Changes
 
-| Kya badalna hai | Kahan |
+### ⭐ SAB BUSINESS DATA AB EK JAGAH — `config.js` (project root)
+
+| Data | config.js field |
 |---|---|
-| Phone / WhatsApp number | partials (header/footer/contact-section) + `main.js` me `919000000000` replace |
-| Email | Partials me `hello@shaunixgroup.com` replace |
-| Address / Map | `views/contact.html` |
+| 📞 Phone display | `phoneDisplay` |
+| 💬 WhatsApp | `whatsapp` (+ `phoneDigits` tel-links ke liye) |
+| ✉️ Email | `email` |
+| 📍 Address | `address` |
+| 🕒 Timing | `hours` |
+| 🌐 Website | `websiteUrl` |
+| 🗺️ Google Map | `mapQuery` |
+
+`config.js` save karte hi **har page** me phone/email/WhatsApp/address/map automatic
+update ho jate hain — partials ya pages kholne ki zarurat nahi. 👍
+
+| Baaki cheezein | Kahan |
+|---|---|
 | Menu items | `views/partials/header.html` (1 jagah = sab pages) |
+| Images | files replace karo same naam se (`public/images/…`) |
+| Email bhejne ki setting | `.env` (SMTP_USER / SMTP_PASS) — ye display ke liye nahi hai |
 
 ## 🐙 GitHub Upload
 
