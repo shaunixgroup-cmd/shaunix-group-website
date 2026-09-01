@@ -1,20 +1,29 @@
-// GET  /contact                     -> Contact page
-// POST /contact/send-message        -> Contact form submit
+/* ============================================================
+   contact.js — Contact page & form handling
+   GET  /contact              -> Contact page
+   POST /contact/send-message -> Contact form submit
+   ============================================================ */
+
+   // Agar Node.js v18 se purana hai toh
+const fetch = require('node-fetch');
 const express = require('express');
 const fs      = require('fs');
 const path    = require('path');
 const { renderPage } = require('./render');
 
-const router = express.Router();
-const CFG    = require('../config');   // config.js ka business data
+// ✅ Google Apps Script URL (aapka deployed URL)
+const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzNRpBXyec_CsNnCu8ssH-alXlQq7H5hmoDtX3a707bf_CHUpwAWW3DzGQ4U_ukkqe1/exec';
 
-// ---------- CONTACT PAGE ----------
+const router = express.Router();
+const CFG    = require('../config');   /* Business data from config.js */
+
+/* ---------- CONTACT PAGE ---------- */
 router.get('/', (req, res) => {
   renderPage(res, 'contact.html');
 });
 
-// ---------- FORM SUBMIT ----------
-router.post('/send-message', (req, res) => {
+/* ---------- FORM SUBMIT ---------- */
+router.post('/send-message', async (req, res) => {  // ← async add karein
   const body = req.body || {};
 
   const name    = String(body.name || '').trim();
@@ -23,15 +32,15 @@ router.post('/send-message', (req, res) => {
   const service = String(body.service || 'General Enquiry').trim();
   const message = String(body.message || '').trim();
 
-  // Basic validation
+  /* Basic validation */
   if (!name || !phone || !message) {
     if (req.get('X-Requested-With') === 'fetch') {
-      return res.status(400).json({ ok: false, error: 'Naam, phone aur message required hain.' });
+      return res.status(400).json({ ok: false, error: 'Name, phone and message are required.' });
     }
     return res.redirect('/contact?error=1');
   }
 
-  // 1) Message hamesha messages.log me save hota hai (backup)
+  /* 1) Always save message to messages.log (backup) */
   const entry = {
     time: new Date().toLocaleString('en-IN'),
     name: name.slice(0, 100),
@@ -41,31 +50,72 @@ router.post('/send-message', (req, res) => {
     message: message.slice(0, 2000)
   };
 
+  // ✅ Save to messages.log (backup)
   try {
     fs.appendFileSync(
       path.join(__dirname, '..', 'messages.log'),
       JSON.stringify(entry) + '\n',
       'utf8'
     );
+    console.log('✅ Saved to messages.log');
   } catch (err) {
-    console.error('Log write failed:', err.message);
+    console.error('❌ Log write failed:', err.message);
   }
 
-  // 2) Email bhejo (sirf tab jab .env me SMTP details bhari ho)
+  // ✅ NEW: Save to Google Sheets
+  try {
+    await sendToGoogleSheet(entry);
+    console.log('✅ Saved to Google Sheets');
+  } catch (err) {
+    console.error('❌ Google Sheets save failed:', err.message);
+    // Error ignore karein - app crash nahi honi chahiye
+  }
+
+  /* 2) Send email (only when SMTP details are configured in .env) */
   sendEnquiryEmail(entry);
 
-  // 3) Reply
+  /* 3) Reply */
   if (req.get('X-Requested-With') === 'fetch') {
     return res.json({ ok: true });
   }
   res.redirect('/contact?sent=1');
 });
 
-// ---------- EMAIL (optional) ----------
+/* ---------- GOOGLE SHEETS FUNCTION ---------- */
+async function sendToGoogleSheet(entry) {
+  try {
+    // Check if fetch is available (Node.js 18+)
+    const fetch = global.fetch || require('node-fetch');
+    
+    const response = await fetch(GAS_WEB_APP_URL, {
+      method: 'POST',
+      mode: 'no-cors',  // Important: CORS issues avoid karne ke liye
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: entry.name,
+        phone: entry.phone,
+        email: entry.email || '',
+        service: entry.service,
+        message: entry.message,
+        timestamp: entry.time
+      })
+    });
+    
+    console.log('✅ Google Sheets API call completed');
+    return true;
+  } catch (error) {
+    console.error('❌ Google Sheets fetch error:', error.message);
+    throw error;
+  }
+}
+
+/* ---------- EMAIL (optional) ---------- */
 function sendEnquiryEmail(entry) {
   const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, ADMIN_EMAIL, BUSINESS_EMAIL } = process.env;
 
-  if (!SMTP_HOST || !SMTP_USER || !SMTP_PASS) return; // email setup nahi hai — skip
+  if (!SMTP_HOST || !SMTP_USER || !SMTP_PASS) return; /* Email not configured — skip */
 
   try {
     const nodemailer   = require('nodemailer');
@@ -83,10 +133,10 @@ function sendEnquiryEmail(entry) {
         from: `SHAUNIX GROUP Website <${SMTP_USER}>`,
         to,
         replyTo: entry.email || undefined,
-        subject: `🚀 New Enquiry | ${entry.service} | ${entry.name}`,
+        subject: `New Enquiry | ${entry.service} | ${entry.name}`,
         text:
-          `Naya enquiry aaya hai!\n\n` +
-          `Naam    : ${entry.name}\n` +
+          `New enquiry received!\n\n` +
+          `Name    : ${entry.name}\n` +
           `Phone   : ${entry.phone}\n` +
           `Email   : ${entry.email || '-'}\n` +
           `Service : ${entry.service}\n\n` +
@@ -95,7 +145,7 @@ function sendEnquiryEmail(entry) {
           `<div style="font-family:Arial,sans-serif;max-width:560px;margin:auto;border:1px solid #e5e9f2;border-radius:12px;overflow:hidden">` +
           `<div style="background:#0b1b3a;color:#fff;padding:18px 24px"><b>SHAUNIX GROUP</b> — New Website Enquiry</div>` +
           `<table style="width:100%;border-collapse:collapse;font-size:14px;color:#334155">` +
-          row('Naam', entry.name) + row('Phone', `<a href="tel:${entry.phone}">${entry.phone}</a>`) +
+          row('Name', entry.name) + row('Phone', `<a href="tel:${entry.phone}">${entry.phone}</a>`) +
           row('Email', entry.email || '-') + row('Service', entry.service) +
           `</table>` +
           `<div style="padding:16px 24px 24px;font-size:14px;color:#334155">` +
@@ -115,4 +165,3 @@ function row(label, value) {
 }
 
 module.exports = router;
-

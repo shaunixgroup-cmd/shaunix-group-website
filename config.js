@@ -1,41 +1,41 @@
 /* ============================================================
-   🏢 SHAUNIX GROUP — BUSINESS DATA (EKMUKHIYA / SINGLE SOURCE)
+   SHAUNIX GROUP — BUSINESS DATA (SINGLE SOURCE)
    ------------------------------------------------------------
-   ✅ YAHIN SAB KUCH EDIT KARO — phone, email, WhatsApp, address,
-      timing, website, Google Map — poore website me AUTOMATIC
-      update ho jayega. Aur kahin haath nahi lagana!
+   EDIT EVERYTHING HERE — phone, email, WhatsApp, address,
+   timing, website, Google Map — updates AUTOMATICALLY
+   across the entire website. No need to edit anywhere else!
    ============================================================ */
 
 module.exports = {
 
-  /* Brand */
-  name:    'SHAUNIX GROUP',
-  tagline: 'Technology. Solutions. Growth.',
+   /* Brand */
+   name: 'SHAUNIX GROUP',
+   tagline: 'Technology. Solutions. Growth.',
 
-  /* 📞 Phone (dikhega is tarah: "+91 98765 43210") */
-  phoneDisplay: '+91 90000 00000',
+   /* Phone (displayed as: "+91 98765 43210") */
+   phoneDisplay: '+91 98211 86889',
 
-  /* Sirf digits — tel: links aur WhatsApp ke liye (country code ke saath,
-     bina "+" aur bina space) — Example: 919876543210 */
-  phoneDigits: '919000000000',
+   /* Digits only — for tel: links and WhatsApp (with country code,
+      without "+" and without spaces) — Example: 919876543210 */
+   phoneDigits: '919821186889',
 
-  /* 💬 WhatsApp — sirf digits (same as phone ho sakte ho) */
-  whatsapp: '919000000000',
+   /* WhatsApp — digits only (can be same as phone) */
+   whatsapp: '919821186889',
 
-  /* ✉️ Email */
-  email: 'hello@shaunixgroup.com',
+   /* Email */
+   email: 'shaunixgroup@gmail.com',
 
-  /* 📍 Address (poora likho — about/contact/footer me dikhega) */
-  address: 'Your City, India',
+   /* Address (full address — displayed on about/contact/footer) */
+   address: 'A-20, A Block, Gali No. 1/A, Om Nagar, Shakti Vihar, Badarpur, New Delhi, Delhi 110044',
 
-  /* 🕒 Business hours */
-  hours: 'Mon – Sat · 10 AM – 7 PM',
+   /* Business hours */
+   hours: 'Mon – Sat · 10 AM – 7 PM',
 
-  /* 🌐 Website (signature/brochure ke liye) */
-  websiteUrl: 'www.shaunixgroup.com',
+   /* Website (for signature/brochure) */
+   websiteUrl: 'www.shaunixgroup.com',
 
-  /* 🗺️ Google Map — apni location ka naam/address likho,
-     Contact page ka map yahi dikhayega. Example: 'Baner, Pune'
-     Tip: street + area + city likho → accurate pin milega */
-  mapQuery: 'India'
+   /* Google Map — enter your location name/address,
+      the Contact page map will display this. Example: 'Baner, Pune'
+      Tip: street + area + city → accurate pin */
+   mapQuery: 'India'
 };

@@ -1,10 +1,10 @@
-// ============================================================
-//  render.js — Chhota helper
-//  Har page me jo {{HEADER}}, {{FOOTER}}, {{CONTACT_SECTION}},
-//  {{YEAR}} likha hota hai, uski jagah asli header/footer/
-//  contact-form daal deta hai (views/partials/ se).
-//  Fayda: menu ya phone number sirf EK jagah badalna hota hai.
-// ============================================================
+/* ============================================================
+   render.js — Small helper
+   Every page contains {{HEADER}}, {{FOOTER}}, {{CONTACT_SECTION}},
+   {{YEAR}} placeholders. This file replaces them with the actual
+   header/footer/contact-form content from views/partials/.
+   Benefit: menu or phone number only needs to be changed in ONE place.
+   ============================================================ */
 
 const fs   = require('fs');
 const path = require('path');
@@ -17,9 +17,9 @@ function readPartial(fileName) {
 }
 
 /* ============================================================
- *  EK JAGAH KA BUSINESS DATA — project root ki /config.js
- *  Saare {{TOKENS}} yahan se poori website me fill hote hain.
- * ============================================================ */
+   SINGLE SOURCE OF BUSINESS DATA — from project root /config.js
+   All {{TOKENS}} are filled across the entire website from here.
+   ============================================================ */
 const CFG = require('../config');
 
 const TOKENS = {
@@ -39,7 +39,7 @@ const TOKENS = {
 
 function applySiteData(html) {
   Object.entries(TOKENS).forEach(([token, value]) => {
-    const safeVal = String(value == null ? '' : value).replace(/"/g, '&quot;');
+    const safeVal = String(value == null ? '' : value).replace(/"/g, '"');
     html = html.split(token).join(safeVal);
   });
   return html;
@@ -55,7 +55,7 @@ function renderPage(res, viewFile) {
       .split('{{FOOTER}}').join(readPartial('footer.html'))
       .split('{{CONTACT_SECTION}}').join(readPartial('contact-section.html'));
 
-    // ⭐ config.js ka data har page + partial me inject hota hai
+    /* Inject config.js data into every page + partial */
     html = applySiteData(html);
 
     html = html.replace(/{{YEAR}}/g, String(new Date().getFullYear()));
@@ -63,7 +63,7 @@ function renderPage(res, viewFile) {
     res.type('text/html').send(html);
   } catch (err) {
     console.error('Render error (' + viewFile + '):', err.message);
-    res.status(500).send('Kuch galat ho gaya — thodi der baad try karein.');
+    res.status(500).send('Something went wrong — please try again later.');
   }
 }
 

@@ -1,11 +1,11 @@
-<!-- ============ CONTACT FORM SECTION (home + sab service pages + contact page) ============ -->
+<!-- ============ CONTACT FORM SECTION (home + all service pages + contact page) ============ -->
 <section class="section contact-band reveal" id="contact">
   <div class="container contact-grid">
 
     <!-- LEFT: info -->
     <div class="contact-info">
       <span class="eyebrow eyebrow-light">Get in Touch</span>
-      <h2>Tell us what <em>you need</em>.<br>We'll make it happen.</h2>
+      <h2>Tell us what <em>you need</em>.<br>We will make it happen.</h2>
       <p class="lead-light">One message is enough — our team will understand your requirement,
          suggest the right option and share a clear quotation.</p>
 
@@ -33,7 +33,7 @@
 
     <!-- RIGHT: form -->
     <form class="contact-form" id="contactForm" action="/contact/send-message" method="POST" novalidate>
-      <h3>Send Enquiry 🚀</h3>
+      <h3>Send Enquiry</h3>
 
       <div class="field-row">
         <label>Name <input type="text" name="name" placeholder="Your full name" required minlength="2"></label>
@@ -44,21 +44,21 @@
         <label>Service Needed
           <select name="service" required>
             <option value="" selected disabled>Select a vertical…</option>
-            <option>💻 SHAUNIX TECH — Products &amp; Accessories</option>
-            <option>🔧 SHAUNIX CARE — Repairs &amp; Service</option>
-            <option>🌐 SHAUNIX DIGITAL — Website / App / Branding</option>
-            <option>🖨️ SHAUNIX PRINT — Printing Solutions</option>
-            <option>🎓 SHAUNIX ACADEMY — Courses &amp; Training</option>
-            <option>♻️ SHAUNIX RECLAIM — IT Asset / E-Waste</option>
+            <option>SHAUNIX TECH — Products & Accessories</option>
+            <option>SHAUNIX CARE — Repairs & Service</option>
+            <option>SHAUNIX DIGITAL — Website / App / Branding</option>
+            <option>SHAUNIX PRINT — Printing Solutions</option>
+            <option>SHAUNIX ACADEMY — Courses & Training</option>
+            <option>SHAUNIX RECLAIM — IT Asset / E-Waste</option>
             <option>Other / Not sure yet</option>
           </select>
         </label>
       </div>
       <label>Message <textarea name="message" rows="4" required minlength="10"
-              placeholder="Short me batayein — kya chahiye? (model, topic, quantity, timeline… anything)"></textarea></label>
+              placeholder="Please describe your requirement — what do you need? (model, topic, quantity, timeline, etc.)"></textarea></label>
 
-      <button class="btn btn-primary btn-block" type="submit" id="submitBtn">Send Message ➜</button>
-      <button class="btn btn-wa btn-block" type="button" id="waSendBtn" hidden>💬 Send via WhatsApp instead</button>
+      <button class="btn btn-primary btn-block" type="submit" id="submitBtn">Send Message →</button>
+      <button class="btn btn-wa btn-block" type="button" id="waSendBtn" hidden>Send via WhatsApp instead</button>
 
       <p class="form-note" id="formNote">🔒 Your details stay private. We only use them to reply to your enquiry.</p>
       <p class="form-status" id="formStatus" role="status"></p>

@@ -1,5 +1,5 @@
 <script>
-/* Image fallback — logo/photos na ho to sundar placeholder dikhata hai */
+/* Image fallback — displays a polished placeholder when logo/photos are missing */
 window.imgFallback = window.imgFallback || function (img) {
   var ph = document.createElement('span');
   ph.className = 'ph-fallback ' + (img.closest('.brand') ? 'logo-ph' : 'media-ph');
@@ -8,19 +8,19 @@ window.imgFallback = window.imgFallback || function (img) {
 };
 </script>
 <script>
-/* Site-wide data — project root /config.js se inject hota hai (SIRF WAHAN EDIT KARO) */
+/* Site-wide data — injected from project root /config.js (EDIT ONLY THERE) */
 window.SITE = { wa:"{{WA_NUM}}", phone:"{{PHONE}}", email:"{{EMAIL}}" };
 </script>
-<!-- ============ TOP BAR + MAIN HEADER (sab pages par same) ============ -->
+<!-- ============ TOP BAR + MAIN HEADER (same on all pages) ============ -->
 <header class="site-header" id="top">
 
   <!-- Top strip: phone / email / tagline -->
   <div class="topbar">
     <div class="container topbar-inner">
       <div class="topbar-links">
-        <span>📍 Serving clients across India</span>
-        <a href="tel:+{{PHONE_DIGITS}}">📞 {{PHONE}}</a>
-        <a href="mailto:{{EMAIL}}">✉️ {{EMAIL}}</a>
+        <span>Serving clients across India</span>
+        <a href="tel:+{{PHONE_DIGITS}}">{{PHONE}}</a>
+        <a href="mailto:{{EMAIL}}">{{EMAIL}}</a>
       </div>
       <span class="topbar-tag">Technology • Digital • Services • Education • Sustainability</span>
     </div>
@@ -43,7 +43,7 @@ window.SITE = { wa:"{{WA_NUM}}", phone:"{{PHONE}}", email:"{{EMAIL}}" };
         <a href="#services" data-nav="services" aria-haspopup="true">Services <span class="caret">▾</span></a>
         <ul class="dropdown">
           <li><a href="/tech"><i class="dot dot-tech"></i>SHAUNIX TECH<span>Laptops • Desktops • Accessories</span></a></li>
-          <li><a href="/care"><i class="dot dot-care"></i>SHAUNIX CARE<span>Laptop &amp; Printer Repairs</span></a></li>
+          <li><a href="/care"><i class="dot dot-care"></i>SHAUNIX CARE<span>Laptop & Printer Repairs</span></a></li>
           <li><a href="/digital"><i class="dot dot-digital"></i>SHAUNIX DIGITAL<span>Websites • Apps • Branding</span></a></li>
           <li><a href="/print"><i class="dot dot-print"></i>SHAUNIX PRINT<span>Cards • Brochures • Flyers</span></a></li>
           <li><a href="/academy"><i class="dot dot-academy"></i>SHAUNIX ACADEMY<span>MERN • Python • Data Science</span></a></li>
@@ -55,7 +55,7 @@ window.SITE = { wa:"{{WA_NUM}}", phone:"{{PHONE}}", email:"{{EMAIL}}" };
     </ul>
 
     <div class="nav-actions">
-      <a class="btn btn-ghost btn-sm hide-sm" href="tel:+919000000000">📞 Call Now</a>
+      <a class="btn btn-ghost btn-sm hide-sm" href="tel:+919000000000">Call Now</a>
       <a class="btn btn-primary btn-sm" href="/contact">Get a Quote</a>
       <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
