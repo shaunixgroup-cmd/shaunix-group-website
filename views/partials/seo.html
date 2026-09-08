@@ -1,0 +1,41 @@
+<!-- ============================================================
+     seo.html — SEO tags partial
+     Yeh block har page ke <head> mein inject hota hai.
+     Per-page values (title, description, keywords, canonical, OG,
+     Twitter, JSON-LD schema) project root ke seo.config.js se
+     aati hain — render.js unhe yahan inject karta hai.
+     Ek page = ek set of tags = NO duplicates!
+     SEO badalna ho toh seo.config.js edit karo — yahan kuch nahi.
+     ============================================================ -->
+
+<!-- ========== BASIC SEO (per-page — from seo.config.js) ========== -->
+<title>{{TITLE}}</title>
+<meta name="description" content="{{DESCRIPTION}}">
+<meta name="keywords" content="{{KEYWORDS}}">
+<meta name="robots" content="{{ROBOTS}}">
+<link rel="canonical" href="{{CANONICAL}}">
+
+<!-- ========== OPEN GRAPH (Facebook/LinkedIn/WhatsApp) ========== -->
+<meta property="og:title" content="{{OG_TITLE}}">
+<meta property="og:description" content="{{OG_DESCRIPTION}}">
+<meta property="og:image" content="{{OG_IMAGE}}">
+<meta property="og:url" content="{{OG_URL}}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SHAUNIX GROUP">
+
+<!-- ========== TWITTER CARDS ========== -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{TWITTER_TITLE}}">
+<meta name="twitter:description" content="{{TWITTER_DESCRIPTION}}">
+<meta name="twitter:image" content="{{OG_IMAGE}}">
+
+<!-- ========== OTHER (site-wide) ========== -->
+<meta name="author" content="{{AUTHOR}}">
+<meta name="geo.region" content="{{GEO_REGION}}">
+<meta name="geo.placename" content="{{GEO_PLACENAME}}">
+
+<!-- ========== STRUCTURED DATA (JSON-LD — auto-generated from seo.config.js)
+     1) LocalBusiness — page-specific name/url/description
+     2) BreadcrumbList — Home › Page (homepage par skip hota hai) ========== -->
+{{JSON_LD}}
+{{BREADCRUMB_LD}}

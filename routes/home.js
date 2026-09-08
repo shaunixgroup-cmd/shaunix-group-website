@@ -1,5 +1,5 @@
 // GET  /        -> Home page
-const express   = require('express');
+const express = require('express');
 const { renderPage } = require('./render');
 
 const router = express.Router();

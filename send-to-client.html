@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Private/hidden tool — search engines se index nahi hoga -->
+    <meta name="robots" content="noindex, nofollow">
+    <title>Send to Client — SHAUNIX GROUP</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 900;
+            color: #08152d;
+            margin-bottom: 4px;
+        }
+
+        .logo span {
+            color: #1454ef;
+        }
+
+        .sub {
+            color: #5d687b;
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 0;
+            margin-bottom: 16px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .input-group .country-code {
+            background: #f5f8fc;
+            padding: 12px 14px;
+            border-radius: 8px 0 0 8px;
+            font-weight: 700;
+            color: #172033;
+            font-size: 16px;
+            border: 2px solid #dfe6f1;
+            border-right: none;
+        }
+
+        .input-group input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #dfe6f1;
+            border-radius: 0 8px 8px 0;
+            font-size: 16px;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            outline: none;
+            transition: border-color 0.3s;
+            min-width: 180px;
+        }
+
+        .input-group input:focus {
+            border-color: #1454ef;
+        }
+
+        .input-group input::placeholder {
+            color: #b0b8c8;
+        }
+
+        /* Auto-detect indicator */
+        .input-group input.valid {
+            border-color: #25D366;
+            background: #f0faf4;
+        }
+
+        .input-group input.invalid {
+            border-color: #c62828;
+            background: #fff5f5;
+        }
+
+        .client-info {
+            background: #f5f8fc;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #172033;
+        }
+
+        .client-info strong {
+            color: #1454ef;
+        }
+
+        .client-info .error-text {
+            color: #c62828;
+        }
+
+        .btn-whatsapp {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #25D366;
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn-whatsapp:hover:not(:disabled) {
+            background: #1da851;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.35);
+        }
+
+        .btn-whatsapp:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            background: #b0b8c8;
+        }
+
+        .btn-whatsapp:active:not(:disabled) {
+            transform: scale(0.97);
+        }
+
+        .note {
+            margin-top: 16px;
+            font-size: 13px;
+            color: #8a95aa;
+        }
+
+        .status-msg {
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .status-msg.success {
+            display: block;
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status-msg.error {
+            display: block;
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .status-msg.info {
+            display: block;
+            background: #e3f2fd;
+            color: #0d47a1;
+        }
+
+        /* Counter/remaining digits */
+        .counter {
+            font-size: 12px;
+            color: #8a95aa;
+            margin-top: 4px;
+            text-align: left;
+        }
+
+        .counter .remaining {
+            font-weight: 700;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 24px;
+            }
+
+            .input-group input {
+                min-width: 140px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- Logo -->
+        <div class="logo">SHAUNIX <span>GROUP</span></div>
+        <div class="sub">Technology. Solutions. Growth.</div>
+
+        <!-- Status Message -->
+        <div id="statusMsg" class="status-msg"></div>
+
+        <!-- Input: Client Number -->
+        <div class="input-group">
+            <span class="country-code">+91</span>
+            <input type="tel" id="clientInput" placeholder="98211 86889" maxlength="10" pattern="[0-9]{10}" autofocus
+                autocomplete="tel">
+        </div>
+
+        <!-- Remaining digits counter -->
+        <div class="counter">
+            <span id="digitCounter">10 digits remaining</span>
+        </div>
+
+        <!-- Client Info Display -->
+        <div class="client-info">
+            📱 Sending to: <strong id="clientNumber">+91 ..........</strong>
+        </div>
+
+        <!-- WhatsApp Button (auto-enables on 10 digits) -->
+        <button class="btn-whatsapp" id="sendBtn" disabled>
+            <span>📤</span> Send to Client via WhatsApp
+        </button>
+
+        <p class="note">🔒 Private tool — enter 10-digit number or use ?client=9876543210 in URL</p>
+    </div>
+
+    <script>
+        // ============================================================
+        // COMPANY DATA
+        // ============================================================
+        const COMPANY = {
+            name: 'SHAUNIX GROUP',
+            tagline: 'Technology. Solutions. Growth.',
+            website: 'shaunixgroup.com',
+            phone: '+91 98211 86889',
+            whatsapp: '919821186889',
+            email: 'shaunixgroup@gmail.com',
+            address: 'A-20, Om Nagar, Shakti Vihar, Badarpur, New Delhi – 110044'
+        };
+
+        // ============================================================
+        // WHATSAPP MESSAGE TEMPLATE
+        // ============================================================
+        function generateMessage() {
+            return `🌐 https://shaunixgroup.com/
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🏢 *SHAUNIX GROUP*
+*Technology. Solutions. Growth.*
+
+♻️ *IT WASTE COLLECTION & IT ASSET RECOVERY*
+
+We help businesses, offices & institutions responsibly manage their old and unused IT equipment.
+
+• E-Waste Collection
+• Old Laptop & Desktop Pickup
+• IT Asset Recovery
+• IT Equipment Segregation & Disposal
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💻 *LAPTOPS • DESKTOPS • ACCESSORIES*
+
+• New & Refurbished Laptops
+• Desktops & Computer Systems
+• Monitors & Printers
+• Computer Accessories
+• IT Hardware Supply & Support
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🛠️ *REPAIR & IT SUPPORT*
+
+• Laptop & Desktop Repair
+• Hardware / Software Support
+• AMC & Maintenance
+• Doorstep IT Service
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🌐 *DIGITAL SOLUTIONS*
+
+• Website Development
+• Web Applications
+• Graphic Designing & Branding
+• Digital Business Solutions
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🖨️ *PRINTING SOLUTIONS*
+
+• Visiting Cards
+• Brochures & Flyers
+• Business Stationery
+• Packaging & Promotional Printing
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📋 *HAVE AN IT REQUIREMENT?*
+
+Aap apni requirement, business details, ya old/unused IT equipment ki information hume WhatsApp par share kar sakte hain.
+
+📱 *WhatsApp:*
+https://wa.me/${COMPANY.whatsapp}?text=Hi%20Shaunix%20Group!
+
+📞 *${COMPANY.phone}*
+✉️ *${COMPANY.email}*
+🌐 *${COMPANY.website}*
+
+📍 *${COMPANY.address}*
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+*SHAUNIX GROUP*
+*Technology for Today. Skills for Tomorrow.*
+*Solutions • Support • Sustainability*
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
+        }
+
+        // ============================================================
+        // MAIN LOGIC
+        // ============================================================
+        (function () {
+            const clientInput = document.getElementById('clientInput');
+            const sendBtn = document.getElementById('sendBtn');
+            const clientNumberSpan = document.getElementById('clientNumber');
+            const statusMsg = document.getElementById('statusMsg');
+            const digitCounter = document.getElementById('digitCounter');
+
+            let currentClient = null;
+
+            // ======== FUNCTION: Update UI based on input ========
+            function updateClientNumber() {
+                const raw = clientInput.value.trim();
+                const clean = raw.replace(/\D/g, '');
+
+                // Update counter
+                const remaining = 10 - clean.length;
+                if (remaining > 0) {
+                    digitCounter.innerHTML = `<span class="remaining">${remaining}</span> digits remaining`;
+                    digitCounter.style.color = '#8a95aa';
+                } else {
+                    digitCounter.innerHTML = '✅ 10 digits entered';
+                    digitCounter.style.color = '#25D366';
+                }
+
+                // Update input styling
+                clientInput.classList.remove('valid', 'invalid');
+                if (clean.length > 0 && clean.length < 10) {
+                    clientInput.classList.add('invalid');
+                }
+
+                // Check if exactly 10 digits
+                if (clean.length === 10 && /^[0-9]{10}$/.test(clean)) {
+                    currentClient = clean;
+                    clientInput.classList.add('valid');
+                    clientInput.classList.remove('invalid');
+                    clientNumberSpan.textContent = `+91 ${clean.slice(0, 5)} ${clean.slice(5)}`;
+                    clientNumberSpan.style.color = '#1454ef';
+                    sendBtn.disabled = false;
+
+                    statusMsg.className = 'status-msg success';
+                    statusMsg.textContent = `✅ Number set: +91 ${clean.slice(0, 5)} ${clean.slice(5)}`;
+                    statusMsg.style.display = 'block';
+
+                    // Also update input value to clean version
+                    clientInput.value = clean;
+
+                } else {
+                    // Not 10 digits yet
+                    currentClient = null;
+                    sendBtn.disabled = true;
+
+                    if (clean.length > 0 && clean.length < 10) {
+                        clientNumberSpan.textContent = `+91 ${clean}___`;
+                        clientNumberSpan.style.color = '#c62828';
+                        statusMsg.className = 'status-msg info';
+                        statusMsg.textContent = `📝 ${clean.length}/10 digits entered`;
+                        statusMsg.style.display = 'block';
+                    } else if (clean.length === 0) {
+                        clientNumberSpan.textContent = '+91 ..........';
+                        clientNumberSpan.style.color = '#172033';
+                        statusMsg.className = 'status-msg info';
+                        statusMsg.textContent = '📝 Enter a 10-digit mobile number';
+                        statusMsg.style.display = 'block';
+                    } else if (clean.length > 10) {
+                        // Trim to 10 digits
+                        clientInput.value = clean.slice(0, 10);
+                        updateClientNumber(); // re-run
+                        return;
+                    }
+                }
+            }
+
+            // ======== EVENT: Input on phone field ========
+            clientInput.addEventListener('input', function (e) {
+                // Only allow digits
+                this.value = this.value.replace(/\D/g, '');
+                // Limit to 10 digits
+                if (this.value.length > 10) {
+                    this.value = this.value.slice(0, 10);
+                }
+                updateClientNumber();
+            });
+
+            // ======== EVENT: Paste prevention + cleanup ========
+            clientInput.addEventListener('paste', function (e) {
+                e.preventDefault();
+                const pasted = (e.clipboardData || window.clipboardData).getData('text');
+                const cleaned = pasted.replace(/\D/g, '').slice(0, 10);
+                if (cleaned) {
+                    this.value = cleaned;
+                    updateClientNumber();
+                }
+            });
+
+            // ======== EVENT: Send Button Click ========
+            sendBtn.addEventListener('click', function () {
+                if (!currentClient) {
+                    statusMsg.className = 'status-msg error';
+                    statusMsg.textContent = '❌ Please enter a valid 10-digit number first.';
+                    statusMsg.style.display = 'block';
+                    return;
+                }
+
+                const message = generateMessage();
+                const encoded = encodeURIComponent(message);
+                const url = `https://api.whatsapp.com/send?phone=91${currentClient}&text=${encoded}`;
+                window.open(url, '_blank');
+
+                statusMsg.className = 'status-msg success';
+                statusMsg.textContent = `📤 WhatsApp opened for +91 ${currentClient.slice(0, 5)} ${currentClient.slice(5)}`;
+                statusMsg.style.display = 'block';
+            });
+
+            // ======== AUTO-DETECT FROM URL ========
+            const params = new URLSearchParams(window.location.search);
+            const urlClient = params.get('client');
+
+            if (urlClient && /^[0-9]{10}$/.test(urlClient)) {
+                clientInput.value = urlClient;
+                updateClientNumber();
+                statusMsg.className = 'status-msg success';
+                statusMsg.textContent = `📱 Auto-detected from URL: +91 ${urlClient.slice(0, 5)} ${urlClient.slice(5)}`;
+                statusMsg.style.display = 'block';
+            } else {
+                // Show initial message
+                statusMsg.className = 'status-msg info';
+                statusMsg.textContent = '📝 Enter a 10-digit mobile number';
+                statusMsg.style.display = 'block';
+            }
+
+            // Initial update
+            updateClientNumber();
+
+        })();
+    </script>
+
+</body>
+
+</html>

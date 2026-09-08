@@ -46,6 +46,7 @@ Browser me kholo → **http://localhost:3000**
 | `/tech` | SHAUNIX TECH | | `/academy` | SHAUNIX ACADEMY |
 | `/care` | SHAUNIX CARE | | `/reclaim` | SHAUNIX RECLAIM |
 | `/digital` | SHAUNIX DIGITAL | | `/about` `(`/contact`)` | About / Contact |
+| `/feedback` | ⭐ Customer Feedback | | | |
 
 ## 📬 Contact Form Kaise Kaam Karta Hai
 
@@ -53,6 +54,20 @@ Browser me kholo → **http://localhost:3000**
 2. **Email bhi chahiye?** `.env` me: Gmail par 2-Step Verification ON →
    https://myaccount.google.com/apppasswords se App Password lo →
    `SMTP_HOST=smtp.gmail.com`, `SMTP_USER=<gmail>`, `SMTP_PASS=<16-char pass>` bhar do. Bas!
+
+## ⭐ Customer Feedback Form (`/feedback`)
+
+Customers jo service use kar chuke hain wo **`/feedback`** par apna experience share karte hain —
+star rating (1–5), service, recommend, likhit feedback. Feedback **Google Sheet** me save hota hai,
+aur submit ke baad customer ek tap me apna feedback **WhatsApp** par share kar sakta hai.
+
+1. Har feedback pehle **`feedback.log`** me backup hota hai (kuch bhi miss nahi hota).
+2. **Google Sheet connection (5 min):** `marketing/feedback-google-sheet-setup.md` kholo →
+   Apps Script paste → Deploy (Web app, Access: **Anyone**) → URL copy →
+   **`config.js`** me `feedbackWebAppUrl: 'PASTE-YOUR-URL-HERE'` kar do. Bas! ✅
+3. Submit ke baad success screen par 2 buttons: **Share on WhatsApp** (customer koi bhi
+   chat / group / Status choose kar sakta hai) aur **Send to SHAUNIX GROUP** (seedha aapko) —
+   feedback text pre-written format me WhatsApp me khul jata hai.
 
 ## 🔧 Common Changes
 
@@ -76,6 +91,22 @@ update ho jate hain — partials ya pages kholne ki zarurat nahi. 👍
 | Menu items | `views/partials/header.html` (1 jagah = sab pages) |
 | Images | files replace karo same naam se (`public/images/…`) |
 | Email bhejne ki setting | `.env` (SMTP_USER / SMTP_PASS) — ye display ke liye nahi hai |
+
+## 🔍 SEO — SAB EK FILE ME (`seo.config.js`)
+
+Har page ka `<title>`, meta description, **keywords**, canonical, OG/Twitter tags,
+**LocalBusiness JSON-LD** (page-specific name/url/description) aur
+**BreadcrumbList JSON-LD** — sab **`seo.config.js`** (project root) se aate hain.
+SEO badalna ho toh wahi EK file edit karo — poori website automatic update. ✅
+
+- **Naya page:** `views/` mein page banao (`<head>` mein `{{SEO}}` likho) → route banao
+  → `seo.config.js` ke `PAGES` mein entry add karo. Title + keywords + schema +
+  breadcrumb sab automatic ban jate hain.
+- **H1 rule:** har page par sirf **ek `<h1>`** — vertical/brand name ke saath.
+- **Breadcrumbs:** har inner page par visible `Home › Page` crumbs + hidden
+  BreadcrumbList JSON-LD (dono `seo.config.js` ke `crumbs` se).
+- **Canonical host:** `https://shaunixgroup.com` — www chahiye toh `seo.config.js`
+  me `siteUrl` badlo (aur sitemap.xml + robots.txt bhi match kar lena).
 
 ## 🐙 GitHub Upload
 

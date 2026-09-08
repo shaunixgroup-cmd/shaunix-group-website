@@ -597,6 +597,54 @@ body.no-scroll { overflow: hidden; }
           transition: opacity .75s cubic-bezier(.2,.65,.35,1), transform .75s cubic-bezier(.2,.65,.35,1); }
 .reveal.in { opacity: 1; transform: none; }
 
+/* ---------- 23. FEEDBACK PAGE (/feedback) ---------- */
+.feedback-wrap { max-width: 780px; margin-inline: auto; }
+.feedback-form h3 { text-align: center; }
+.feedback-form .req { color: #d92d20; }
+
+/* Star rating */
+.star-rating { border: 0; padding: 0; margin: 4px 0 16px; }
+.star-rating legend { display: block; font-size: .8rem; font-weight: 700; letter-spacing: .04em;
+                      text-transform: uppercase; color: #57627a; margin-bottom: 10px; padding: 0; }
+.stars { display: flex; gap: 6px; }
+.star { background: none; border: 0; cursor: pointer; font-size: 2.15rem; line-height: 1; color: #ccd7ee;
+        padding: 2px 3px; transition: transform .16s ease, color .16s ease; }
+.star:hover, .star.preview { transform: scale(1.2); color: #f7b500; }
+.star.on { color: #f7b500; text-shadow: 0 6px 18px rgba(247, 181, 0, .38); }
+.star:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 6px; }
+.star-label { display: block; margin-top: 7px; font-size: .86rem; font-weight: 650; color: var(--muted); min-height: 1.25em; }
+.star-label.active { color: #a97400; }
+
+/* No-JS rating fallback */
+.ns-rating { font-size: .8rem; }
+
+/* Recommend pills */
+.choice-block { margin-bottom: 16px; }
+.choice-title { display: block; font-size: .8rem; font-weight: 700; letter-spacing: .04em;
+                text-transform: uppercase; color: #57627a; margin-bottom: 8px; }
+.contact-form .pill { display: inline-block; margin: 0 0 8px; font-size: .9rem; font-weight: 600;
+                      text-transform: none; letter-spacing: 0; }
+.pill input { position: absolute; opacity: 0; pointer-events: none; }
+.pill span { display: inline-block; padding: 11px 18px; border: 1.6px solid var(--line); border-radius: 999px;
+             background: #fbfcff; cursor: pointer; color: var(--body); transition: all .2s ease; }
+.pill:hover span { border-color: var(--blue); color: var(--blue); }
+.pill input:checked + span { background: var(--blue); border-color: var(--blue); color: #fff;
+                             box-shadow: 0 8px 20px rgba(20, 84, 239, .25); }
+.pill input:focus-visible + span { box-shadow: 0 0 0 4px rgba(20, 84, 239, .15); }
+
+/* Testimonial permission checkbox */
+.contact-form .check-line { display: flex; gap: 10px; align-items: flex-start; font-size: .84rem; font-weight: 500;
+                            letter-spacing: 0; text-transform: none; color: var(--body); margin-bottom: 16px; }
+.contact-form .check-line input { width: auto; margin-top: 3px; accent-color: var(--blue); }
+.contact-form .check-line i { color: var(--muted); }
+
+/* Success panel — WhatsApp share buttons */
+.share-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 4px; }
+.share-hint { display: block; margin-top: 16px; font-size: .78rem; color: var(--muted); }
+
+/* Error variant of the ?error=1 banner */
+.sent-banner.error { background: #fdecea; border-color: #f6c1ba; color: #8a1f14; }
+
 /* ---------- END OF STYLE ---------- */
 
 /* ============================================================

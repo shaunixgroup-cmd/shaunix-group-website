@@ -62,14 +62,20 @@ router.post('/send-message', async (req, res) => {  // ← async add karein
     console.error('❌ Log write failed:', err.message);
   }
 
-  // ✅ NEW: Save to Google Sheets
-  try {
-    await sendToGoogleSheet(entry);
-    console.log('✅ Saved to Google Sheets');
-  } catch (err) {
-    console.error('❌ Google Sheets save failed:', err.message);
-    // Error ignore karein - app crash nahi honi chahiye
-  }
+  // ✅ Save to Google Sheets — BACKGROUND mein (await NAHI karte!)
+  // Apps Script kabhi-kabhi slow/hot hota hai — agar yahan await karein
+  // toh form ka button "Sending..." par atak jata hai. Isliye user ko
+  // reply TURANT bhejte hain, sheet save background mein hota hai.
+  // (Backup: entry upar messages.log mein already save ho chuki hai)
+  sendToGoogleSheet(entry)
+    .then(function(ok) {
+      if (ok) console.log('✅ Saved to Google Sheets');
+      else console.error('⚠️ Google Sheets ne unexpected response diya — entry messages.log backup mein safe hai');
+    })
+    .catch(function(err) {
+      console.error('❌ Google Sheets save failed:', err.message);
+      /* Error ignore karein - app crash nahi honi chahiye */
+    });
 
   /* 2) Send email (only when SMTP details are configured in .env) */
   sendEnquiryEmail(entry);
@@ -89,10 +95,12 @@ async function sendToGoogleSheet(entry) {
     
     const response = await fetch(GAS_WEB_APP_URL, {
       method: 'POST',
-      mode: 'no-cors',  // Important: CORS issues avoid karne ke liye
       headers: {
         'Content-Type': 'application/json',
       },
+      redirect: 'follow',
+      /* 15s timeout — Apps Script hang ho toh server process kabhi stuck na ho */
+      signal: AbortSignal.timeout(15000),
       body: JSON.stringify({
         name: entry.name,
         phone: entry.phone,
@@ -103,8 +111,7 @@ async function sendToGoogleSheet(entry) {
       })
     });
     
-    console.log('✅ Google Sheets API call completed');
-    return true;
+    return response.ok;
   } catch (error) {
     console.error('❌ Google Sheets fetch error:', error.message);
     throw error;

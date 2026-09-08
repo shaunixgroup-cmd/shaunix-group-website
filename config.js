@@ -37,5 +37,20 @@ module.exports = {
    /* Google Map — enter your location name/address,
       the Contact page map will display this. Example: 'Baner, Pune'
       Tip: street + area + city → accurate pin */
-   mapQuery: 'India'
+   mapQuery: 'India',
+
+   /* ============================================================
+      ⭐ CUSTOMER FEEDBACK FORM → GOOGLE SHEET
+      ------------------------------------------------------------
+      1) Google Sheet ▸ Extensions ▸ Apps Script
+      2) Script paste karo from: marketing/feedback-google-sheet-setup.md
+      3) Deploy ▸ New deployment ▸ Web app (Access: "Anyone")
+      4) Copy the Web App URL and paste it below (between quotes):
+
+         feedbackWebAppUrl: 'https://script.google.com/macros/s/XXXX/exec',
+
+      Jab tak URL paste nahi hota, feedback feedback.log me backup
+      hota rehta hai — form kabhi fail nahi hota.
+      ============================================================ */
+   feedbackWebAppUrl: 'https://script.google.com/macros/s/AKfycby-W2HnSG4t7qiCaf15BtQN8G5ctUeG_ZgzyRBK9qGq9NjTxpnQxIbMIq0OqcveJZ3A/exec'
 };

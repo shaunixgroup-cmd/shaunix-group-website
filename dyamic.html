@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Goku Evolution - Level Up!</title>
+
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(ellipse at center, #0d0d2b 0%, #000000 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        /* ===== BACKGROUND STARS ===== */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.8), transparent),
+                radial-gradient(2px 2px at 50px 160px, #ddd, transparent),
+                radial-gradient(2px 2px at 90px 40px, rgba(255, 255, 255, 0.6), transparent),
+                radial-gradient(2px 2px at 130px 80px, #fff, transparent),
+                radial-gradient(2px 2px at 160px 30px, rgba(255, 255, 255, 0.7), transparent);
+            background-size: 200px 200px;
+            background-repeat: repeat;
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ===== MAIN CARD ===== */
+        .container {
+            max-width: 550px;
+            width: 100%;
+            background: linear-gradient(145deg, #1a1a2e, #16213e);
+            border-radius: 30px;
+            padding: 35px 30px 40px;
+            box-shadow:
+                0 0 60px rgba(255, 215, 0, 0.08),
+                0 20px 60px rgba(0, 0, 0, 0.8),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .title {
+            font-size: 22px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #f1c40f, #e67e22);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 40px rgba(241, 196, 15, 0.2);
+            letter-spacing: 1px;
+        }
+
+        .level-badge {
+            background: linear-gradient(135deg, #f1c40f, #e67e22);
+            color: #0d0d2b;
+            padding: 6px 18px;
+            border-radius: 30px;
+            font-weight: 800;
+            font-size: 16px;
+            box-shadow: 0 4px 20px rgba(241, 196, 15, 0.3);
+        }
+
+        /* ===== GOKU IMAGE ===== */
+        .goku-container {
+            margin: 15px 0 20px;
+            position: relative;
+        }
+
+        .goku-image {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 100px;
+            background: radial-gradient(circle, #2d2d44, #1a1a2e);
+            box-shadow:
+                0 0 60px rgba(241, 196, 15, 0.15),
+                inset 0 -4px 20px rgba(0, 0, 0, 0.5);
+            border: 3px solid rgba(241, 196, 15, 0.2);
+            transition: all 0.6s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .goku-image .emoji {
+            font-size: 110px;
+            line-height: 1;
+            filter: drop-shadow(0 0 30px rgba(241, 196, 15, 0.2));
+            transition: all 0.6s ease;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        /* Power Aura */
+        .goku-image::after {
+            content: '';
+            position: absolute;
+            inset: -10px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(241, 196, 15, 0.1), transparent 70%);
+            animation: auraPulse 3s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes auraPulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.3;
+            }
+
+            50% {
+                transform: scale(1.2);
+                opacity: 0.8;
+            }
+        }
+
+        /* ===== FORM NAME ===== */
+        .form-name {
+            font-size: 26px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-top: 8px;
+            text-shadow: 0 0 30px rgba(241, 196, 15, 0.15);
+            letter-spacing: 1px;
+        }
+
+        .form-name span {
+            background: linear-gradient(135deg, #f1c40f, #e67e22);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* ===== POWER LEVEL ===== */
+        .power-level {
+            margin: 12px 0 20px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 215, 0, 0.08);
+        }
+
+        .power-label {
+            font-size: 13px;
+            color: #8a7e75;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        .power-value {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #f1c40f, #f39c12);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Courier New', monospace;
+            text-shadow: 0 0 40px rgba(241, 196, 15, 0.2);
+        }
+
+        /* ===== PROGRESS BAR ===== */
+        .progress-container {
+            margin: 15px 0 20px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #2d2d44;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #f1c40f, #e67e22, #e74c3c);
+            border-radius: 10px;
+            transition: width 0.8s ease;
+            width: 0%;
+            box-shadow: 0 0 20px rgba(241, 196, 15, 0.3);
+        }
+
+        .progress-text {
+            font-size: 12px;
+            color: #6b5e55;
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn-area {
+            display: flex;
+            gap: 14px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #f1c40f, #e67e22);
+            color: #0d0d2b;
+            box-shadow: 0 6px 25px rgba(241, 196, 15, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 10px 40px rgba(241, 196, 15, 0.5);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.06);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-3px);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: #ffffff;
+            box-shadow: 0 6px 25px rgba(231, 76, 60, 0.25);
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 10px 40px rgba(231, 76, 60, 0.4);
+        }
+
+        /* ===== EVOLUTION HISTORY ===== */
+        .history {
+            margin-top: 20px;
+            padding-top: 18px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .history-title {
+            font-size: 12px;
+            color: #6b5e55;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .history-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+            margin-top: 8px;
+        }
+
+        .history-tag {
+            font-size: 11px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(255, 215, 0, 0.08);
+            color: #b8a88a;
+            border: 1px solid rgba(255, 215, 0, 0.06);
+            transition: 0.3s;
+            font-weight: 500;
+        }
+
+        .history-tag.active {
+            background: rgba(241, 196, 15, 0.15);
+            color: #f1c40f;
+            border-color: rgba(241, 196, 15, 0.2);
+        }
+
+        /* ===== LEVEL UP ANIMATION ===== */
+        .level-up-flash {
+            animation: flashGold 0.6s ease;
+        }
+
+        @keyframes flashGold {
+            0% {
+                box-shadow: 0 0 0 rgba(241, 196, 15, 0);
+            }
+
+            50% {
+                box-shadow: 0 0 80px rgba(241, 196, 15, 0.6), 0 0 150px rgba(241, 196, 15, 0.2);
+            }
+
+            100% {
+                box-shadow: 0 0 0 rgba(241, 196, 15, 0);
+            }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 480px) {
+            .container {
+                padding: 25px 18px 30px;
+            }
+
+            .title {
+                font-size: 18px;
+            }
+
+            .goku-image {
+                width: 150px;
+                height: 150px;
+            }
+
+            .goku-image .emoji {
+                font-size: 80px;
+            }
+
+            .form-name {
+                font-size: 20px;
+            }
+
+            .power-value {
+                font-size: 22px;
+            }
+
+            .btn {
+                padding: 12px 20px;
+                font-size: 13px;
+                min-width: 100px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .goku-image {
+                width: 120px;
+                height: 120px;
+            }
+
+            .goku-image .emoji {
+                font-size: 65px;
+            }
+
+            .form-name {
+                font-size: 17px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container" id="app">
+
+        <!-- HEADER -->
+        <div class="header">
+            <div class="title">⚡ GOKU EVOLUTION</div>
+            <div class="level-badge" id="levelBadge">Level 1</div>
+        </div>
+
+        <!-- GOKU IMAGE -->
+        <div class="goku-container">
+            <div class="goku-image" id="gokuImage">
+                <span class="emoji" id="gokuEmoji">🐒</span>
+            </div>
+        </div>
+
+        <!-- FORM NAME -->
+        <div class="form-name" id="formName">Base <span>Goku</span></div>
+
+        <!-- POWER LEVEL -->
+        <div class="power-level">
+            <div class="power-label">⚡ Power Level</div>
+            <div class="power-value" id="powerValue">1,000</div>
+        </div>
+
+        <!-- PROGRESS BAR -->
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text" id="progressText">0% to next level</div>
+        </div>
+
+        <!-- BUTTONS -->
+        <div class="btn-area">
+            <button class="btn btn-primary" id="levelUpBtn">🔥 Level Up!</button>
+            <button class="btn btn-danger" id="resetBtn">⟲ Reset</button>
+        </div>
+
+        <!-- EVOLUTION HISTORY -->
+        <div class="history">
+            <div class="history-title">📜 Evolution Path</div>
+            <div class="history-tags" id="historyTags">
+                <span class="history-tag active">🐒 Base</span>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // ============================================================
+        // GOKU EVOLUTION DATA
+        // ============================================================
+        const gokuForms = [{
+            name: 'Base Goku',
+            emoji: '🐒',
+            power: 1000,
+            level: 1,
+            color: '#f1c40f'
+        }, {
+            name: 'Great Ape',
+            emoji: '🐵',
+            power: 5000,
+            level: 2,
+            color: '#e67e22'
+        }, {
+            name: 'Super Saiyan',
+            emoji: '💛',
+            power: 15000,
+            level: 3,
+            color: '#f1c40f'
+        }, {
+            name: 'Super Saiyan 2',
+            emoji: '⚡',
+            power: 25000,
+            level: 4,
+            color: '#f39c12'
+        }, {
+            name: 'Super Saiyan 3',
+            emoji: '🔥',
+            power: 50000,
+            level: 5,
+            color: '#e74c3c'
+        }, {
+            name: 'Super Saiyan God',
+            emoji: '🔴',
+            power: 100000,
+            level: 6,
+            color: '#e74c3c'
+        }, {
+            name: 'Super Saiyan Blue',
+            emoji: '💠',
+            power: 250000,
+            level: 7,
+            color: '#3498db'
+        }, {
+            name: 'Ultra Instinct Omen',
+            emoji: '🌌',
+            power: 500000,
+            level: 8,
+            color: '#8e44ad'
+        }, {
+            name: 'Ultra Instinct Mastered',
+            emoji: '👁️',
+            power: 1000000,
+            level: 9,
+            color: '#f1c40f'
+        }];
+
+        // ============================================================
+        // APP STATE
+        // ============================================================
+        let currentIndex = 0; // 0 = Base Form
+        const maxIndex = gokuForms.length - 1;
+
+        // DOM Elements
+        const gokuEmoji = document.getElementById('gokuEmoji');
+        const gokuImage = document.getElementById('gokuImage');
+        const formName = document.getElementById('formName');
+        const powerValue = document.getElementById('powerValue');
+        const levelBadge = document.getElementById('levelBadge');
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
+        const historyTags = document.getElementById('historyTags');
+        const levelUpBtn = document.getElementById('levelUpBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        // ============================================================
+        // UPDATE UI FUNCTION
+        // ============================================================
+        function updateUI(index, animate = true) {
+            const form = gokuForms[index];
+            const nextForm = gokuForms[index + 1];
+
+            // Update Emoji
+            gokuEmoji.textContent = form.emoji;
+
+            // Update Name
+            const nameParts = form.name.split(' ');
+            const lastName = nameParts.pop();
+            const firstName = nameParts.join(' ');
+            formName.innerHTML = `${firstName} <span>${lastName}</span>`;
+
+            // Update Power Level
+            powerValue.textContent = form.power.toLocaleString();
+
+            // Update Level Badge
+            levelBadge.textContent = `Level ${form.level}`;
+
+            // Update Image Border
+            gokuImage.style.borderColor = form.color;
+            gokuImage.style.boxShadow = `0 0 60px ${form.color}22, inset 0 -4px 20px rgba(0,0,0,0.5)`;
+
+            // Update Progress Bar (percentage to next level)
+            if (nextForm) {
+                const progressPercent = ((index) / (maxIndex)) * 100;
+                progressFill.style.width = `${progressPercent}%`;
+                progressText.textContent = `${Math.round(progressPercent)}% to ${nextForm.name}`;
+            } else {
+                progressFill.style.width = '100%';
+                progressText.textContent = '🌟 MAX LEVEL ACHIEVED! 🌟';
+            }
+
+            // Update History Tags
+            updateHistory(index);
+
+            // Disable button if max level
+            if (index === maxIndex) {
+                levelUpBtn.disabled = true;
+                levelUpBtn.textContent = '🏆 MAX LEVEL';
+            } else {
+                levelUpBtn.disabled = false;
+                levelUpBtn.textContent = '🔥 Level Up!';
+            }
+
+            // Animate flash
+            if (animate) {
+                gokuImage.classList.remove('level-up-flash');
+                setTimeout(() => {
+                    gokuImage.classList.add('level-up-flash');
+                }, 10);
+                setTimeout(() => {
+                    gokuImage.classList.remove('level-up-flash');
+                }, 700);
+            }
+
+            // Update current index
+            currentIndex = index;
+        }
+
+        // ============================================================
+        // UPDATE HISTORY
+        // ============================================================
+        function updateHistory(activeIndex) {
+            historyTags.innerHTML = '';
+            gokuForms.forEach((form, i) => {
+                const tag = document.createElement('span');
+                tag.className = 'history-tag';
+                if (i === activeIndex) tag.classList.add('active');
+                tag.textContent = `${form.emoji} ${form.name}`;
+                historyTags.appendChild(tag);
+            });
+        }
+
+        // ============================================================
+        // LEVEL UP FUNCTION
+        // ============================================================
+        function levelUp() {
+            if (currentIndex < maxIndex) {
+                const newIndex = currentIndex + 1;
+                updateUI(newIndex, true);
+            }
+        }
+
+        // ============================================================
+        // RESET FUNCTION
+        // ============================================================
+        function resetAll() {
+            if (currentIndex === 0) {
+                // Already at base
+                alert('Already at Base Goku! 😄');
+                return;
+            }
+            // Confirm reset
+            if (confirm('Reset to Base Goku? All progress will be lost!')) {
+                updateUI(0, true);
+            }
+        }
+
+        // ============================================================
+        // EVENT LISTENERS
+        // ============================================================
+        levelUpBtn.addEventListener('click', levelUp);
+        resetBtn.addEventListener('click', resetAll);
+
+        // Keyboard Shortcut: Space bar to level up
+        document.addEventListener('keydown', (e) => {
+            if (e.key === ' ' || e.key === 'Space') {
+                e.preventDefault();
+                levelUp();
+            }
+        });
+
+        // ============================================================
+        // INITIAL LOAD
+        // ============================================================
+        updateUI(0, false);
+
+        console.log('🔥 Goku Evolution App Loaded!');
+        console.log(`👁️ Current Form: ${gokuForms[0].name}`);
+        console.log('💡 Press SPACE bar to Level Up!');
+
+        // ============================================================
+        // CONFETTI EFFECT ON MAX LEVEL (BONUS)
+        // ============================================================
+        function showMaxLevelCelebration() {
+            if (currentIndex === maxIndex) {
+                // Simple celebration: flash rainbow border
+                gokuImage.style.borderColor = '#f1c40f';
+                gokuImage.style.boxShadow = '0 0 80px rgba(241,196,15,0.4), 0 0 150px rgba(241,196,15,0.2)';
+                setTimeout(() => {
+                    gokuImage.style.borderColor = '#f1c40f';
+                }, 2000);
+            }
+        }
+
+        // Override updateUI to include celebration
+        const originalUpdateUI = updateUI;
+        updateUI = function (index, animate = true) {
+            originalUpdateUI(index, animate);
+            if (index === maxIndex) {
+                setTimeout(showMaxLevelCelebration, 300);
+            }
+        };
+    </script>
+
+</body>
+
+</html>

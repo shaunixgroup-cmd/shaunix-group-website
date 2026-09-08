@@ -1,16 +1,21 @@
 <script>
-/* Image fallback — displays a polished placeholder when logo/photos are missing */
-window.imgFallback = window.imgFallback || function (img) {
-  var ph = document.createElement('span');
-  ph.className = 'ph-fallback ' + (img.closest('.brand') ? 'logo-ph' : 'media-ph');
-  ph.textContent = img.dataset.fallback || 'SG';
-  img.replaceWith(ph);
-};
+  /* Image fallback — displays a polished placeholder when logo/photos are missing */
+  window.imgFallback = window.imgFallback || function (img) {
+    var ph = document.createElement('span');
+    ph.className = 'ph-fallback ' + (img.closest('.brand') ? 'logo-ph' : 'media-ph');
+    ph.textContent = img.dataset.fallback || 'SG';
+    img.replaceWith(ph);
+  };
 </script>
 <script>
-/* Site-wide data — injected from project root /config.js (EDIT ONLY THERE) */
-window.SITE = { wa:"{{WA_NUM}}", phone:"{{PHONE}}", email:"{{EMAIL}}" };
+  /* Site-wide data — injected from project root /config.js (EDIT ONLY THERE) */
+  window.SITE = { wa: "{{WA_NUM}}", phone: "{{PHONE}}", email: "{{EMAIL}}" };
 </script>
+
+<!-- NOTE: SEO tags (title, description, keywords, canonical, OG, Twitter,
+     JSON-LD schema) ab <head> mein inject hote hain — project root
+     seo.config.js se, render.js ke through. Yahan kuch bhi duplicate mat likhein! -->
+
 <!-- ============ TOP BAR + MAIN HEADER (same on all pages) ============ -->
 <header class="site-header" id="top">
 
@@ -29,8 +34,8 @@ window.SITE = { wa:"{{WA_NUM}}", phone:"{{PHONE}}", email:"{{EMAIL}}" };
   <!-- Main nav -->
   <nav class="navbar container" aria-label="Main navigation">
     <a href="/" class="brand" aria-label="SHAUNIX GROUP home">
-      <img src="/images/logo/shaunix-group-logo.png" alt="SHAUNIX GROUP logo"
-           data-fallback="SG" onerror="imgFallback(this)">
+      <img src="/images/logo/shaunix-group-logo.png" alt="SHAUNIX GROUP logo" data-fallback="SG"
+        onerror="imgFallback(this)">
       <span class="brand-text">
         <strong>SHAUNIX <em>GROUP</em></strong>
         <small>Technology. Solutions. Growth.</small>
@@ -42,20 +47,26 @@ window.SITE = { wa:"{{WA_NUM}}", phone:"{{PHONE}}", email:"{{EMAIL}}" };
       <li class="has-drop">
         <a href="#services" data-nav="services" aria-haspopup="true">Services <span class="caret">▾</span></a>
         <ul class="dropdown">
-          <li><a href="/tech"><i class="dot dot-tech"></i>SHAUNIX TECH<span>Laptops • Desktops • Accessories</span></a></li>
+          <li><a href="/tech"><i class="dot dot-tech"></i>SHAUNIX TECH<span>Laptops • Desktops • Accessories</span></a>
+          </li>
           <li><a href="/care"><i class="dot dot-care"></i>SHAUNIX CARE<span>Laptop & Printer Repairs</span></a></li>
-          <li><a href="/digital"><i class="dot dot-digital"></i>SHAUNIX DIGITAL<span>Websites • Apps • Branding</span></a></li>
-          <li><a href="/print"><i class="dot dot-print"></i>SHAUNIX PRINT<span>Cards • Brochures • Flyers</span></a></li>
-          <li><a href="/academy"><i class="dot dot-academy"></i>SHAUNIX ACADEMY<span>MERN • Python • Data Science</span></a></li>
-          <li><a href="/reclaim"><i class="dot dot-reclaim"></i>SHAUNIX RECLAIM<span>E-Waste • IT Recovery</span></a></li>
+          <li><a href="/digital"><i class="dot dot-digital"></i>SHAUNIX DIGITAL<span>Websites • Apps •
+                Branding</span></a></li>
+          <li><a href="/print"><i class="dot dot-print"></i>SHAUNIX PRINT<span>Cards • Brochures • Flyers</span></a>
+          </li>
+          <li><a href="/academy"><i class="dot dot-academy"></i>SHAUNIX ACADEMY<span>MERN • Python • Data
+                Science</span></a></li>
+          <li><a href="/reclaim"><i class="dot dot-reclaim"></i>SHAUNIX RECLAIM<span>E-Waste • IT Recovery</span></a>
+          </li>
         </ul>
       </li>
       <li><a href="/about" data-nav="/about">About</a></li>
       <li><a href="/contact" data-nav="/contact">Contact</a></li>
+      <li><a href="/feedback" data-nav="/feedback">Feedback</a></li>
     </ul>
 
     <div class="nav-actions">
-      <a class="btn btn-ghost btn-sm hide-sm" href="tel:+919000000000">Call Now</a>
+      <a class="btn btn-ghost btn-sm hide-sm" href="tel:+{{PHONE_DIGITS}}">Call Now</a>
       <a class="btn btn-primary btn-sm" href="/contact">Get a Quote</a>
       <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>

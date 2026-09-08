@@ -214,6 +214,22 @@
       });
     }
 
+    /* fetch + safety timeout — agar network/server 20s tak jawab na de
+       toh error message dikhta hai, button "Sending..." par stuck nahi rehta */
+    function fetchTimeout(url, opts, ms) {
+      return new Promise(function(resolve, reject) {
+        var settled = false;
+        var timer = setTimeout(function() {
+          if (!settled) { settled = true; reject(new Error('timeout')); }
+        }, ms);
+        fetch(url, opts).then(function(res) {
+          if (!settled) { settled = true; clearTimeout(timer); resolve(res); }
+        }, function(err) {
+          if (!settled) { settled = true; clearTimeout(timer); reject(err); }
+        });
+      });
+    }
+
     /* -------------------------------------------------
      * 8) CONTACT FORM — AJAX + WhatsApp option
      * ------------------------------------------------- */
@@ -253,11 +269,11 @@
         status.textContent = '';
         status.className = 'form-status';
 
-        fetch(form.action, {
+        fetchTimeout(form.action, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'fetch' },
           body: JSON.stringify(Object.fromEntries(new FormData(form)))
-        })
+        }, 20000)
         .then(function(res) {
           if (!res.ok) throw new Error('fail');
           return res.json();
@@ -286,11 +302,155 @@
      * 9) CONTACT PAGE — ?sent=1 banner
      * ------------------------------------------------- */
     var sentZone = document.querySelector('.sent-banner-zone');
-    if (sentZone && new URLSearchParams(location.search).get('sent')) {
+    if (sentZone && form && new URLSearchParams(location.search).get('sent')) {
       sentZone.innerHTML =
         '<div class="sent-banner"><b>Message received!</b> Our team will reply shortly. ' +
         'For urgent enquiries, contact us on WhatsApp → ' +
         '<a href="https://wa.me/' + WHATSAPP_NUMBER + '" target="_blank" rel="noopener"><b>' + SITE_PHONE + '</b></a></div>';
+    }
+    /* -------------------------------------------------
+     * 10) FEEDBACK FORM — stars, AJAX + WhatsApp share
+     *     (page: /feedback)
+     * ------------------------------------------------- */
+    var fbForm = document.getElementById('feedbackForm');
+    if (fbForm) {
+      var fbBtn = document.getElementById('fbSubmitBtn');
+      var fbStatus = document.getElementById('fbStatus');
+      var ratingIn = document.getElementById('ratingInput');
+      var starLabel = document.getElementById('starLabel');
+      var starBtns = Array.prototype.slice.call(document.querySelectorAll('#starBtns .star'));
+      var STAR_WORDS = ['', 'Poor', 'Fair', 'Good', 'Very Good', 'Excellent'];
+
+      function paintStars(n, cls) {
+        for (var i = 0; i < starBtns.length; i++) {
+          starBtns[i].classList.toggle(cls, Number(starBtns[i].dataset.value) <= n);
+        }
+      }
+
+      function setLabel(v) {
+        if (starLabel) {
+          starLabel.textContent = v ? (STAR_WORDS[v] + ' — ' + v + '/5') : 'Tap a star to rate';
+          starLabel.classList.toggle('active', !!v);
+        }
+      }
+
+      /* Star buttons: hover preview + click to rate */
+      for (var s = 0; s < starBtns.length; s++) {
+        (function(btn) {
+          var v = Number(btn.dataset.value);
+          btn.addEventListener('mouseenter', function() {
+            paintStars(v, 'preview');
+            if (starLabel) starLabel.textContent = STAR_WORDS[v] + ' — ' + v + '/5';
+          });
+          btn.addEventListener('mouseleave', function() {
+            paintStars(0, 'preview');
+            setLabel(Number(ratingIn.value) || 0);
+          });
+          btn.addEventListener('click', function() {
+            ratingIn.value = String(v);
+            paintStars(v, 'on');
+            setLabel(v);
+            if (fbStatus) { fbStatus.textContent = ''; fbStatus.className = 'form-status'; }
+          });
+        })(starBtns[s]);
+      }
+
+      function escHtml(s) {
+        return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;')
+                              .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+
+      /* Pre-written WhatsApp text built from the customer's own feedback */
+      function buildShareText(fd) {
+        var r = Number(ratingIn.value) || 0;
+        var stars = new Array(r + 1).join('★');
+        var msg = String(fd.get('message') || '').slice(0, 500);
+        return '⭐ My Feedback for SHAUNIX GROUP ⭐\n\n' +
+          'Name: ' + (fd.get('name') || '') + '\n' +
+          'Service: ' + (fd.get('service') || '') + '\n' +
+          'Rating: ' + stars + ' (' + r + '/5)\n' +
+          'Recommend: ' + (fd.get('recommend') || '—') + '\n\n' +
+          '\u201C' + msg + '\u201D\n\n' +
+          '— shared from shaunixgroup.com/feedback';
+      }
+
+      fbForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        if (!fbForm.checkValidity()) {
+          fbForm.reportValidity();
+          return;
+        }
+        if (!ratingIn.value) {
+          fbStatus.textContent = 'Please select a star rating — how did we do?';
+          fbStatus.className = 'form-status error';
+          return;
+        }
+
+        var fd = new FormData(fbForm);
+        fd.append('source', location.href);
+        var shareText = buildShareText(fd);
+
+        fbBtn.disabled = true;
+        fbBtn.textContent = 'Sending...';
+        fbStatus.textContent = '';
+        fbStatus.className = 'form-status';
+
+        var payload = {};
+        fd.forEach(function(v, k) { payload[k] = v; });
+
+        fetchTimeout(fbForm.action, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'fetch' },
+          body: JSON.stringify(payload)
+        }, 20000)
+        .then(function(res) {
+          if (!res.ok) throw new Error('fail');
+          return res.json();
+        })
+        .then(function() {
+          var first = String(fd.get('name') || '').trim().split(/\s+/)[0];
+          fbForm.innerHTML =
+            '<div class="sent-success">' +
+              '<div class="tick">✓</div>' +
+              '<h3>Feedback Received!' + (first ? ' Thank you, ' + escHtml(first) + '!' : '') + '</h3>' +
+              '<p>Your feedback has been recorded — it helps us serve you even better.<br>' +
+              'Happy with our service? Move it to WhatsApp and share the love:</p>' +
+              '<div class="share-row">' +
+                '<a class="btn btn-wa" target="_blank" rel="noopener" ' +
+                  'href="https://api.whatsapp.com/send?text=' + encodeURIComponent(shareText) + '">Share on WhatsApp ↗</a>' +
+                '<a class="btn btn-navy" target="_blank" rel="noopener" ' +
+                  'href="https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(shareText) + '">Send to SHAUNIX GROUP</a>' +
+              '</div>' +
+              '<small class="share-hint">Tip: “Share on WhatsApp” opens WhatsApp — pick any chat, group or your Status.</small>' +
+            '</div>';
+        })
+        .catch(function() {
+          fbStatus.textContent = 'Unable to send right now — please try again, or tap the WhatsApp button below.';
+          fbStatus.className = 'form-status error';
+          fbBtn.disabled = false;
+          fbBtn.textContent = 'Submit Feedback ★';
+        });
+      });
+    }
+
+    /* -------------------------------------------------
+     * 11) FEEDBACK PAGE — ?sent=1 / ?error=1 banners
+     *     (no-JS form submit fallback)
+     * ------------------------------------------------- */
+    var fbZone = document.querySelector('.sent-banner-zone');
+    if (fbZone && !form) {   /* feedback page has no #contactForm */
+      var fbQ = new URLSearchParams(location.search);
+      if (fbQ.get('sent')) {
+        fbZone.innerHTML =
+          '<div class="sent-banner"><b>Feedback received!</b> Thank you for helping us improve. ' +
+          'Want to share it too? <a href="https://api.whatsapp.com/send?text=' +
+          encodeURIComponent('⭐ My Feedback for SHAUNIX GROUP — shared from shaunixgroup.com/feedback') +
+          '" target="_blank" rel="noopener"><b>Share on WhatsApp →</b></a></div>';
+      } else if (fbQ.get('error')) {
+        fbZone.innerHTML =
+          '<div class="sent-banner error"><b>Almost there!</b> Please fill your name, phone, service, ' +
+          'star rating and feedback, then submit again.</div>';
+      }
     }
   });
 })();
