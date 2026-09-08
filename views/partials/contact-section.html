@@ -1,0 +1,67 @@
+<!-- ============ CONTACT FORM SECTION (home + all service pages + contact page) ============ -->
+<section class="section contact-band reveal" id="contact">
+  <div class="container contact-grid">
+
+    <!-- LEFT: info -->
+    <div class="contact-info">
+      <span class="eyebrow eyebrow-light">Get in Touch</span>
+      <h2>Tell us what <em>you need</em>.<br>We will make it happen.</h2>
+      <p class="lead-light">One message is enough — our team will understand your requirement,
+         suggest the right option and share a clear quotation.</p>
+
+      <div class="info-cards">
+        <a class="info-card" href="tel:+{{PHONE_DIGITS}}">
+          <span class="ico">📞</span>
+          <span><b>Call / WhatsApp</b>{{PHONE}}<br><small>{{HOURS}}</small></span>
+        </a>
+        <a class="info-card" href="mailto:{{EMAIL}}">
+          <span class="ico">✉️</span>
+          <span><b>Email Us</b>{{EMAIL}}<br><small>Reply within 24 hours</small></span>
+        </a>
+        <div class="info-card">
+          <span class="ico">📍</span>
+          <span><b>Visit Centre</b>{{ADDRESS}}<br><small>Serving clients across India</small></span>
+        </div>
+      </div>
+
+      <div class="trust-row">
+        <span>✔ Trusted local experts</span>
+        <span>✔ Transparent pricing</span>
+        <span>✔ One roof — six verticals</span>
+      </div>
+    </div>
+
+    <!-- RIGHT: form -->
+    <form class="contact-form" id="contactForm" action="/contact/send-message" method="POST" novalidate>
+      <h3>Send Enquiry</h3>
+
+      <div class="field-row">
+        <label>Name <input type="text" name="name" placeholder="Your full name" required minlength="2"></label>
+        <label>Phone <input type="tel" name="phone" placeholder="+91 ..." required pattern="[0-9+\-\s]{8,15}"></label>
+      </div>
+      <div class="field-row">
+        <label>Email <input type="email" name="email" placeholder="you@email.com" required></label>
+        <label>Service Needed
+          <select name="service" required>
+            <option value="" selected disabled>Select a vertical…</option>
+            <option>SHAUNIX TECH — Products & Accessories</option>
+            <option>SHAUNIX CARE — Repairs & Service</option>
+            <option>SHAUNIX DIGITAL — Website / App / Branding</option>
+            <option>SHAUNIX PRINT — Printing Solutions</option>
+            <option>SHAUNIX ACADEMY — Courses & Training</option>
+            <option>SHAUNIX RECLAIM — IT Asset / E-Waste</option>
+            <option>Other / Not sure yet</option>
+          </select>
+        </label>
+      </div>
+      <label>Message <textarea name="message" rows="4" required minlength="10"
+              placeholder="Please describe your requirement — what do you need? (model, topic, quantity, timeline, etc.)"></textarea></label>
+
+      <button class="btn btn-primary btn-block" type="submit" id="submitBtn">Send Message →</button>
+      <button class="btn btn-wa btn-block" type="button" id="waSendBtn" hidden>Send via WhatsApp instead</button>
+
+      <p class="form-note" id="formNote">🔒 Your details stay private. We only use them to reply to your enquiry.</p>
+      <p class="form-status" id="formStatus" role="status"></p>
+    </form>
+  </div>
+</section>

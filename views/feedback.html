@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {{SEO}}
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+</head>
+
+<body>
+  {{HEADER}}
+
+  <section class="page-hero">
+    <div class="container">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><i>›</i><b>Feedback</b></nav>
+      <span class="eyebrow eyebrow-light">Customer Voice</span>
+      <h1>Share Your <em>SHAUNIX GROUP</em> Feedback</h1>
+      <p class="ph-sub">Used our products or services? Tell us how we did — it takes under a minute,
+        and your honest words help us serve you even better.</p>
+    </div>
+  </section>
+
+  <div class="container sent-banner-zone"></div>
+
+  <!-- FEEDBACK FORM -->
+  <section class="section" id="feedback">
+    <div class="container feedback-wrap reveal">
+      <form class="contact-form feedback-form" id="feedbackForm" action="/feedback/submit" method="POST" novalidate>
+        <h3>Rate Your Experience</h3>
+
+        <div class="field-row">
+          <label>Name <input type="text" name="name" placeholder="Your full name" required minlength="2"></label>
+          <label>Phone <input type="tel" name="phone" placeholder="+91 ..." required pattern="[0-9+\-\s]{8,15}"></label>
+        </div>
+
+        <div class="field-row">
+          <label>Email <input type="email" name="email" placeholder="you@email.com (optional)"></label>
+          <label>Service Used
+            <select name="service" required>
+              <option value="" selected disabled>Select a vertical…</option>
+              <option>SHAUNIX TECH — Products & Accessories</option>
+              <option>SHAUNIX CARE — Repairs & Service</option>
+              <option>SHAUNIX DIGITAL — Website / App / Branding</option>
+              <option>SHAUNIX PRINT — Printing Solutions</option>
+              <option>SHAUNIX ACADEMY — Courses & Training</option>
+              <option>SHAUNIX RECLAIM — IT Asset / E-Waste</option>
+              <option>Other / Multiple services</option>
+            </select>
+          </label>
+        </div>
+
+        <!-- Star rating (JS paints .on / .preview classes) -->
+        <fieldset class="star-rating">
+          <legend>How would you rate your experience? <b class="req">*</b></legend>
+          <div class="stars" id="starBtns" role="radiogroup" aria-label="Rating out of 5 stars">
+            <button type="button" class="star" data-value="1" aria-label="Rate 1 out of 5 — Poor">★</button>
+            <button type="button" class="star" data-value="2" aria-label="Rate 2 out of 5 — Fair">★</button>
+            <button type="button" class="star" data-value="3" aria-label="Rate 3 out of 5 — Good">★</button>
+            <button type="button" class="star" data-value="4" aria-label="Rate 4 out of 5 — Very Good">★</button>
+            <button type="button" class="star" data-value="5" aria-label="Rate 5 out of 5 — Excellent">★</button>
+          </div>
+          <span class="star-label" id="starLabel">Tap a star to rate</span>
+          <input type="hidden" name="rating" id="ratingInput">
+          <!-- No-JS fallback: plain select, read as same rating field server-side -->
+          <noscript>
+            <label class="ns-rating">Rating
+              <select name="ratingSelect" required>
+                <option value="" selected disabled>Select rating…</option>
+                <option value="5">★★★★★ Excellent (5/5)</option>
+                <option value="4">★★★★ Very Good (4/5)</option>
+                <option value="3">★★★ Good (3/5)</option>
+                <option value="2">★★ Fair (2/5)</option>
+                <option value="1">★ Poor (1/5)</option>
+              </select>
+            </label>
+          </noscript>
+        </fieldset>
+
+        <!-- Would you recommend us? -->
+        <div class="choice-block">
+          <span class="choice-title">Would you recommend SHAUNIX GROUP? <b class="req">*</b></span>
+          <div class="pill-group">
+            <label class="pill"><input type="radio" name="recommend" value="Definitely — yes" required><span>👍 Definitely</span></label>
+            <label class="pill"><input type="radio" name="recommend" value="Maybe"><span>🤔 Maybe</span></label>
+            <label class="pill"><input type="radio" name="recommend" value="Not yet"><span>😕 Not yet</span></label>
+          </div>
+        </div>
+
+        <label>Your Feedback <textarea name="message" rows="5" required minlength="10"
+                placeholder="What did you like? What can we improve? (Be honest — every word helps us grow)"></textarea></label>
+
+        <label class="check-line">
+          <input type="checkbox" name="permission" value="Yes">
+          <span>You may publish my feedback as a testimonial (first name only) — <i>optional</i></span>
+        </label>
+
+        <button class="btn btn-primary btn-block" type="submit" id="fbSubmitBtn">Submit Feedback ★</button>
+        <p class="form-note" id="fbNote">🔒 Your feedback is private. Sharing to WhatsApp happens only if you choose to.</p>
+        <p class="form-status" id="fbStatus" role="status"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- WHY FEEDBACK MATTERS -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-head center reveal">
+        <span class="eyebrow">Why Your Feedback Matters</span>
+        <h2>Every review makes us <em>better</em>.</h2>
+      </div>
+      <div class="grid-3" data-stagger>
+        <article class="item-card reveal">
+          <div class="item-ico">⏱️</div>
+          <h3>Takes Under a Minute</h3>
+          <p>Star rating and a few honest words — done. We read every single feedback ourselves.</p>
+        </article>
+        <article class="item-card reveal">
+          <div class="item-ico">🎯</div>
+          <h3>Honest Is Welcome</h3>
+          <p>Loved it? Say it. Something off? Say it louder — we fix whatever our customers point out.</p>
+        </article>
+        <article class="item-card reveal">
+          <div class="item-ico">💬</div>
+          <h3>Prefer WhatsApp?</h3>
+          <p>Submit here, then share it on WhatsApp in one tap — or message us directly at
+            <a href="{{WA_LINK}}" target="_blank" rel="noopener">wa.me/{{WA_NUM}}</a>.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  {{FOOTER}}
+</body>
+
+</html>

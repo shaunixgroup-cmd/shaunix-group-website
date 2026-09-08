@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SHAUNIX ACADEMY — 3×6 ft Standee</title>
+
+
+    <style>
+        /* =========================================================
+           RESET
+        ========================================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+            background: #e7e7e7;
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            min-height: 100vh;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            padding: 25px;
+        }
+
+
+
+        /* =========================================================
+           SCREEN PRINT TOOLBAR
+        ========================================================= */
+
+        .print-toolbar {
+
+            width: 900px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            gap: 14px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .print-button {
+
+            border: none;
+
+            padding: 14px 28px;
+
+            background: #0757c9;
+            color: #ffffff;
+
+            border-radius: 8px;
+
+            font-size: 15px;
+            font-weight: 800;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 6px 18px rgba(0, 0, 0, .18);
+        }
+
+
+        .print-button:hover {
+            background: #0046aa;
+        }
+
+
+        .screen-info {
+
+            color: #555555;
+
+            font-size: 12px;
+
+            font-weight: 600;
+        }
+
+
+
+        /* =========================================================
+           ARTBOARD
+           
+           3 : 6 ratio
+           
+           900 × 1800 CSS px
+        ========================================================= */
+
+        .standee {
+
+            width: 900px;
+            height: 1800px;
+
+            background: #ffffff;
+
+            position: relative;
+
+            overflow: hidden;
+
+            color: #111111;
+
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, .22);
+        }
+
+
+
+        /* =========================================================
+           TOP BRAND AREA
+        ========================================================= */
+
+        .top-section {
+
+            width: 100%;
+            height: 430px;
+
+            position: relative;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(135deg,
+                    #003b88 0%,
+                    #0068d7 52%,
+                    #00a6d9 100%);
+
+            color: #ffffff;
+        }
+
+
+        /* Decorative diagonal */
+
+        .top-section::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 650px;
+            height: 650px;
+
+            right: -300px;
+            top: -360px;
+
+            border-radius: 50%;
+
+            border:
+                90px solid rgba(255, 255, 255, .07);
+        }
+
+
+        .top-section::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 400px;
+            height: 400px;
+
+            left: -280px;
+            bottom: -330px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255, 255, 255, .055);
+        }
+
+
+
+        /* =========================================================
+           LOGO
+        ========================================================= */
+
+        .logo-container {
+
+            position: absolute;
+
+            left: 55px;
+            top: 50px;
+
+            width: 155px;
+            height: 155px;
+
+            background: #ffffff;
+
+            border-radius: 24px;
+
+            padding: 15px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            z-index: 5;
+
+            box-shadow:
+                0 15px 35px rgba(0, 0, 0, .22);
+        }
+
+
+        .logo-container img {
+
+            display: block;
+
+            width: 100%;
+            height: 100%;
+
+            object-fit: contain;
+
+            object-position: center;
+        }
+
+
+
+        /* =========================================================
+           BRAND NAME
+        ========================================================= */
+
+        .brand {
+
+            position: absolute;
+
+            left: 245px;
+            top: 63px;
+
+            z-index: 5;
+        }
+
+
+        .brand-small {
+
+            font-size: 18px;
+
+            font-weight: 700;
+
+            letter-spacing: 4px;
+
+            opacity: .82;
+        }
+
+
+        .brand-name {
+
+            margin-top: 7px;
+
+            font-size: 44px;
+
+            line-height: 1;
+
+            font-weight: 900;
+
+            letter-spacing: 1px;
+        }
+
+
+
+        /* =========================================================
+           ADMISSION BADGE
+        ========================================================= */
+
+        .admission {
+
+            position: absolute;
+
+            right: 55px;
+            top: 55px;
+
+            z-index: 5;
+
+            background: #ffd000;
+
+            color: #111111;
+
+            padding: 13px 22px;
+
+            border-radius: 50px;
+
+            font-size: 15px;
+
+            font-weight: 900;
+
+            letter-spacing: 1px;
+
+            box-shadow:
+                0 8px 20px rgba(0, 0, 0, .16);
+        }
+
+
+
+        /* =========================================================
+           HERO
+        ========================================================= */
+
+        .hero {
+
+            position: absolute;
+
+            left: 55px;
+            right: 55px;
+
+            bottom: 45px;
+
+            z-index: 5;
+        }
+
+
+        .hero-title {
+
+            font-size: 76px;
+
+            line-height: .95;
+
+            font-weight: 900;
+
+            letter-spacing: -2px;
+        }
+
+
+        .hero-title span {
+
+            color: #baf5ff;
+        }
+
+
+        .hero-subtitle {
+
+            margin-top: 16px;
+
+            font-size: 22px;
+
+            font-weight: 600;
+
+            letter-spacing: 1px;
+
+            color: rgba(255, 255, 255, .9);
+        }
+
+
+
+        /* =========================================================
+           MAIN CONTENT
+        ========================================================= */
+
+        .main-content {
+
+            padding:
+                42px 55px 35px;
+        }
+
+
+
+        /* =========================================================
+           SECTION TITLE
+        ========================================================= */
+
+        .section-title {
+
+            text-align: center;
+
+            font-size: 18px;
+
+            font-weight: 900;
+
+            letter-spacing: 4px;
+
+            color: #64748b;
+
+            margin-bottom: 23px;
+        }
+
+
+
+        /* =========================================================
+           CLASS GRID
+        ========================================================= */
+
+        .class-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 18px;
+        }
+
+
+        .class-card {
+
+            min-height: 145px;
+
+            position: relative;
+
+            padding: 24px 25px 20px 30px;
+
+            border:
+                2px solid #dbe4ee;
+
+            border-radius: 18px;
+
+            background: #ffffff;
+
+            overflow: hidden;
+        }
+
+
+        .class-card::before {
+
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            top: 0;
+            bottom: 0;
+
+            width: 8px;
+
+            background: #0969d7;
+        }
+
+
+        .class-card.green::before {
+            background: #08a46f;
+        }
+
+
+        .class-label {
+
+            font-size: 14px;
+
+            font-weight: 900;
+
+            letter-spacing: 2px;
+
+            color: #0969d7;
+        }
+
+
+        .green .class-label {
+            color: #078c61;
+        }
+
+
+        .class-name {
+
+            margin-top: 8px;
+
+            font-size: 25px;
+
+            font-weight: 900;
+
+            color: #101828;
+        }
+
+
+        .class-description {
+
+            margin-top: 6px;
+
+            font-size: 14px;
+
+            line-height: 1.4;
+
+            color: #667085;
+
+            font-weight: 500;
+        }
+
+
+
+        /* =========================================================
+           CORE SUBJECTS
+        ========================================================= */
+
+        .subjects-box {
+
+            margin-top: 28px;
+
+            padding: 25px;
+
+            border-radius: 20px;
+
+            background: #f4f8fc;
+
+            border:
+                2px solid #dce7f2;
+        }
+
+
+        .subjects-title {
+
+            text-align: center;
+
+            font-size: 15px;
+
+            font-weight: 900;
+
+            letter-spacing: 3px;
+
+            color: #344054;
+
+            margin-bottom: 18px;
+        }
+
+
+        .subjects {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            justify-content: center;
+
+            gap: 12px;
+        }
+
+
+        .subject {
+
+            padding:
+                11px 20px;
+
+            background: #ffffff;
+
+            border:
+                1px solid #d4dfeb;
+
+            border-radius: 50px;
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+            color: #1d2939;
+        }
+
+
+
+        /* =========================================================
+           DIGITAL SKILLS
+        ========================================================= */
+
+        .digital-section {
+
+            margin-top: 27px;
+        }
+
+
+        .digital-title {
+
+            text-align: center;
+
+            font-size: 15px;
+
+            font-weight: 900;
+
+            letter-spacing: 3px;
+
+            color: #667085;
+
+            margin-bottom: 16px;
+        }
+
+
+        .digital-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 12px;
+        }
+
+
+        .digital-card {
+
+            padding: 17px 10px;
+
+            text-align: center;
+
+            border:
+                1px solid #dce3ea;
+
+            border-radius: 15px;
+
+            background: #ffffff;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            color: #344054;
+        }
+
+
+        .digital-icon {
+
+            display: block;
+
+            font-size: 27px;
+
+            margin-bottom: 7px;
+        }
+
+
+
+        /* =========================================================
+           PROMISE
+        ========================================================= */
+
+        .promise {
+
+            margin-top: 28px;
+
+            padding: 20px;
+
+            text-align: center;
+
+            border-radius: 18px;
+
+            background:
+                linear-gradient(90deg,
+                    #edf6ff,
+                    #effcf7);
+
+            border:
+                1px solid #d7e8e4;
+        }
+
+
+        .promise-title {
+
+            font-size: 28px;
+
+            font-weight: 900;
+
+            color: #0757b8;
+        }
+
+
+        .promise-title span {
+            color: #008c62;
+        }
+
+
+        .promise-text {
+
+            margin-top: 7px;
+
+            font-size: 14px;
+
+            color: #667085;
+
+            font-weight: 600;
+        }
+
+
+
+        /* =========================================================
+           CONTACT AREA
+        ========================================================= */
+
+        .contact {
+
+            margin-top: 30px;
+
+            padding: 27px 30px;
+
+            border-radius: 22px;
+
+            text-align: center;
+
+            background: #06244b;
+
+            color: #ffffff;
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+
+        .contact::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 300px;
+            height: 300px;
+
+            right: -190px;
+            top: -190px;
+
+            border-radius: 50%;
+
+            border:
+                55px solid rgba(255, 255, 255, .055);
+        }
+
+
+        .contact-heading {
+
+            position: relative;
+
+            z-index: 2;
+
+            font-size: 18px;
+
+            font-weight: 900;
+
+            letter-spacing: 1px;
+        }
+
+
+        .phone {
+
+            position: relative;
+
+            z-index: 2;
+
+            margin-top: 9px;
+
+            font-size: 38px;
+
+            font-weight: 900;
+
+            letter-spacing: 1px;
+        }
+
+
+        .contact-details {
+
+            position: relative;
+
+            z-index: 2;
+
+            margin-top: 9px;
+
+            font-size: 14px;
+
+            line-height: 1.7;
+
+            color: #c9d8e9;
+        }
+
+
+        .cta {
+
+            display: inline-block;
+
+            position: relative;
+
+            z-index: 2;
+
+            margin-top: 14px;
+
+            padding:
+                11px 25px;
+
+            border-radius: 50px;
+
+            background: #ffd000;
+
+            color: #111111;
+
+            font-size: 13px;
+
+            font-weight: 900;
+
+            letter-spacing: .5px;
+        }
+
+
+
+        /* =========================================================
+           FOOTER
+        ========================================================= */
+
+        .footer {
+
+            text-align: center;
+
+            margin-top: 20px;
+        }
+
+
+        .footer-brand {
+
+            font-size: 14px;
+
+            font-weight: 900;
+
+            letter-spacing: 2px;
+
+            color: #1d2939;
+        }
+
+
+        .footer-text {
+
+            margin-top: 5px;
+
+            font-size: 11px;
+
+            color: #98a2b3;
+        }
+
+
+
+        /* =========================================================
+           SCREEN RESPONSIVE
+        ========================================================= */
+
+        @media screen and (max-width: 950px) {
+
+            body {
+                padding: 10px;
+            }
+
+
+            .print-toolbar {
+                width: 100%;
+            }
+
+
+            .standee {
+
+                width: 100%;
+
+                height: auto;
+
+                aspect-ratio: 1 / 2;
+            }
+
+
+            .top-section {
+                height: 23.9%;
+            }
+
+
+            .main-content {
+                padding:
+                    4.5% 6%;
+            }
+
+
+            .logo-container {
+
+                left: 6%;
+
+                top: 8%;
+
+                width: 17%;
+
+                height: 17%;
+            }
+
+
+            .brand {
+
+                left: 27%;
+
+                top: 10%;
+            }
+
+
+            .brand-small {
+                font-size: 2vw;
+            }
+
+
+            .brand-name {
+                font-size: 4.5vw;
+            }
+
+
+            .admission {
+
+                right: 6%;
+
+                top: 8%;
+
+                font-size: 1.8vw;
+
+                padding:
+                    1.3vw 2vw;
+            }
+
+
+            .hero {
+
+                left: 6%;
+
+                right: 6%;
+
+                bottom: 7%;
+            }
+
+
+            .hero-title {
+                font-size: 8.4vw;
+            }
+
+
+            .hero-subtitle {
+                font-size: 2.4vw;
+            }
+
+
+            .class-name {
+                font-size: 3vw;
+            }
+
+
+            .class-description,
+            .subject,
+            .digital-card,
+            .contact-details {
+                font-size: 1.7vw;
+            }
+
+
+            .phone {
+                font-size: 4.3vw;
+            }
+
+        }
+
+
+
+        /* =========================================================
+           PRINT
+           
+           IMPORTANT:
+           - Toolbar disappears
+           - Exact 3ft × 6ft page
+           - No screen shadow
+           - No margins
+        ========================================================= */
+
+        @media print {
+
+            @page {
+
+                size: 36in 72in;
+
+                margin: 0;
+            }
+
+
+            html,
+            body {
+
+                width: 36in;
+                height: 72in;
+
+                margin: 0 !important;
+                padding: 0 !important;
+
+                background: #ffffff !important;
+            }
+
+
+            body {
+
+                display: block;
+            }
+
+
+            .print-toolbar {
+
+                display: none !important;
+            }
+
+
+            .standee {
+
+                width: 36in;
+                height: 72in;
+
+                margin: 0;
+
+                border-radius: 0;
+
+                box-shadow: none;
+
+                page-break-after: always;
+            }
+
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================================
+         SCREEN ONLY
+    ========================================================== -->
+
+    <div class="print-toolbar">
+
+        <button class="print-button" onclick="window.print()">
+
+            🖨️ PRINT / SAVE PDF
+
+        </button>
+
+        <div class="screen-info">
+
+            3 ft × 6 ft • Print Ready
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================================================
+         STANDEE
+    ========================================================== -->
+
+    <div class="standee">
+
+
+        <!-- =====================================================
+             TOP SECTION
+        ====================================================== -->
+
+        <section class="top-section">
+
+
+            <!-- LOGO -->
+
+            <div class="logo-container">
+
+                <img src="shaunix-group-logo.png" alt="SHAUNIX GROUP Logo">
+
+            </div>
+
+
+
+            <!-- BRAND -->
+
+            <div class="brand">
+
+                <div class="brand-small">
+                    SHAUNIX GROUP
+                </div>
+
+                <div class="brand-name">
+                    ACADEMY
+                </div>
+
+            </div>
+
+
+
+            <!-- ADMISSION -->
+
+            <div class="admission">
+
+                ADMISSIONS OPEN
+
+            </div>
+
+
+
+            <!-- HERO -->
+
+            <div class="hero">
+
+                <div class="hero-title">
+
+                    SHAUNIX
+                    <span>ACADEMY</span>
+
+                </div>
+
+
+                <div class="hero-subtitle">
+
+                    Learn • Build • Grow
+
+                    &nbsp; | &nbsp;
+
+                    Academic & Digital Skills
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =====================================================
+             MAIN
+        ====================================================== -->
+
+        <main class="main-content">
+
+
+            <!-- ACADEMIC -->
+
+            <div class="section-title">
+
+                ACADEMIC PROGRAMS
+
+            </div>
+
+
+
+            <div class="class-grid">
+
+
+                <!-- CLASS 9 -->
+
+                <div class="class-card">
+
+                    <div class="class-label">
+                        CLASS 09
+                    </div>
+
+                    <div class="class-name">
+                        Mathematics + Science
+                    </div>
+
+                    <div class="class-description">
+                        Strong Concepts • Foundation • Practice
+                    </div>
+
+                </div>
+
+
+
+                <!-- CLASS 10 -->
+
+                <div class="class-card green">
+
+                    <div class="class-label">
+                        CLASS 10
+                    </div>
+
+                    <div class="class-name">
+                        Mathematics + Science
+                    </div>
+
+                    <div class="class-description">
+                        Board Preparation • Revision • Practice
+                    </div>
+
+                </div>
+
+
+
+                <!-- CLASS 11 -->
+
+                <div class="class-card">
+
+                    <div class="class-label">
+                        CLASS 11
+                    </div>
+
+                    <div class="class-name">
+                        PCM
+                    </div>
+
+                    <div class="class-description">
+                        Physics • Chemistry • Mathematics
+                    </div>
+
+                </div>
+
+
+
+                <!-- CLASS 12 -->
+
+                <div class="class-card green">
+
+                    <div class="class-label">
+                        CLASS 12
+                    </div>
+
+                    <div class="class-name">
+                        PCM
+                    </div>
+
+                    <div class="class-description">
+                        Board Preparation • Concept Building
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 SUBJECTS
+            ================================================== -->
+
+            <div class="subjects-box">
+
+
+                <div class="subjects-title">
+
+                    CORE SUBJECTS
+
+                </div>
+
+
+                <div class="subjects">
+
+                    <div class="subject">
+                        📐 MATHEMATICS
+                    </div>
+
+                    <div class="subject">
+                        🔬 SCIENCE
+                    </div>
+
+                    <div class="subject">
+                        ⚛️ PHYSICS
+                    </div>
+
+                    <div class="subject">
+                        🧪 CHEMISTRY
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 DIGITAL SKILLS
+            ================================================== -->
+
+            <div class="digital-section">
+
+
+                <div class="digital-title">
+
+                    COMPUTER & DIGITAL SKILLS
+
+                </div>
+
+
+                <div class="digital-grid">
+
+
+                    <div class="digital-card">
+
+                        <span class="digital-icon">
+                            💻
+                        </span>
+
+                        COMPUTER
+
+                    </div>
+
+
+                    <div class="digital-card">
+
+                        <span class="digital-icon">
+                            ⌨️
+                        </span>
+
+                        CODING
+
+                    </div>
+
+
+                    <div class="digital-card">
+
+                        <span class="digital-icon">
+                            🎨
+                        </span>
+
+                        GRAPHIC DESIGN
+
+                    </div>
+
+
+                    <div class="digital-card">
+
+                        <span class="digital-icon">
+                            🌐
+                        </span>
+
+                        WEB DEVELOPMENT
+
+                    </div>
+
+
+                    <div class="digital-card">
+
+                        <span class="digital-icon">
+                            📊
+                        </span>
+
+                        DATA
+
+                    </div>
+
+
+                    <div class="digital-card">
+
+                        <span class="digital-icon">
+                            ⚙️
+                        </span>
+
+                        PRACTICAL SKILLS
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 PROMISE
+            ================================================== -->
+
+            <div class="promise">
+
+
+                <div class="promise-title">
+
+                    Learn Today.
+                    <span>Lead Tomorrow.</span>
+
+                </div>
+
+
+                <div class="promise-text">
+
+                    From classroom concepts to real-world digital skills.
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 CONTACT
+            ================================================== -->
+
+            <div class="contact">
+
+
+                <div class="contact-heading">
+
+                    📢 ENROLLMENTS OPEN
+
+                </div>
+
+
+                <div class="phone">
+
+                    +91 98211 86889
+
+                </div>
+
+
+                <div class="contact-details">
+
+                    ✉ shaunixgroup@gmail.com
+
+                    <br>
+
+                    🌐 www.shaunixgroup.com
+
+                    <br>
+
+                    📍 A-20, Om Nagar, Shakti Vihar,
+                    Badarpur, New Delhi – 110044
+
+                </div>
+
+
+                <div class="cta">
+
+                    CALL NOW • JOIN SHAUNIX ACADEMY
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 FOOTER
+            ================================================== -->
+
+            <div class="footer">
+
+
+                <div class="footer-brand">
+
+                    SHAUNIX ACADEMY
+
+                </div>
+
+
+                <div class="footer-text">
+
+                    Technology for Today • Skills for Tomorrow
+
+                </div>
+
+
+            </div>
+
+
+        </main>
+
+    </div>
+
+
+
+</body>
+
+</html>

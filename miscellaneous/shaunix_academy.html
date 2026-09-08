@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHAUNIX ACADEMY — Complete Brochure with Batches</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #08152d;
+            --navy2: #0d2345;
+            --blue: #1454ef;
+            --cyan: #0ea8e9;
+            --green: #12b76a;
+            --orange: #f79009;
+            --pink: #ec4899;
+            --purple: #7c5cfc;
+            --text: #172033;
+            --muted: #5d687b;
+            --light: #f5f8fc;
+            --border: #dfe6f1;
+        }
+
+        body {
+            font-family: "Inter", "Segoe UI", Arial, sans-serif;
+            background: #e7ebf2;
+            color: var(--text);
+            padding: 35px 20px;
+        }
+
+        .toolbar {
+            max-width: 1200px;
+            margin: 0 auto 25px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .btn {
+            border: none;
+            padding: 13px 22px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            color: white;
+            background: var(--navy);
+            box-shadow: 0 5px 18px rgba(0, 0, 0, .15);
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-blue {
+            background: var(--blue);
+        }
+
+        .brochure {
+            width: 297mm;
+            min-height: 210mm;
+            margin: 0 auto 35px;
+            background: white;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .20);
+            overflow: hidden;
+        }
+
+        .side {
+            width: 100%;
+            min-height: 210mm;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .panel {
+            min-width: 0;
+            min-height: 210mm;
+            padding: 11mm 9mm;
+            position: relative;
+            overflow: hidden;
+            background: white;
+        }
+
+        .side {
+            position: relative;
+        }
+
+        .side::before,
+        .side::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            border-left: 1px dashed rgba(80, 90, 110, .22);
+            z-index: 50;
+            pointer-events: none;
+        }
+
+        .side::before {
+            left: 33.333%;
+        }
+
+        .side::after {
+            left: 66.666%;
+        }
+
+        .cover {
+            background:
+                radial-gradient(circle at 20% 20%, rgba(20, 84, 239, .35), transparent 30%),
+                radial-gradient(circle at 90% 80%, rgba(18, 183, 106, .22), transparent 28%),
+                linear-gradient(145deg, #061126, #0a1830 55%, #102b4c);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .cover::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            opacity: .08;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, .7) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, .7) 1px, transparent 1px);
+            background-size: 20px 20px;
+            pointer-events: none;
+        }
+
+        .cover-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo-img {
+            width: 24mm;
+            height: 24mm;
+            margin: 0 auto 5mm;
+            border-radius: 6mm;
+            object-fit: contain;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 2.5mm;
+            box-shadow: 0 10px 30px rgba(20, 84, 239, .25);
+            display: block;
+        }
+
+        .logo-img-small {
+            width: 18mm;
+            height: 18mm;
+            margin: 0 auto 4mm;
+            border-radius: 4mm;
+            object-fit: contain;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 2mm;
+            display: block;
+        }
+
+        .logo-img-back {
+            width: 18mm;
+            height: 18mm;
+            margin: 0 auto 4mm;
+            border-radius: 4mm;
+            object-fit: contain;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 2mm;
+            display: block;
+        }
+
+        .logo-fallback {
+            display: none;
+            width: 24mm;
+            height: 24mm;
+            margin: 0 auto 5mm;
+            border-radius: 6mm;
+            background: linear-gradient(135deg, var(--blue), var(--cyan), var(--green));
+            place-items: center;
+            font-size: 9mm;
+            font-weight: 900;
+            color: white;
+        }
+
+        .logo-fallback-small {
+            display: none;
+            width: 18mm;
+            height: 18mm;
+            margin: 0 auto 4mm;
+            border-radius: 4mm;
+            background: linear-gradient(135deg, var(--blue), var(--cyan), var(--green));
+            place-items: center;
+            font-size: 6mm;
+            font-weight: 900;
+            color: white;
+        }
+
+        .cover h1 {
+            font-size: 9mm;
+            line-height: 1;
+            letter-spacing: -.5px;
+            font-weight: 900;
+        }
+
+        .cover h1 span {
+            color: #5db1ff;
+        }
+
+        .cover-tagline {
+            margin-top: 3mm;
+            color: #c5d2e8;
+            font-size: 3.2mm;
+            letter-spacing: .4px;
+        }
+
+        .cover-line {
+            width: 20mm;
+            height: 0.8mm;
+            margin: 4mm auto;
+            border-radius: 10px;
+            background: linear-gradient(90deg, var(--blue), var(--cyan), var(--green));
+        }
+
+        .cover-title {
+            display: inline-block;
+            padding: 2mm 4.5mm;
+            border-radius: 20px;
+            background: rgba(18, 183, 106, .14);
+            border: 1px solid rgba(18, 183, 106, .35);
+            color: #74e8aa;
+            font-size: 2.8mm;
+            font-weight: 800;
+        }
+
+        .verticals {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5mm;
+            margin-top: 4mm;
+        }
+
+        .verticals span {
+            padding: 1.2mm 2.5mm;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, .08);
+            border: 1px solid rgba(255, 255, 255, .10);
+            color: #d8e3f5;
+            font-size: 2.5mm;
+            font-weight: 700;
+        }
+
+        .cover-contact {
+            margin-top: 5mm;
+            font-size: 2.6mm;
+            line-height: 1.8;
+            color: #c4d1e7;
+        }
+
+        .cover-bottom {
+            margin-top: 6mm;
+            color: #91a3c1;
+            font-size: 2.2mm;
+            letter-spacing: .5px;
+        }
+
+        .section-tag {
+            display: inline-block;
+            padding: 1.2mm 2.5mm;
+            border-radius: 20px;
+            background: #edf3ff;
+            color: var(--blue);
+            font-size: 2.2mm;
+            font-weight: 800;
+            letter-spacing: .4px;
+            text-transform: uppercase;
+            margin-bottom: 2.5mm;
+        }
+
+        .section-title {
+            font-size: 4.5mm;
+            line-height: 1.15;
+            color: var(--navy);
+            font-weight: 850;
+            margin-bottom: 2.5mm;
+        }
+
+        .section-description {
+            font-size: 2.7mm;
+            line-height: 1.5;
+            color: var(--muted);
+            margin-bottom: 2.5mm;
+        }
+
+        .accent-line {
+            width: 12mm;
+            height: .7mm;
+            border-radius: 10px;
+            background: var(--blue);
+            margin: 1.5mm 0 3mm;
+        }
+
+        .service-block {
+            margin-bottom: 4mm;
+        }
+
+        .service-heading {
+            display: flex;
+            align-items: center;
+            gap: 2mm;
+            color: var(--navy);
+            font-size: 3.5mm;
+            line-height: 1.2;
+            font-weight: 800;
+            margin-bottom: 1.5mm;
+        }
+
+        .service-icon {
+            width: 7mm;
+            height: 7mm;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            border-radius: 2mm;
+            background: #edf3ff;
+            font-size: 3.5mm;
+        }
+
+        .service-block p {
+            font-size: 2.5mm;
+            line-height: 1.5;
+            color: var(--muted);
+            margin-bottom: 1.5mm;
+        }
+
+        .check-list {
+            list-style: none;
+        }
+
+        .check-list li {
+            position: relative;
+            padding-left: 4.5mm;
+            margin-bottom: 1.2mm;
+            font-size: 2.4mm;
+            line-height: 1.4;
+            color: #4b5668;
+        }
+
+        .check-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--green);
+            font-weight: 900;
+        }
+
+        .two-boxes {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5mm;
+            margin-top: 2.5mm;
+        }
+
+        .mini-box {
+            border: 1px solid var(--border);
+            border-radius: 2mm;
+            padding: 2.5mm;
+            background: #fbfcfe;
+        }
+
+        .mini-box h4 {
+            font-size: 2.5mm;
+            line-height: 1.25;
+            color: var(--navy);
+            margin-bottom: 1mm;
+        }
+
+        .mini-box p {
+            font-size: 2.2mm;
+            line-height: 1.4;
+            color: #707b8c;
+        }
+
+        .highlight {
+            padding: 3mm;
+            margin-top: 3mm;
+            background: #f3f7ff;
+            border-left: 0.8mm solid var(--blue);
+            border-radius: 2mm;
+        }
+
+        .highlight strong {
+            color: var(--navy);
+        }
+
+        .highlight p {
+            font-size: 2.4mm;
+            line-height: 1.5;
+            color: #47546a;
+        }
+
+        .stat-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2mm;
+            margin-top: 3mm;
+        }
+
+        .stat {
+            padding: 2.5mm;
+            text-align: center;
+            border-radius: 2mm;
+            background: #f8faff;
+            border: 1px solid var(--border);
+        }
+
+        .stat strong {
+            display: block;
+            color: var(--blue);
+            font-size: 3.5mm;
+        }
+
+        .stat span {
+            display: block;
+            margin-top: 0.8mm;
+            color: var(--muted);
+            font-size: 2mm;
+        }
+
+        .print-panel {
+            background: linear-gradient(180deg, #fff, #fff8fc);
+        }
+
+        .print-panel .section-tag {
+            background: #fff0f7;
+            color: var(--pink);
+        }
+
+        .back {
+            background: linear-gradient(180deg, #f6f9fe, #ffffff);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .back h2 {
+            text-align: center;
+            font-size: 5.5mm;
+            color: var(--navy);
+            margin-bottom: 1.5mm;
+        }
+
+        .back h2 span {
+            color: var(--blue);
+        }
+
+        .back-intro {
+            text-align: center;
+            font-size: 2.5mm;
+            color: var(--muted);
+            line-height: 1.5;
+            margin-bottom: 4mm;
+        }
+
+        .contact-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2mm;
+        }
+
+        .contact {
+            display: flex;
+            align-items: center;
+            gap: 2.5mm;
+            padding: 2.5mm;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 2mm;
+        }
+
+        .contact-icon {
+            width: 8mm;
+            height: 8mm;
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+            border-radius: 2mm;
+            background: #f0f4fb;
+            font-size: 3.5mm;
+        }
+
+        .contact-text strong {
+            display: block;
+            font-size: 2.4mm;
+            color: var(--navy);
+            margin-bottom: .5mm;
+        }
+
+        .contact-text span,
+        .contact-text a {
+            display: block;
+            font-size: 2.2mm;
+            line-height: 1.3;
+            color: #68758a;
+            text-decoration: none;
+        }
+
+        .qr-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5mm;
+            margin-top: 3mm;
+        }
+
+        .qr {
+            min-height: 28mm;
+            border: 1px dashed #bdc7d8;
+            border-radius: 2mm;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: #fff;
+            color: #7b879a;
+            padding: 1.5mm;
+        }
+
+        .qr img {
+            width: 18mm;
+            height: 18mm;
+            object-fit: contain;
+            margin-bottom: 1.5mm;
+        }
+
+        .qr strong {
+            display: block;
+            font-size: 2.2mm;
+            color: var(--navy);
+            margin-bottom: 0.5mm;
+        }
+
+        .qr span {
+            display: block;
+            font-size: 1.8mm;
+            line-height: 1.3;
+            color: #68758a;
+        }
+
+        .back-tagline {
+            text-align: center;
+            margin-top: 4mm;
+            padding-top: 3mm;
+            border-top: 1px solid var(--border);
+            font-size: 2.2mm;
+            line-height: 1.5;
+            color: #637087;
+        }
+
+        .back-tagline strong {
+            color: var(--navy);
+        }
+
+        .batch-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2mm;
+            margin-top: 2mm;
+        }
+
+        .batch-card {
+            border: 1px solid var(--border);
+            border-radius: 2mm;
+            padding: 2mm 2.5mm;
+            background: #fafcff;
+        }
+
+        .batch-card .track-tag {
+            display: inline-block;
+            font-size: 1.8mm;
+            font-weight: 800;
+            padding: 0.5mm 2mm;
+            border-radius: 10px;
+            color: white;
+            margin-bottom: 1mm;
+        }
+
+        .tag-academic {
+            background: var(--blue);
+        }
+
+        .tag-coding {
+            background: var(--purple);
+        }
+
+        .tag-design {
+            background: var(--pink);
+        }
+
+        .tag-data {
+            background: var(--green);
+        }
+
+        .batch-card h4 {
+            font-size: 2.5mm;
+            color: var(--navy);
+            margin-bottom: 0.5mm;
+        }
+
+        .batch-card .meta {
+            font-size: 2mm;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        .batch-card .meta strong {
+            color: var(--text);
+        }
+
+        .placement-guide {
+            margin-top: 3mm;
+            background: #f8faff;
+            border-radius: 2mm;
+            padding: 2.5mm;
+            border: 1px solid var(--border);
+        }
+
+        .placement-guide h4 {
+            font-size: 2.5mm;
+            color: var(--navy);
+            margin-bottom: 1.5mm;
+        }
+
+        .placement-guide .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1mm 2mm;
+            font-size: 2mm;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        .placement-guide .row .label {
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .fee-box {
+            margin-top: 2.5mm;
+            background: #eefbf5;
+            border-radius: 2mm;
+            padding: 2mm 2.5mm;
+            border-left: 0.8mm solid var(--green);
+        }
+
+        .fee-box p {
+            font-size: 2.2mm;
+            color: #3f5a4a;
+            line-height: 1.5;
+        }
+
+        .fee-box strong {
+            color: var(--navy);
+        }
+
+        @page {
+            size: A4 landscape;
+            margin: 0;
+        }
+
+        @media print {
+            body {
+                padding: 0;
+                margin: 0;
+                background: white;
+            }
+
+            .toolbar,
+            .fold-note {
+                display: none !important;
+            }
+
+            .brochure {
+                width: 297mm;
+                height: 210mm;
+                min-height: 210mm;
+                margin: 0;
+                box-shadow: none;
+                page-break-after: always;
+                break-after: page;
+            }
+
+            .brochure:last-child {
+                page-break-after: auto;
+                break-after: auto;
+            }
+
+            .side {
+                width: 297mm;
+                height: 210mm;
+                min-height: 210mm;
+            }
+
+            .panel {
+                height: 210mm;
+                min-height: 210mm;
+            }
+
+            .side::before,
+            .side::after {
+                display: none;
+            }
+
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            a {
+                color: inherit !important;
+                text-decoration: none !important;
+            }
+
+            .logo-img,
+            .logo-img-small,
+            .logo-img-back {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+
+        @media (max-width: 1000px) {
+            body {
+                padding: 15px;
+            }
+
+            .brochure {
+                width: 100%;
+                min-height: auto;
+                overflow-x: auto;
+            }
+
+            .side {
+                min-width: 900px;
+            }
+
+            .toolbar {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="toolbar">
+        <button class="btn btn-blue" onclick="window.print()">🖨️ Print / Save PDF</button>
+    </div>
+
+    <!-- ========== PAGE 1 — OUTSIDE ========== -->
+    <section class="brochure">
+        <div class="side">
+            <!-- BACK PANEL -->
+            <div class="panel back">
+                <img src="shaunix-group-logo.png" alt="SHAUNIX ACADEMY Logo" class="logo-img-back"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';">
+                <div class="logo-fallback-small" style="display:none;">SA</div>
+                <h2>Let's <span>Learn</span></h2>
+                <p class="back-intro">
+                    Academic excellence meets practical digital skills.<br>
+                    School + Coding + Design + Data.
+                </p>
+                <div class="contact-list">
+                    <div class="contact">
+                        <div class="contact-icon">📞</div>
+                        <div class="contact-text"><strong>Phone / WhatsApp</strong><a href="tel:+919821186889">+91 98211
+                                86889</a></div>
+                    </div>
+                    <div class="contact">
+                        <div class="contact-icon">✉️</div>
+                        <div class="contact-text"><strong>Email</strong><a
+                                href="mailto:shaunixgroup@gmail.com">shaunixgroup@gmail.com</a></div>
+                    </div>
+                    <div class="contact">
+                        <div class="contact-icon">🌐</div>
+                        <div class="contact-text"><strong>Website</strong><a
+                                href="https://www.shaunixgroup.com">www.shaunixgroup.com</a></div>
+                    </div>
+                    <div class="contact">
+                        <div class="contact-icon">📍</div>
+                        <div class="contact-text"><strong>Address</strong><span>A-20, A Block, Gali No. 1/A, Om Nagar,
+                                Shakti Vihar, Badarpur, New Delhi, Delhi 110044</span></div>
+                    </div>
+                    <div class="contact">
+                        <div class="contact-icon">🕒</div>
+                        <div class="contact-text"><strong>Business Hours</strong><span>Monday – Saturday · 10 AM – 7
+                                PM</span></div>
+                    </div>
+                </div>
+                <div class="qr-area">
+                    <div class="qr">
+                        <img src="shaunix_whatsapp_qr.png" alt="WhatsApp QR">
+                        <strong>📱 WHATSAPP QR</strong>
+                        <span>Scan to Chat</span>
+                    </div>
+                    <div class="qr">
+                        <img src="shaunix-website-qr.png" alt="Website QR">
+                        <strong>🌐 WEBSITE QR</strong>
+                        <span>Scan to Visit</span>
+                    </div>
+                </div>
+                <div class="back-tagline">
+                    <strong>SHAUNIX ACADEMY</strong><br>
+                    Practical Skills for a Digital Future
+                </div>
+            </div>
+
+            <!-- FOLD-IN — COURSE OVERVIEW + BATCHES -->
+            <div class="panel print-panel">
+                <span class="section-tag">🎓 SHAUNIX ACADEMY</span>
+                <h2 class="section-title">Learn. Build. Grow.</h2>
+                <div class="accent-line"></div>
+                <p class="section-description">
+                    Academic Education + Computer Skills + Practical Learning — for school students, beginners, and
+                    skill learners.
+                </p>
+
+                <div style="margin-bottom:2mm;">
+                    <div style="font-size:2.8mm; font-weight:800; color:var(--navy); margin-bottom:1.5mm;">📋 COURSE
+                        TRACKS & BATCHES</div>
+
+                    <div class="batch-grid">
+                        <div class="batch-card">
+                            <span class="track-tag tag-academic">📚 ACADEMIC</span>
+                            <h4>9th–10th Foundation</h4>
+                            <div class="meta"><strong>Subjects:</strong> Maths, Science (Phy, Chem, Bio)</div>
+                            <div class="meta"><strong>Duration:</strong> 8 months · Mon/Wed/Fri 4-6 PM</div>
+                        </div>
+                        <div class="batch-card">
+                            <span class="track-tag tag-academic">📚 ACADEMIC</span>
+                            <h4>11th–12th Pre-University</h4>
+                            <div class="meta"><strong>Subjects:</strong> Maths, Physics, Chemistry</div>
+                            <div class="meta"><strong>Duration:</strong> 10 months · Tue/Thu/Sat 6-8 PM</div>
+                        </div>
+                        <div class="batch-card">
+                            <span class="track-tag tag-coding">💻 CODING</span>
+                            <h4>C++ Beginner / Advanced</h4>
+                            <div class="meta"><strong>Topics:</strong> Fundamentals, OOP, DSA</div>
+                            <div class="meta"><strong>Duration:</strong> 3 months each · Mon/Wed/Fri 6-8 PM</div>
+                        </div>
+                        <div class="batch-card">
+                            <span class="track-tag tag-coding">💻 CODING</span>
+                            <h4>Python Starter / Pro</h4>
+                            <div class="meta"><strong>Topics:</strong> Basics, Lists, Dicts, APIs</div>
+                            <div class="meta"><strong>Duration:</strong> 3 months each · Tue/Thu/Sat 4-6 PM</div>
+                        </div>
+                        <div class="batch-card">
+                            <span class="track-tag tag-coding">🌐 WEB</span>
+                            <h4>Web Dev 101 / Full Stack</h4>
+                            <div class="meta"><strong>Topics:</strong> HTML, CSS, JS, Backend</div>
+                            <div class="meta"><strong>Duration:</strong> 4–6 months · Sat 10 AM-2 PM</div>
+                        </div>
+                        <div class="batch-card">
+                            <span class="track-tag tag-design">🎨 DESIGN</span>
+                            <h4>Design Basics / Pro</h4>
+                            <div class="meta"><strong>Topics:</strong> Canva, Photoshop, CorelDRAW</div>
+                            <div class="meta"><strong>Duration:</strong> 2–3 months · Mon/Wed/Fri 4-6 PM</div>
+                        </div>
+                        <div class="batch-card">
+                            <span class="track-tag tag-design">📱 SOCIAL</span>
+                            <h4>Social Media Design</h4>
+                            <div class="meta"><strong>Topics:</strong> Posts, Reels, Ads, Carousels</div>
+                            <div class="meta"><strong>Duration:</strong> 2 months · Tue/Thu 4-6 PM</div>
+                        </div>
+                        <div class="batch-card">
+                            <span class="track-tag tag-data">📊 DATA</span>
+                            <h4>Excel Master</h4>
+                            <div class="meta"><strong>Topics:</strong> Formulas, Pivot Tables, Charts</div>
+                            <div class="meta"><strong>Duration:</strong> 2 months · Mon/Wed 6-8 PM</div>
+                        </div>
+                        <div class="batch-card">
+                            <span class="track-tag tag-data">📊 DATA</span>
+                            <h4>Power BI Pro</h4>
+                            <div class="meta"><strong>Topics:</strong> Dashboards, DAX, Reports</div>
+                            <div class="meta"><strong>Duration:</strong> 2 months · Tue/Thu 6-8 PM</div>
+                        </div>
+                        <div class="batch-card">
+                            <span class="track-tag tag-data">📝 OFFICE</span>
+                            <h4>Office Suite + Google WS</h4>
+                            <div class="meta"><strong>Topics:</strong> Word, PPT, Sheets, Docs</div>
+                            <div class="meta"><strong>Duration:</strong> 2 months · Sat 10 AM-12 PM</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="placement-guide">
+                    <h4>🎯 Batch Placement Guide</h4>
+                    <div class="row">
+                        <span class="label">9th–10th Student</span>
+                        <span>Foundation Academic + Any 1 Skill</span>
+                        <span class="label">11th–12th Student</span>
+                        <span>Pre-University + Any 1 Skill</span>
+                        <span class="label">Complete Beginner</span>
+                        <span>C++ / Python / Web Dev 101</span>
+                        <span class="label">Creative Student</span>
+                        <span>Design Basics → Social Media / Print</span>
+                        <span class="label">Office/Business Aspirant</span>
+                        <span>Excel Master → Power BI Pro</span>
+                    </div>
+                </div>
+
+                <div class="fee-box">
+                    <p><strong>💰 Fee Structure:</strong> Academic (8-10 months) ₹12,000–15,000 · Skill Track (2-4
+                        months) ₹5,000–8,000 · Academic + 1 Skill ₹16,000–20,000</p>
+                </div>
+
+                <div style="margin-top:2mm; display:flex; gap:2mm; flex-wrap:wrap;">
+                    <span
+                        style="background:#e8f0fe; padding:1.2mm 3mm; border-radius:15px; font-size:2mm; font-weight:700; color:var(--blue);">✅
+                        Max 15 per batch</span>
+                    <span
+                        style="background:#e8f0fe; padding:1.2mm 3mm; border-radius:15px; font-size:2mm; font-weight:700; color:var(--blue);">✅
+                        Certificate provided</span>
+                    <span
+                        style="background:#e8f0fe; padding:1.2mm 3mm; border-radius:15px; font-size:2mm; font-weight:700; color:var(--blue);">✅
+                        Practical projects</span>
+                </div>
+            </div>
+
+            <!-- FRONT COVER -->
+            <div class="panel cover">
+                <div class="cover-content">
+                    <img src="shaunix-group-logo.png" alt="SHAUNIX ACADEMY Logo" class="logo-img"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';">
+                    <div class="logo-fallback" style="display:none;">SA</div>
+                    <h1>SHAUNIX <span>ACADEMY</span></h1>
+                    <div class="cover-tagline">Learn. Build. Grow.</div>
+                    <div class="cover-line"></div>
+                    <div class="cover-title">ACADEMIC + DIGITAL SKILLS</div>
+                    <div class="verticals">
+                        <span>📐 MATH</span><span>🔬 SCIENCE</span><span>⚛️ PHYSICS</span><span>🧪 CHEM</span>
+                        <span>💻 CODE</span><span>🎨 DESIGN</span><span>📊 DATA</span>
+                    </div>
+                    <div class="cover-contact">
+                        📞 +91 98211 86889<br>
+                        ✉️ shaunixgroup@gmail.com<br>
+                        🌐 www.shaunixgroup.com
+                    </div>
+                    <div class="cover-bottom">School Academics + Practical Digital Skills</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== PAGE 2 — INSIDE (ACADEMICS + COMPUTER + PRACTICAL) ========== -->
+    <section class="brochure">
+        <div class="side">
+            <!-- ACADEMICS -->
+            <div class="panel">
+                <span class="section-tag">📚 ACADEMICS</span>
+                <h2 class="section-title">School Academics<br>9th – 12th</h2>
+                <div class="accent-line"></div>
+                <p class="section-description">
+                    Strong foundation in Mathematics, Science, Physics and Chemistry with concept clarity,
+                    problem-solving skills and exam-oriented preparation.
+                </p>
+                <div class="service-block">
+                    <div class="service-heading">
+                        <div class="service-icon">📐</div>Mathematics
+                    </div>
+                    <ul class="check-list">
+                        <li>Complete syllabus coverage with concept clarity</li>
+                        <li>Step-by-step problem solving techniques</li>
+                        <li>Important questions and previous year papers</li>
+                        <li>Regular practice sessions and revision</li>
+                    </ul>
+                </div>
+                <div class="service-block">
+                    <div class="service-heading">
+                        <div class="service-icon">🔬</div>Science (9th–10th)
+                    </div>
+                    <ul class="check-list">
+                        <li>Physics, Chemistry and Biology with practical approach</li>
+                        <li>Concept-based learning with real-world examples</li>
+                        <li>Numerical problem solving and derivations</li>
+                        <li>Exam-oriented preparation and doubt clearing</li>
+                    </ul>
+                </div>
+                <div class="service-block">
+                    <div class="service-heading">
+                        <div class="service-icon">⚛️</div>Physics (11th–12th)
+                    </div>
+                    <ul class="check-list">
+                        <li>In-depth concepts and derivations</li>
+                        <li>Numerical problems and formula applications</li>
+                        <li>Board examination focused preparation</li>
+                        <li>Practical experiments and lab work support</li>
+                    </ul>
+                </div>
+                <div class="service-block">
+                    <div class="service-heading">
+                        <div class="service-icon">🧪</div>Chemistry (11th–12th)
+                    </div>
+                    <ul class="check-list">
+                        <li>Physical, Organic and Inorganic Chemistry</li>
+                        <li>Numerical and conceptual practice</li>
+                        <li>Reaction mechanisms and name reactions</li>
+                        <li>Board and competitive exam preparation</li>
+                    </ul>
+                </div>
+                <div class="highlight">
+                    <p><strong>🎯 Our Focus:</strong> Concept → Practice → Problem Solving → Revision → Exam Preparation
+                    </p>
+                </div>
+            </div>
+
+            <!-- COMPUTER & DIGITAL SKILLS -->
+            <div class="panel">
+                <span class="section-tag">💻 DIGITAL SKILLS</span>
+                <h2 class="section-title">Coding · Design · Data</h2>
+                <div class="accent-line" style="background:var(--cyan);"></div>
+                <p class="section-description">Practical skills that are actually useful for school, college, jobs,
+                    business and freelancing — all taught hands-on.</p>
+                <div class="service-block">
+                    <div class="service-heading">
+                        <div class="service-icon">🎨</div>Graphic Designing
+                    </div>
+                    <ul class="check-list">
+                        <li>Adobe Photoshop, Canva, CorelDRAW mastery</li>
+                        <li>Poster, Banner and Social Media Creatives</li>
+                        <li>Business Cards, Brochures and Branding</li>
+                        <li>Logo design and visual identity creation</li>
+                    </ul>
+                </div>
+                <div class="service-block">
+                    <div class="service-heading">
+                        <div class="service-icon">👨‍💻</div>Programming & Coding
+                    </div>
+                    <ul class="check-list">
+                        <li><strong>C++</strong> – Fundamentals, OOP, Arrays and Data Structures</li>
+                        <li><strong>Python</strong> – Fundamentals, Lists, Dictionaries and Real-world Programs</li>
+                        <li><strong>JavaScript</strong> – DOM Manipulation, Interactivity and Web basics</li>
+                        <li>Project-based learning with practical assignments</li>
+                    </ul>
+                </div>
+                <div class="service-block">
+                    <div class="service-heading">
+                        <div class="service-icon">🌐</div>Web Development
+                    </div>
+                    <ul class="check-list">
+                        <li>HTML, CSS and JavaScript from basics to advanced</li>
+                        <li>Responsive and mobile-friendly websites</li>
+                        <li>Portfolio websites and mini projects</li>
+                        <li>Deployment and hosting fundamentals</li>
+                    </ul>
+                </div>
+                <div class="highlight" style="border-left-color:var(--cyan);background:#f0f8ff;">
+                    <p><strong>💡 Real-World Projects:</strong> Every skill is applied through practical projects that
+                        build your portfolio and confidence.</p>
+                </div>
+            </div>
+
+            <!-- PRODUCTIVITY & DATA + PRACTICAL -->
+            <div class="panel">
+                <span class="section-tag" style="background:#f0faf4;color:var(--green);">📊 DATA & PRODUCTIVITY</span>
+                <h2 class="section-title">Office & Data Skills</h2>
+                <div class="accent-line" style="background:var(--green);"></div>
+                <p class="section-description">Master the tools that power modern workplaces — from spreadsheets to
+                    dashboards and professional documents.</p>
+                <div class="service-block">
+                    <div class="service-heading">
+                        <div class="service-icon">📊</div>Excel & Power BI
+                    </div>
+                    <ul class="check-list">
+                        <li>Basic to Advanced Excel with Formulas and Functions</li>
+                        <li>Data Cleaning, Sorting, Filtering and Analysis</li>
+                        <li>Charts, Graphs and Pivot Tables for reporting</li>
+                        <li>Power BI – Dashboards, Reports and Data Visualization</li>
+                    </ul>
+                </div>
+                <div class="service-block">
+                    <div class="service-heading">
+                        <div class="service-icon">📝</div>Microsoft Office
+                    </div>
+                    <ul class="check-list">
+                        <li><strong>Word</strong> – Professional documents, formatting, tables and reports</li>
+                        <li><strong>PowerPoint</strong> – Professional presentations with slide design</li>
+                        <li>Resume creation and business document formatting</li>
+                    </ul>
+                </div>
+                <div class="service-block">
+                    <div class="service-heading">
+                        <div class="service-icon">☁️</div>Google Workspace
+                    </div>
+                    <ul class="check-list">
+                        <li>Google Sheets, Docs and Slides for collaboration</li>
+                        <li>Online file sharing and permission management</li>
+                        <li>Practical spreadsheet work and team projects</li>
+                    </ul>
+                </div>
+                <div class="highlight" style="border-left-color:var(--green);background:#eefbf5;">
+                    <p><strong>🚀 Learn by Doing:</strong> Understand → Practice → Build → Improve → Showcase — every
+                        skill is applied to real-world scenarios.</p>
+                </div>
+                <div style="margin-top:2.5mm;">
+                    <span
+                        style="display:inline-block; background:#e8f0fe; padding:1.5mm 3.5mm; border-radius:20px; font-size:2.2mm; font-weight:700; color:var(--blue);">🎯
+                        Who Can Join: School Students · Beginners · Skill Learners · Future Professionals</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== PAGE 3 — CTA / REVISED COVER + ACADEMY INFO ========== -->
+    <section class="brochure">
+        <div class="side">
+            <!-- LEFT: CTA + COURSE HIGHLIGHTS + WHY JOIN -->
+            <div class="panel"
+                style="background:linear-gradient(145deg, #fafcff, #f0f5fe); display:flex; flex-direction:column; justify-content:space-between;">
+
+                <!-- HEADER -->
+                <div>
+                    <span class="section-tag" style="background:#fff4df;color:var(--orange);">🌟 BUILD YOUR
+                        FUTURE</span>
+                    <h2 class="section-title" style="font-size:5.5mm; margin-bottom:1.5mm;">Academic Knowledge<br>+
+                        Digital Skills
+                    </h2>
+                    <div class="accent-line" style="background:var(--orange); width:20mm;"></div>
+                    <p style="font-size:2.8mm; line-height:1.6; color:var(--text); font-weight:600; margin-bottom:2mm;">
+                        Don't just study for exams. <span style="color:var(--blue);">Learn skills that last a
+                            lifetime.</span>
+                    </p>
+                </div>
+
+                <!-- 3 CORE PILLARS -->
+                <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.5mm; margin-bottom:2.5mm;">
+                    <div
+                        style="background:white; border-radius:2mm; padding:1.8mm 1.5mm; text-align:center; border:1px solid var(--border); box-shadow:0 1px 4px rgba(0,0,0,0.03);">
+                        <div style="font-size:4.5mm;">📚</div>
+                        <div style="font-size:2.2mm; font-weight:700; color:var(--navy);">Academics</div>
+                        <div style="font-size:1.6mm; color:var(--muted);">Maths · Science · Physics · Chemistry</div>
+                    </div>
+                    <div
+                        style="background:white; border-radius:2mm; padding:1.8mm 1.5mm; text-align:center; border:1px solid var(--border); box-shadow:0 1px 4px rgba(0,0,0,0.03);">
+                        <div style="font-size:4.5mm;">💻</div>
+                        <div style="font-size:2.2mm; font-weight:700; color:var(--navy);">Digital Skills</div>
+                        <div style="font-size:1.6mm; color:var(--muted);">Coding · Design · Web Dev</div>
+                    </div>
+                    <div
+                        style="background:white; border-radius:2mm; padding:1.8mm 1.5mm; text-align:center; border:1px solid var(--border); box-shadow:0 1px 4px rgba(0,0,0,0.03);">
+                        <div style="font-size:4.5mm;">🚀</div>
+                        <div style="font-size:2.2mm; font-weight:700; color:var(--navy);">Practical</div>
+                        <div style="font-size:1.6mm; color:var(--muted);">Projects · Portfolio · Real-world</div>
+                    </div>
+                </div>
+
+                <!-- COURSE LIST (2 COLUMN) -->
+                <div
+                    style="background:white; border-radius:2mm; padding:2.5mm 3mm; border:1px solid var(--border); margin-bottom:2.5mm; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+                    <div
+                        style="font-size:2.2mm; font-weight:800; color:var(--navy); margin-bottom:1.5mm; text-align:center; letter-spacing:0.3px;">
+                        📖 WHAT YOU'LL LEARN</div>
+                    <div
+                        style="display:grid; grid-template-columns:1fr 1fr; gap:1mm 3mm; font-size:2mm; color:var(--muted); line-height:1.6;">
+                        <div><span style="color:var(--blue); font-weight:700;">📐</span> Mathematics (9th–12th)</div>
+                        <div><span style="color:var(--blue); font-weight:700;">🔬</span> Science (9th–10th)</div>
+                        <div><span style="color:var(--blue); font-weight:700;">⚛️</span> Physics (11th–12th)</div>
+                        <div><span style="color:var(--blue); font-weight:700;">🧪</span> Chemistry (11th–12th)</div>
+                        <div><span style="color:var(--blue); font-weight:700;">🎨</span> Graphic Design · Canva ·
+                            Photoshop</div>
+                        <div><span style="color:var(--blue); font-weight:700;">💻</span> C++ · Python · JavaScript</div>
+                        <div><span style="color:var(--blue); font-weight:700;">🌐</span> Web Development (HTML, CSS, JS)
+                        </div>
+                        <div><span style="color:var(--blue); font-weight:700;">📊</span> Excel · Power BI · Data
+                            Analytics</div>
+                        <div><span style="color:var(--blue); font-weight:700;">📝</span> Word · PowerPoint · Google
+                            Workspace</div>
+                        <div><span style="color:var(--blue); font-weight:700;">🎯</span> Portfolio Building · Projects
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WHY JOIN + CTA ROW -->
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:2mm;">
+                    <!-- WHY JOIN -->
+                    <div
+                        style="background:linear-gradient(135deg,#f0f7ff,#e8f4fd); border-radius:2mm; padding:1.8mm 2mm; border-left:0.8mm solid var(--blue);">
+                        <div style="font-size:2mm; font-weight:800; color:var(--navy); margin-bottom:0.5mm;">⭐ Why Join
+                            Us?</div>
+                        <ul
+                            style="list-style:none; font-size:1.7mm; color:var(--muted); line-height:1.6; padding-left:0;">
+                            <li style="position:relative; padding-left:3.5mm; margin-bottom:0.3mm;">✓ Expert faculty &
+                                small batches
+                            </li>
+                            <li style="position:relative; padding-left:3.5mm; margin-bottom:0.3mm;">✓ Practical projects
+                                & portfolio
+                            </li>
+                            <li style="position:relative; padding-left:3.5mm; margin-bottom:0.3mm;">✓ Certificate &
+                                career guidance
+                            </li>
+                            <li style="position:relative; padding-left:3.5mm;">✓ Flexible timings · Free demo</li>
+                        </ul>
+                    </div>
+
+                    <!-- CTA - PRIMARY (Compact but prominent) -->
+                    <div
+                        style="background:linear-gradient(145deg, var(--navy), #0a1a3a); border-radius:2mm; padding:1.8mm 2.5mm; display:flex; flex-direction:column; justify-content:center; text-align:center; color:white; border:1px solid rgba(255,255,255,0.06);">
+                        <div
+                            style="font-size:1.4mm; text-transform:uppercase; letter-spacing:0.5px; opacity:0.5; font-weight:600;">
+                            Start Your Journey</div>
+                        <div style="font-size:3mm; font-weight:900; margin:0.3mm 0;">📞 ENQUIRE NOW</div>
+                        <div
+                            style="font-size:2.5mm; font-weight:700; letter-spacing:0.3px; background:rgba(255,255,255,0.08); padding:0.5mm; border-radius:1.5mm; margin-bottom:0.3mm;">
+                            +91 98211 86889</div>
+                        <div style="font-size:1.4mm; opacity:0.6;">shaunixgroup@gmail.com</div>
+                    </div>
+                </div>
+
+                <!-- FOOTER -->
+                <div
+                    style="text-align:center; margin-top:1.5mm; padding-top:1.5mm; border-top:1px solid var(--border); font-size:1.8mm; color:var(--muted);">
+                    <strong style="color:var(--navy);">SHAUNIX ACADEMY</strong> · Where Learning Meets Practical Skills
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT: WHY SHAUNIX ACADEMY + BENEFITS + TESTIMONIALS -->
+            <div class="panel reclaim" style="display:flex; flex-direction:column; justify-content:space-between;">
+
+                <!-- SECTION 1: HEADER -->
+                <div>
+                    <span class="section-tag" style="background:#e8f5e9;color:#2e7d32;">⭐ WHY SHAUNIX</span>
+                    <h2 class="section-title" style="font-size:4.8mm; margin-bottom:1.5mm;">Why Choose<br>SHAUNIX
+                        ACADEMY?</h2>
+                    <div class="accent-line" style="background:var(--green); width:18mm;"></div>
+                    <p style="font-size:2.4mm; color:var(--muted); line-height:1.5; margin-bottom:2.5mm;">
+                        We don't just teach — we build skills that last a lifetime.
+                    </p>
+                </div>
+
+                <!-- SECTION 2: BENEFITS GRID (3x2) -->
+                <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.5mm; margin-bottom:2.5mm;">
+                    <div
+                        style="background:#f8faff; border-radius:2mm; padding:1.8mm 1.5mm; border:1px solid var(--border); text-align:center;">
+                        <div style="font-size:4mm;">👨‍🏫</div>
+                        <div style="font-size:2mm; font-weight:700; color:var(--navy);">Expert Faculty</div>
+                        <div style="font-size:1.7mm; color:var(--muted);">Qualified teachers</div>
+                    </div>
+                    <div
+                        style="background:#f8faff; border-radius:2mm; padding:1.8mm 1.5mm; border:1px solid var(--border); text-align:center;">
+                        <div style="font-size:4mm;">👥</div>
+                        <div style="font-size:2mm; font-weight:700; color:var(--navy);">Small Batches</div>
+                        <div style="font-size:1.7mm; color:var(--muted);">Max 15 students</div>
+                    </div>
+                    <div
+                        style="background:#f8faff; border-radius:2mm; padding:1.8mm 1.5mm; border:1px solid var(--border); text-align:center;">
+                        <div style="font-size:4mm;">🖥️</div>
+                        <div style="font-size:2mm; font-weight:700; color:var(--navy);">Practical Learning</div>
+                        <div style="font-size:1.7mm; color:var(--muted);">Projects & portfolio</div>
+                    </div>
+                    <div
+                        style="background:#f8faff; border-radius:2mm; padding:1.8mm 1.5mm; border:1px solid var(--border); text-align:center;">
+                        <div style="font-size:4mm;">📜</div>
+                        <div style="font-size:2mm; font-weight:700; color:var(--navy);">Certificate</div>
+                        <div style="font-size:1.7mm; color:var(--muted);">SHAUNIX certified</div>
+                    </div>
+                    <div
+                        style="background:#f8faff; border-radius:2mm; padding:1.8mm 1.5mm; border:1px solid var(--border); text-align:center;">
+                        <div style="font-size:4mm;">💼</div>
+                        <div style="font-size:2mm; font-weight:700; color:var(--navy);">Career Support</div>
+                        <div style="font-size:1.7mm; color:var(--muted);">Guidance & mentoring</div>
+                    </div>
+                    <div
+                        style="background:#f8faff; border-radius:2mm; padding:1.8mm 1.5mm; border:1px solid var(--border); text-align:center;">
+                        <div style="font-size:4mm;">🆓</div>
+                        <div style="font-size:2mm; font-weight:700; color:var(--navy);">Demo Session</div>
+                        <div style="font-size:1.7mm; color:var(--muted);">Free trial class</div>
+                    </div>
+                </div>
+
+                <!-- SECTION 3: KEY HIGHLIGHTS (2 cards) -->
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5mm; margin-bottom:2.5mm;">
+                    <div
+                        style="background:linear-gradient(135deg,#e8f0fe,#f0f7ff); border-radius:2mm; padding:1.8mm 2mm; border-left:0.8mm solid var(--blue);">
+                        <div style="font-size:2mm; font-weight:800; color:var(--navy);">🎯 100% Practical</div>
+                        <div style="font-size:1.8mm; color:var(--muted); line-height:1.4;">Learn by doing, not just
+                            theory</div>
+                    </div>
+                    <div
+                        style="background:linear-gradient(135deg,#e8f5e9,#f0faf4); border-radius:2mm; padding:1.8mm 2mm; border-left:0.8mm solid var(--green);">
+                        <div style="font-size:2mm; font-weight:800; color:var(--navy);">📈 Portfolio Ready</div>
+                        <div style="font-size:1.8mm; color:var(--muted); line-height:1.4;">Build projects you can show
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 4: TESTIMONIALS -->
+                <div
+                    style="background:#faf5ff; border-radius:2mm; padding:2mm 2.5mm; border-left:0.8mm solid var(--purple); margin-bottom:2.5mm;">
+                    <div style="font-size:2.2mm; font-weight:800; color:var(--navy); margin-bottom:1mm;">💬 Student
+                        Testimonials
+                    </div>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:2mm;">
+                        <div style="background:white; border-radius:1.5mm; padding:1.5mm;">
+                            <div style="font-size:1.8mm; color:var(--muted); line-height:1.5; font-style:italic;">
+                                "Maths aur Physics dono strong kar di. Ab main exam mein confident hoon!"
+                            </div>
+                            <div style="font-size:1.6mm; color:var(--blue); font-weight:600; margin-top:0.5mm;">—
+                                Ananya, Class 12
+                            </div>
+                            <div style="font-size:1.4mm; color:#ffb300;">⭐⭐⭐⭐⭐</div>
+                        </div>
+                        <div style="background:white; border-radius:1.5mm; padding:1.5mm;">
+                            <div style="font-size:1.8mm; color:var(--muted); line-height:1.5; font-style:italic;">
+                                "Graphic Design aur Python dono seekha. Ab freelance bhi kar raha hoon!"
+                            </div>
+                            <div style="font-size:1.6mm; color:var(--blue); font-weight:600; margin-top:0.5mm;">— Rahul,
+                                Class 11
+                            </div>
+                            <div style="font-size:1.4mm; color:#ffb300;">⭐⭐⭐⭐⭐</div>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    style="background:#faf5ff; border-radius:2mm; padding:2mm 2.5mm; border-left:0.8mm solid var(--purple); margin-bottom:2.5mm;">
+                    <div style="font-size:2.2mm; font-weight:800; color:var(--navy); margin-bottom:1mm;">💬 Student
+                        Testimonials</div>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:2mm;">
+                        <div style="background:white; border-radius:1.5mm; padding:1.5mm;">
+                            <div style="font-size:1.8mm; color:var(--muted); line-height:1.5; font-style:italic;">
+                                "The Web Development course was a game changer. I built my first portfolio website in
+                                just 2 weeks!"
+                            </div>
+                            <div style="font-size:1.6mm; color:var(--blue); font-weight:600; margin-top:0.5mm;">— Priya
+                                Patel, BCA
+                                Student</div>
+                            <div style="font-size:1.4mm; color:#ffb300;">⭐⭐⭐⭐⭐</div>
+                        </div>
+                        <div style="background:white; border-radius:1.5mm; padding:1.5mm;">
+                            <div style="font-size:1.8mm; color:var(--muted); line-height:1.5; font-style:italic;">
+                                "The UI/UX Design course helped me land my first internship. Highly recommend Shaunix
+                                Academy!"
+                            </div>
+                            <div style="font-size:1.6mm; color:var(--blue); font-weight:600; margin-top:0.5mm;">— Arjun
+                                Mehta, Design
+                                Enthusiast</div>
+                            <div style="font-size:1.4mm; color:#ffb300;">⭐⭐⭐⭐⭐</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FOOTER -->
+                <div
+                    style="text-align:center; margin-top:2mm; padding-top:1.5mm; border-top:1px solid var(--border); font-size:2mm; color:var(--muted);">
+                    <strong style="color:var(--navy);">SHAUNIX ACADEMY</strong> · Practical Learning. Real Skills.
+                    Better Future.
+                </div>
+
+            </div>
+            <!-- MIDDLE: COVER (duplicate) -->
+            <div class="panel cover">
+                <div class="cover-content">
+                    <img src="shaunix-group-logo.png" alt="SHAUNIX ACADEMY Logo" class="logo-img"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';">
+                    <div class="logo-fallback" style="display:none;">SA</div>
+                    <h1>SHAUNIX <span>ACADEMY</span></h1>
+                    <div class="cover-tagline">Learn. Build. Grow.</div>
+                    <div class="cover-line"></div>
+                    <div class="cover-title">ACADEMIC + DIGITAL SKILLS</div>
+                    <div class="verticals">
+                        <span>📐 MATH</span><span>🔬 SCIENCE</span><span>⚛️ PHYSICS</span><span>🧪 CHEM</span>
+                        <span>💻 CODE</span><span>🎨 DESIGN</span><span>📊 DATA</span>
+                    </div>
+                    <div class="cover-contact">
+                        📞 +91 98211 86889<br>
+                        ✉️ shaunixgroup@gmail.com<br>
+                        🌐 www.shaunixgroup.com
+                    </div>
+                    <div class="cover-bottom">Practical Learning. Real Skills. Better Future.</div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <script>
+        document.querySelectorAll('.logo-img, .logo-img-small, .logo-img-back').forEach(img => {
+            img.onerror = function () {
+                this.style.display = 'none';
+                const fallback = this.nextElementSibling;
+                if (fallback && fallback.classList.contains('logo-fallback')) {
+                    fallback.style.display = 'grid';
+                }
+                if (fallback && fallback.classList.contains('logo-fallback-small')) {
+                    fallback.style.display = 'grid';
+                }
+            };
+        });
+    </script>
+
+</body>
+
+</html>

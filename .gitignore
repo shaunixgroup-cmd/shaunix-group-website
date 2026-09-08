@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Environment secrets
+.env
+
+# Contact form submissions log
+messages.log
+
+# Feedback form submissions log
+feedback.log
+
+# OS / Editor junk
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+
+# npm logs
+npm-debug.log*
+

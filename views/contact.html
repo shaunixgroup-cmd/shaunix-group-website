@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {{SEO}}
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+</head>
+
+<body>
+  {{HEADER}}
+
+  <section class="page-hero">
+    <div class="container">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><i>›</i><b>Contact</b></nav>
+      <span class="eyebrow eyebrow-light">Get In Touch</span>
+      <h1>Contact <em>SHAUNIX GROUP</em></h1>
+      <p class="ph-sub">Products, repairs, projects, admissions, printing or e-waste pickup —
+        one message reaches the right team. We reply fast, usually the same day.</p>
+    </div>
+  </section>
+
+  <div class="container sent-banner-zone"></div>
+
+  {{CONTACT_SECTION}}
+
+  <!-- MAP -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-head center reveal">
+        <span class="eyebrow">Find Us</span>
+        <h2>Serving clients <em>across India</em>.</h2>
+        <!-- Map location: change mapQuery in config.js (or paste your embed link) -->
+        <div class="map-frame reveal">
+          <iframe src="https://www.google.com/maps?q={{MAP_QUERY}}&output=embed" title="SHAUNIX GROUP location map"
+            loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <div class="grid-3" style="margin-top:34px" data-stagger>
+          <article class="item-card reveal">
+            <div class="item-ico">📍</div>
+            <h3>Visit Our Centre</h3>
+            <p>{{ADDRESS}}<br><small>(Full address in config.js)</small></p>
+          </article>
+          <article class="item-card reveal">
+            <div class="item-ico">🕒</div>
+            <h3>Business Hours</h3>
+            <p>{{HOURS}}<br>Sunday : By appointment</p>
+          </article>
+          <article class="item-card reveal">
+            <div class="item-ico">🌐</div>
+            <h3>Online</h3>
+            <p>{{EMAIL}}<br>wa.me/{{WA_NUM}}</p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {{FOOTER}}
+</body>
+
+</html>

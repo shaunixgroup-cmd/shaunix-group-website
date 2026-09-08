@@ -1,0 +1,2198 @@
+<!-- Haan, is design ko dekhkar professional brochure ke level par kaafi strong bolunga.
+
+⭐ My Rating
+Category	Rating
+🎨 Aesthetics / Visual Appeal	8.5/10
+💼 Professional Look	8.5/10
+🧩 Layout & Structure	8/10
+🎨 Color Combination	9/10
+📖 Readability	8/10
+🏢 Corporate Feel	8.5/10
+🖨️ Print-readiness	7.5/10
+Overall	8.4/10
+
+Sabse strong point: Navy + blue + cyan + green ka overall brand system professional hai. Six verticals ko alag sections mein divide karna bhi SHAUNIX GROUP ko ek multi-service company jaisa present karta hai, sirf computer shop jaisa nahi.
+
+Ek important correction
+
+Tumhare Page 3 ka order abhi HTML mein:
+
+PRINT → RECLAIM → COVER
+
+hai.
+
+Agar tumhara intention hai:
+
+PRINT → COVER/CTA → RECLAIM
+
+toh COVER ko RECLAIM se pehle rakhna chahiye. CSS mein 3-column grid automatically:
+
+LEFT | CENTER | RIGHT
+
+banayega.
+
+🖨️ Printing wale ko exactly kya bolna hai?
+
+Printing shop par simply ye bolo:
+
+“Bhaiya, mujhe A4 size ka professional tri-fold brochure print karwana hai. Landscape orientation mein, double-sided colour printing chahiye. 3 equal panels mein fold hona chahiye. 300 GSM premium art card/paper par print karna hai, aur matte lamination chahiye.”
+
+Agar premium look chahiye toh:
+
+“A4 landscape, double-side full-colour, tri-fold, 300 GSM art card, matte lamination, clean centre-fold finishing chahiye. Border/text cut nahi hona chahiye.”
+
+Mere hisaab se best specification:
+
+Size: A4
+Orientation: Landscape
+Printing: Full Colour / CMYK
+Sides: Front + Back / Duplex
+Folding: Tri-Fold / 3-Panel Fold
+Paper: 300 GSM Art Card
+Finish: Matte Lamination
+Print quality: High quality / 300 DPI artwork
+Bleed: Ideally 3 mm
+Quantity: Pehle 1 proof/sample, phir bulk
+
+💎 Agar aur premium banana hai
+
+350 GSM Art Card + Matte Lamination
+
+ye aur premium feel dega, lekin cost 300 GSM se zyada hogi.
+
+⚠️ Printing wale ko ek cheez zaroor bolna
+
+“Pehle ek sample/proof nikal ke dikha dena, bulk print baad mein karenge.”
+
+Ye bahut important hai.
+
+Kyunki browser mein brochure perfect dikh sakta hai, lekin printing mein:
+
+panel alignment
+fold position
+margins
+colour
+QR readability
+
+check karna zaroori hai.
+
+Aur physical tri-fold mein fold ke liye printer ko panel dimensions check karne dena. Agar printer standard 3-equal-panel fold use karta hai toh artwork accordingly set karna chahiye.
+
+🏆 Final recommendation
+
+Agar SHAUNIX GROUP ko proper corporate/business brand ki tarah present karna hai, main choose karunga:
+
+A4 Landscape → Double Side → Full Colour → 300 GSM Art Card → Matte Lamination → Tri-Fold → 1 Proof First
+
+Ye combination tumhare current design ke saath professional + premium + clean lagega. -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SHAUNIX GROUP — Tri-Fold Brochure</title>
+
+    <style>
+        /* =========================================================
+           SHAUNIX GROUP
+           PROFESSIONAL A4 TRI-FOLD BROCHURE
+           ========================================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #08152d;
+            --navy2: #0d2345;
+            --blue: #1454ef;
+            --cyan: #0ea8e9;
+            --green: #12b76a;
+            --orange: #f79009;
+            --pink: #ec4899;
+            --purple: #7c5cfc;
+
+            --text: #172033;
+            --muted: #5d687b;
+            --light: #f5f8fc;
+            --border: #dfe6f1;
+        }
+
+        body {
+            font-family: "Inter", "Segoe UI", Arial, sans-serif;
+            background: #e7ebf2;
+            color: var(--text);
+            padding: 35px 20px;
+        }
+
+        /* =========================================================
+           TOOLBAR
+           ========================================================= */
+
+        .toolbar {
+            max-width: 1200px;
+            margin: 0 auto 25px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .btn {
+            border: none;
+            padding: 13px 22px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            color: white;
+            background: var(--navy);
+            box-shadow: 0 5px 18px rgba(0, 0, 0, .15);
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-blue {
+            background: var(--blue);
+        }
+
+        /* =========================================================
+           BROCHURE SHEET
+           ========================================================= */
+
+        .brochure {
+            width: 297mm;
+            min-height: 210mm;
+            margin: 0 auto 35px;
+            background: white;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .20);
+            overflow: hidden;
+        }
+
+        /*
+            3 equal panels.
+
+            A4 landscape:
+            297mm wide
+            210mm high
+
+            Safe printable width after margins:
+            approx 291mm
+        */
+
+        .side {
+            width: 100%;
+            min-height: 210mm;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .panel {
+            min-width: 0;
+            min-height: 210mm;
+            padding: 13mm 10mm;
+            position: relative;
+            overflow: hidden;
+            background: white;
+        }
+
+        /* =========================================================
+           FOLD GUIDES — SCREEN ONLY
+           ========================================================= */
+
+        .side {
+            position: relative;
+        }
+
+        .side::before,
+        .side::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            border-left: 1px dashed rgba(80, 90, 110, .22);
+            z-index: 50;
+            pointer-events: none;
+        }
+
+        .side::before {
+            left: 33.333%;
+        }
+
+        .side::after {
+            left: 66.666%;
+        }
+
+        /* =========================================================
+           COVER
+           ========================================================= */
+
+        .cover {
+            background:
+                radial-gradient(circle at 20% 20%, rgba(20, 84, 239, .35), transparent 30%),
+                radial-gradient(circle at 90% 80%, rgba(18, 183, 106, .22), transparent 28%),
+                linear-gradient(145deg, #061126, #0a1830 55%, #102b4c);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .cover::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            opacity: .08;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, .7) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, .7) 1px, transparent 1px);
+            background-size: 20px 20px;
+            pointer-events: none;
+        }
+
+        .cover-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Logo styling */
+        .logo-img {
+            width: 27mm;
+            height: 27mm;
+            margin: 0 auto 7mm;
+            border-radius: 7mm;
+            object-fit: contain;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 3mm;
+            box-shadow: 0 10px 30px rgba(20, 84, 239, .25);
+            display: block;
+        }
+
+        .logo-img-small {
+            width: 20mm;
+            height: 20mm;
+            margin: 0 auto 5mm;
+            border-radius: 5mm;
+            object-fit: contain;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 2mm;
+            display: block;
+        }
+
+        .logo-img-back {
+            width: 20mm;
+            height: 20mm;
+            margin: 0 auto 5mm;
+            border-radius: 5mm;
+            object-fit: contain;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 2mm;
+            display: block;
+        }
+
+        /* Fallback text logo when image fails */
+        .logo-fallback {
+            display: none;
+            width: 27mm;
+            height: 27mm;
+            margin: 0 auto 7mm;
+            border-radius: 7mm;
+            background: linear-gradient(135deg, var(--blue), var(--cyan), var(--green));
+            place-items: center;
+            font-size: 10mm;
+            font-weight: 900;
+            color: white;
+            box-shadow: 0 10px 30px rgba(20, 84, 239, .35);
+        }
+
+        .logo-fallback-small {
+            display: none;
+            width: 20mm;
+            height: 20mm;
+            margin: 0 auto 5mm;
+            border-radius: 5mm;
+            background: linear-gradient(135deg, var(--blue), var(--cyan), var(--green));
+            place-items: center;
+            font-size: 7mm;
+            font-weight: 900;
+            color: white;
+        }
+
+        .cover h1 {
+            font-size: 10mm;
+            line-height: 1;
+            letter-spacing: -.5px;
+            font-weight: 900;
+        }
+
+        .cover h1 span {
+            color: #5db1ff;
+        }
+
+        .cover-tagline {
+            margin-top: 4mm;
+            color: #c5d2e8;
+            font-size: 3.5mm;
+            letter-spacing: .4px;
+        }
+
+        .cover-line {
+            width: 22mm;
+            height: 1mm;
+            margin: 6mm auto;
+            border-radius: 10px;
+            background: linear-gradient(90deg,
+                    var(--blue),
+                    var(--cyan),
+                    var(--green));
+        }
+
+        .cover-title {
+            display: inline-block;
+            padding: 2.5mm 5mm;
+            border-radius: 20px;
+            background: rgba(18, 183, 106, .14);
+            border: 1px solid rgba(18, 183, 106, .35);
+            color: #74e8aa;
+            font-size: 3mm;
+            font-weight: 800;
+        }
+
+        .verticals {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2mm;
+            margin-top: 6mm;
+        }
+
+        .verticals span {
+            padding: 1.5mm 3mm;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, .08);
+            border: 1px solid rgba(255, 255, 255, .10);
+            color: #d8e3f5;
+            font-size: 2.8mm;
+            font-weight: 700;
+        }
+
+        .cover-contact {
+            margin-top: 7mm;
+            font-size: 2.8mm;
+            line-height: 1.8;
+            color: #c4d1e7;
+        }
+
+        .cover-bottom {
+            margin-top: 8mm;
+            color: #91a3c1;
+            font-size: 2.4mm;
+            letter-spacing: .5px;
+        }
+
+        /* =========================================================
+           GENERAL HEADINGS
+           ========================================================= */
+
+        .section-tag {
+            display: inline-block;
+            padding: 1.5mm 3mm;
+            border-radius: 20px;
+            background: #edf3ff;
+            color: var(--blue);
+            font-size: 2.5mm;
+            font-weight: 800;
+            letter-spacing: .4px;
+            text-transform: uppercase;
+            margin-bottom: 3mm;
+        }
+
+        .section-title {
+            font-size: 5.1mm;
+            line-height: 1.15;
+            color: var(--navy);
+            font-weight: 850;
+            margin-bottom: 3mm;
+        }
+
+        .section-description {
+            font-size: 3mm;
+            line-height: 1.55;
+            color: var(--muted);
+            margin-bottom: 3mm;
+        }
+
+        .accent-line {
+            width: 15mm;
+            height: .8mm;
+            border-radius: 10px;
+            background: var(--blue);
+            margin: 2mm 0 4mm;
+        }
+
+        /* =========================================================
+           SERVICE BLOCKS
+           ========================================================= */
+
+        .service-block {
+            margin-bottom: 7mm;
+        }
+
+        .service-heading {
+            display: flex;
+            align-items: center;
+            gap: 2.5mm;
+            color: var(--navy);
+            font-size: 4mm;
+            line-height: 1.2;
+            font-weight: 800;
+            margin-bottom: 2mm;
+        }
+
+        .service-icon {
+            width: 8mm;
+            height: 8mm;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            border-radius: 2mm;
+            background: #edf3ff;
+            font-size: 4mm;
+        }
+
+        .service-block p {
+            font-size: 2.85mm;
+            line-height: 1.5;
+            color: var(--muted);
+            margin-bottom: 2mm;
+        }
+
+        .check-list {
+            list-style: none;
+        }
+
+        .check-list li {
+            position: relative;
+            padding-left: 5mm;
+            margin-bottom: 1.5mm;
+            font-size: 2.75mm;
+            line-height: 1.4;
+            color: #4b5668;
+        }
+
+        .check-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--green);
+            font-weight: 900;
+        }
+
+        /* =========================================================
+           TWO SERVICE BOXES
+           ========================================================= */
+
+        .two-boxes {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3mm;
+            margin-top: 3mm;
+        }
+
+        .mini-box {
+            border: 1px solid var(--border);
+            border-radius: 2.5mm;
+            padding: 3mm;
+            background: #fbfcfe;
+        }
+
+        .mini-box h4 {
+            font-size: 2.8mm;
+            line-height: 1.25;
+            color: var(--navy);
+            margin-bottom: 1.5mm;
+        }
+
+        .mini-box p {
+            font-size: 2.45mm;
+            line-height: 1.45;
+            color: #707b8c;
+        }
+
+        /* =========================================================
+           HIGHLIGHT BOX
+           ========================================================= */
+
+        .highlight {
+            padding: 4mm;
+            margin-top: 4mm;
+            background: #f3f7ff;
+            border-left: 1mm solid var(--blue);
+            border-radius: 2mm;
+        }
+
+        .highlight strong {
+            color: var(--navy);
+        }
+
+        .highlight p {
+            font-size: 2.7mm;
+            line-height: 1.5;
+            color: #47546a;
+        }
+
+        /* =========================================================
+           PRINT PANEL
+           ========================================================= */
+
+        .print-panel {
+            background: linear-gradient(180deg, #fff, #fff8fc);
+        }
+
+        .print-panel .section-tag {
+            background: #fff0f7;
+            color: var(--pink);
+        }
+
+        .print-intro {
+            padding: 4mm;
+            border-radius: 3mm;
+            background: linear-gradient(135deg, #fff1f8, #f5f1ff);
+            margin-bottom: 4mm;
+        }
+
+        .print-intro strong {
+            display: block;
+            font-size: 3.5mm;
+            color: var(--navy);
+            margin-bottom: 1mm;
+        }
+
+        .print-intro span {
+            font-size: 2.6mm;
+            line-height: 1.4;
+            color: var(--muted);
+        }
+
+        .print-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5mm;
+        }
+
+        .print-card {
+            border: 1px solid #eadfea;
+            border-radius: 2.5mm;
+            padding: 3mm;
+            background: white;
+            min-height: 25mm;
+        }
+
+        .print-card .emoji {
+            font-size: 5mm;
+            display: block;
+            margin-bottom: 1mm;
+        }
+
+        .print-card h4 {
+            font-size: 2.8mm;
+            color: var(--navy);
+            line-height: 1.2;
+            margin-bottom: 1mm;
+        }
+
+        .print-card p {
+            font-size: 2.3mm;
+            line-height: 1.35;
+            color: #748095;
+        }
+
+        .finish {
+            margin-top: 4mm;
+            padding: 3mm;
+            border-radius: 2mm;
+            background: #f8faff;
+            border: 1px solid var(--border);
+        }
+
+        .finish strong {
+            font-size: 2.6mm;
+            color: var(--navy);
+        }
+
+        .finish span {
+            font-size: 2.5mm;
+            color: #68758a;
+        }
+
+        /* =========================================================
+           ACADEMY / RECLAIM
+           ========================================================= */
+
+        .academy .section-tag {
+            background: #fff4df;
+            color: var(--orange);
+        }
+
+        .reclaim .section-tag {
+            background: #eafaf2;
+            color: var(--green);
+        }
+
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 5mm 0;
+        }
+
+        .stat-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2.5mm;
+            margin-top: 4mm;
+        }
+
+        .stat {
+            padding: 3mm;
+            text-align: center;
+            border-radius: 2mm;
+            background: #f8faff;
+            border: 1px solid var(--border);
+        }
+
+        .stat strong {
+            display: block;
+            color: var(--blue);
+            font-size: 4mm;
+        }
+
+        .stat span {
+            display: block;
+            margin-top: 1mm;
+            color: var(--muted);
+            font-size: 2.3mm;
+        }
+
+        /* =========================================================
+           BUSINESS PRINTING / TIERS
+           ========================================================= */
+
+        .tier {
+            padding: 3mm;
+            border-radius: 2.5mm;
+            margin-bottom: 3mm;
+        }
+
+        .tier-green {
+            background: #f0faf4;
+            border-left: 1mm solid var(--green);
+        }
+
+        .tier-blue {
+            background: #eef4ff;
+            border-left: 1mm solid var(--blue);
+        }
+
+        .tier-red {
+            background: #fff1f4;
+            border-left: 1mm solid #e74c65;
+        }
+
+        .tier-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2mm;
+        }
+
+        .tier-head strong {
+            font-size: 3mm;
+            color: var(--navy);
+        }
+
+        .tier-badge {
+            padding: 1mm 2.5mm;
+            border-radius: 10px;
+            font-size: 2mm;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .green-badge {
+            background: #d8f3e4;
+            color: #23804b;
+        }
+
+        .blue-badge {
+            background: #dce8ff;
+            color: #285bb8;
+        }
+
+        .red-badge {
+            background: #ffe0e6;
+            color: #b52d48;
+        }
+
+        .tier-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.3mm;
+        }
+
+        .tier-items span {
+            padding: 1mm 2mm;
+            border-radius: 10px;
+            background: white;
+            font-size: 2.25mm;
+            color: #566176;
+            border: 1px solid rgba(0, 0, 0, .05);
+        }
+
+        /* =========================================================
+           BACK / CONTACT
+           ========================================================= */
+
+        .back {
+            background:
+                linear-gradient(180deg, #f6f9fe, #ffffff);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .back h2 {
+            text-align: center;
+            font-size: 6mm;
+            color: var(--navy);
+            margin-bottom: 2mm;
+        }
+
+        .back h2 span {
+            color: var(--blue);
+        }
+
+        .back-intro {
+            text-align: center;
+            font-size: 2.8mm;
+            color: var(--muted);
+            line-height: 1.5;
+            margin-bottom: 5mm;
+        }
+
+        .contact-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5mm;
+        }
+
+        .contact {
+            display: flex;
+            align-items: center;
+            gap: 3mm;
+            padding: 3mm;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 2.5mm;
+        }
+
+        .contact-icon {
+            width: 9mm;
+            height: 9mm;
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+            border-radius: 2mm;
+            background: #f0f4fb;
+            font-size: 4mm;
+        }
+
+        .contact-text strong {
+            display: block;
+            font-size: 2.7mm;
+            color: var(--navy);
+            margin-bottom: .8mm;
+        }
+
+        .contact-text span,
+        .contact-text a {
+            display: block;
+            font-size: 2.45mm;
+            line-height: 1.35;
+            color: #68758a;
+            text-decoration: none;
+        }
+
+        .qr-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3mm;
+            margin-top: 4mm;
+        }
+
+        .qr {
+            min-height: 32mm;
+            border: 1px dashed #bdc7d8;
+            border-radius: 2.5mm;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: #fff;
+            color: #7b879a;
+            padding: 2mm;
+        }
+
+        .qr img {
+            width: 22mm;
+            height: 22mm;
+            object-fit: contain;
+            margin-bottom: 2mm;
+        }
+
+        .qr strong {
+            display: block;
+            font-size: 2.5mm;
+            color: var(--navy);
+            margin-bottom: 1mm;
+        }
+
+        .qr span {
+            display: block;
+            font-size: 2mm;
+            line-height: 1.3;
+            color: #68758a;
+        }
+
+        .back-tagline {
+            text-align: center;
+            margin-top: 5mm;
+            padding-top: 4mm;
+            border-top: 1px solid var(--border);
+            font-size: 2.5mm;
+            line-height: 1.5;
+            color: #637087;
+        }
+
+        .back-tagline strong {
+            color: var(--navy);
+        }
+
+        /* =========================================================
+           FOLD NOTE
+           ========================================================= */
+
+        .fold-note {
+            max-width: 1200px;
+            margin: -15px auto 25px;
+            text-align: center;
+            color: #68758a;
+            font-size: 13px;
+        }
+
+        /* =========================================================
+           PRINT
+           ========================================================= */
+
+        @page {
+            size: A4 landscape;
+            margin: 0;
+        }
+
+        @media print {
+
+            body {
+                padding: 0;
+                margin: 0;
+                background: white;
+            }
+
+            .toolbar,
+            .fold-note {
+                display: none !important;
+            }
+
+            .brochure {
+                width: 297mm;
+                height: 210mm;
+                min-height: 210mm;
+                margin: 0;
+                box-shadow: none;
+                page-break-after: always;
+                break-after: page;
+            }
+
+            .brochure:last-child {
+                page-break-after: auto;
+                break-after: auto;
+            }
+
+            .side {
+                width: 297mm;
+                height: 210mm;
+                min-height: 210mm;
+            }
+
+            .panel {
+                height: 210mm;
+                min-height: 210mm;
+            }
+
+            .side::before,
+            .side::after {
+                display: none;
+            }
+
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            a {
+                color: inherit !important;
+                text-decoration: none !important;
+            }
+
+            .logo-img,
+            .logo-img-small,
+            .logo-img-back {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+
+        /* =========================================================
+           MOBILE PREVIEW
+           ========================================================= */
+
+        @media (max-width: 1000px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .brochure {
+                width: 100%;
+                min-height: auto;
+                overflow-x: auto;
+            }
+
+            .side {
+                min-width: 900px;
+            }
+
+            .toolbar {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================================================
+         TOOLBAR
+         ========================================================= -->
+
+    <div class="toolbar">
+
+        <button class="btn btn-blue" onclick="window.print()">
+            🖨️ Print / Save PDF
+        </button>
+
+    </div>
+
+
+    <!-- =========================================================
+         PAGE 1 — OUTSIDE
+         LEFT: BACK
+         CENTER: FOLD-IN
+         RIGHT: FRONT COVER
+         ========================================================= -->
+
+    <section class="brochure">
+
+        <div class="side">
+
+
+            <!-- =================================================
+                 BACK PANEL
+                 ================================================= -->
+
+            <div class="panel back">
+
+                <img src="shaunix-group-logo.png" alt="SHAUNIX GROUP Logo" class="logo-img-back"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';">
+                <div class="logo-fallback-small" style="display:none;">SG</div>
+
+                <h2>
+                    Let's Work <span>Together</span>
+                </h2>
+
+                <p class="back-intro">
+                    Technology, printing, digital solutions,
+                    education and responsible IT asset recovery —
+                    all under one trusted partner.
+                </p>
+
+                <div class="contact-list">
+
+                    <div class="contact">
+
+                        <div class="contact-icon">
+                            📞
+                        </div>
+
+                        <div class="contact-text">
+                            <strong>Phone / WhatsApp</strong>
+                            <a href="tel:+919821186889">
+                                +91 98211 86889
+                            </a>
+                        </div>
+
+                    </div>
+
+
+                    <div class="contact">
+
+                        <div class="contact-icon">
+                            ✉️
+                        </div>
+
+                        <div class="contact-text">
+                            <strong>Email</strong>
+                            <a href="mailto:shaunixgroup@gmail.com">
+                                shaunixgroup@gmail.com
+                            </a>
+                        </div>
+
+                    </div>
+
+
+                    <div class="contact">
+
+                        <div class="contact-icon">
+                            🌐
+                        </div>
+
+                        <div class="contact-text">
+                            <strong>Website</strong>
+                            <a href="https://www.shaunixgroup.com">
+                                www.shaunixgroup.com
+                            </a>
+                        </div>
+
+                    </div>
+
+
+                    <div class="contact">
+
+                        <div class="contact-icon">
+                            📍
+                        </div>
+
+                        <div class="contact-text">
+                            <strong>Address</strong>
+                            <span>
+                                A-20, A Block, Gali No. 1/A,
+                                Om Nagar, Shakti Vihar,
+                                Badarpur, New Delhi,
+                                Delhi 110044
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="contact">
+
+                        <div class="contact-icon">
+                            🕒
+                        </div>
+
+                        <div class="contact-text">
+                            <strong>Business Hours</strong>
+                            <span>
+                                Monday – Saturday · 10 AM – 7 PM
+                            </span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="qr-area">
+
+                    <!-- WHATSAPP QR -->
+                    <div class="qr">
+                        <img src="shaunix_whatsapp_qr.png" alt="WhatsApp QR">
+
+                        <strong>📱 WHATSAPP QR</strong>
+
+                        <span>Scan to Chat with SHAUNIX GROUP</span>
+                    </div>
+
+
+                    <!-- WEBSITE QR -->
+                    <div class="qr">
+                        <img src="shaunix-website-qr.png" alt="Website QR">
+
+                        <strong>🌐 WEBSITE QR</strong>
+
+                        <span>Scan to Visit Our Website</span>
+                    </div>
+
+                </div>
+
+
+                <div class="back-tagline">
+                    <strong>
+                        Technology for Today.
+                    </strong><br>
+
+                    Skills for Tomorrow ·
+                    Sustainability for the Future
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 FOLD-IN PANEL
+                 ================================================= -->
+
+            <div class="panel print-panel">
+
+                <span class="section-tag">
+                    🏢 Why SHAUNIX GROUP
+                </span>
+
+                <h2 class="section-title">
+                    One Group.<br>
+                    Complete Solutions.
+                </h2>
+
+                <div class="accent-line"></div>
+
+                <p class="section-description">
+                    From individual customers to businesses,
+                    schools and institutions, SHAUNIX GROUP
+                    brings technology and business solutions
+                    together under one roof.
+                </p>
+
+
+                <div class="two-boxes">
+
+                    <div class="mini-box">
+
+                        <h4>
+                            💻 Technology
+                        </h4>
+
+                        <p>
+                            IT products, accessories,
+                            upgrades and complete setups.
+                        </p>
+
+                    </div>
+
+
+                    <div class="mini-box">
+
+                        <h4>
+                            🔧 Support
+                        </h4>
+
+                        <p>
+                            Laptop, desktop and printer
+                            repair with service support.
+                        </p>
+
+                    </div>
+
+
+                    <div class="mini-box">
+
+                        <h4>
+                            🌐 Digital
+                        </h4>
+
+                        <p>
+                            Websites, apps, software
+                            and digital branding.
+                        </p>
+
+                    </div>
+
+
+                    <div class="mini-box">
+
+                        <h4>
+                            🖨️ Printing
+                        </h4>
+
+                        <p>
+                            Digital & offset printing,
+                            branding and packaging.
+                        </p>
+
+                    </div>
+
+
+                    <div class="mini-box">
+
+                        <h4>
+                            🎓 Academy
+                        </h4>
+
+                        <p>
+                            Practical technology and
+                            analytics education.
+                        </p>
+
+                    </div>
+
+
+                    <div class="mini-box">
+
+                        <h4>
+                            ♻️ Reclaim
+                        </h4>
+
+                        <p>
+                            IT asset recovery and
+                            responsible e-waste management.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="highlight">
+
+                    <p>
+                        <strong>For Businesses:</strong>
+                        Get technology, printing, digital support,
+                        training and IT asset recovery from
+                        one reliable partner.
+                    </p>
+
+                </div>
+
+
+                <div class="stat-row">
+
+                    <div class="stat">
+                        <strong>6</strong>
+                        <span>Business Verticals</span>
+                    </div>
+
+                    <div class="stat">
+                        <strong>360°</strong>
+                        <span>Solution Approach</span>
+                    </div>
+
+                    <div class="stat">
+                        <strong>B2B</strong>
+                        <span>Business Focus</span>
+                    </div>
+
+                    <div class="stat">
+                        <strong>Local</strong>
+                        <span>Personal Support</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 FRONT COVER
+                 ================================================= -->
+
+            <div class="panel cover">
+
+                <div class="cover-content">
+
+                    <img src="shaunix-group-logo.png" alt="SHAUNIX GROUP Logo" class="logo-img"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';">
+                    <div class="logo-fallback" style="display:none;">SG</div>
+
+                    <h1>
+                        SHAUNIX <span>GROUP</span>
+                    </h1>
+
+                    <div class="cover-tagline">
+                        Technology · Solutions · Growth
+                    </div>
+
+                    <div class="cover-line"></div>
+
+                    <div class="cover-title">
+                        COMPLETE BUSINESS SOLUTIONS
+                    </div>
+
+
+                    <div class="verticals">
+
+                        <span>💻 TECH</span>
+                        <span>🔧 CARE</span>
+                        <span>🌐 DIGITAL</span>
+                        <span>🖨️ PRINT</span>
+                        <span>🎓 ACADEMY</span>
+                        <span>♻️ RECLAIM</span>
+
+                    </div>
+
+
+                    <div class="cover-contact">
+
+                        📞 +91 98211 86889<br>
+
+                        ✉️ shaunixgroup@gmail.com<br>
+
+                        🌐 www.shaunixgroup.com
+
+                    </div>
+
+
+                    <div class="cover-bottom">
+                        From technology to printing,
+                        digital solutions to sustainability.
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================================================
+         PAGE 2 — INSIDE
+         TECH | CARE | DIGITAL
+         ========================================================= -->
+
+    <section class="brochure">
+
+        <div class="side">
+
+
+            <!-- =================================================
+                 TECH
+                 ================================================= -->
+
+            <div class="panel">
+
+                <span class="section-tag">
+                    💻 SHAUNIX TECH
+                </span>
+
+                <h2 class="section-title">
+                    IT Products &
+                    Accessories
+                </h2>
+
+                <div class="accent-line"></div>
+
+                <p class="section-description">
+                    Complete technology products for
+                    students, professionals, offices,
+                    businesses and custom setups.
+                </p>
+
+
+                <div class="service-block">
+
+                    <div class="service-heading">
+
+                        <div class="service-icon">
+                            💻
+                        </div>
+
+                        Laptops & Desktops
+
+                    </div>
+
+                    <p>
+                        New systems, business machines,
+                        student laptops and custom desktop
+                        configurations.
+                    </p>
+
+                    <ul class="check-list">
+
+                        <li>
+                            Branded laptops & desktops
+                        </li>
+
+                        <li>
+                            SSD / RAM upgrades
+                        </li>
+
+                        <li>
+                            Office & business systems
+                        </li>
+
+                        <li>
+                            Student & professional setups
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <div class="service-block">
+
+                    <div class="service-heading">
+
+                        <div class="service-icon">
+                            🖱️
+                        </div>
+
+                        Accessories & Peripherals
+
+                    </div>
+
+                    <p>
+                        Everything required to complete
+                        your workstation.
+                    </p>
+
+                    <ul class="check-list">
+
+                        <li>
+                            Keyboard & mouse
+                        </li>
+
+                        <li>
+                            Monitors & webcams
+                        </li>
+
+                        <li>
+                            Printers & scanners
+                        </li>
+
+                        <li>
+                            Cables, storage & networking
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <div class="highlight">
+
+                    <p>
+                        <strong>Business Orders:</strong>
+                        Bulk requirements, GST billing
+                        and technology recommendations
+                        according to budget and usage.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 CARE
+                 ================================================= -->
+
+            <div class="panel">
+
+                <span class="section-tag" style="background:#fff0ec;color:#ff6b4a;">
+                    🔧 SHAUNIX CARE
+                </span>
+
+                <h2 class="section-title">
+                    Laptop, Desktop
+                    & Printer Repairs
+                </h2>
+
+                <div class="accent-line" style="background:#ff6b4a;">
+                </div>
+
+                <p class="section-description">
+                    Reliable repair and maintenance
+                    support for home users, shops
+                    and offices.
+                </p>
+
+
+                <div class="service-block">
+
+                    <div class="service-heading">
+
+                        <div class="service-icon">
+                            💻
+                        </div>
+
+                        Laptop & Desktop
+
+                    </div>
+
+                    <ul class="check-list">
+
+                        <li>
+                            Screen replacement
+                        </li>
+
+                        <li>
+                            Battery replacement
+                        </li>
+
+                        <li>
+                            Keyboard repair
+                        </li>
+
+                        <li>
+                            SSD / RAM upgrades
+                        </li>
+
+                        <li>
+                            Windows & software installation
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <div class="service-block">
+
+                    <div class="service-heading">
+
+                        <div class="service-icon">
+                            🖨️
+                        </div>
+
+                        Printer Services
+
+                    </div>
+
+                    <ul class="check-list">
+
+                        <li>
+                            Printer diagnosis
+                        </li>
+
+                        <li>
+                            Hardware repair
+                        </li>
+
+                        <li>
+                            Setup & installation
+                        </li>
+
+                        <li>
+                            Office printer support
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <div class="service-block">
+
+                    <div class="service-heading">
+
+                        <div class="service-icon">
+                            🏢
+                        </div>
+
+                        AMC & On-Site Support
+
+                    </div>
+
+                    <p>
+                        Annual maintenance contracts
+                        and on-site technical support
+                        for offices and shops.
+                    </p>
+
+                </div>
+
+
+                <div class="highlight" style="border-left-color:#ff6b4a;background:#fff5f2;">
+
+                    <p>
+                        <strong>Transparent Service:</strong>
+                        Diagnosis first, clear estimate
+                        and genuine parts wherever applicable.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 DIGITAL
+                 ================================================= -->
+
+            <div class="panel">
+
+                <span class="section-tag" style="background:#f2efff;color:#7c5cfc;">
+                    🌐 SHAUNIX DIGITAL
+                </span>
+
+                <h2 class="section-title">
+                    Websites, Apps
+                    & Digital Branding
+                </h2>
+
+                <div class="accent-line" style="background:#7c5cfc;">
+                </div>
+
+                <p class="section-description">
+                    Build a professional digital presence
+                    for your business, brand or organisation.
+                </p>
+
+
+                <div class="service-block">
+
+                    <div class="service-heading">
+
+                        <div class="service-icon">
+                            🌐
+                        </div>
+
+                        Websites & E-commerce
+
+                    </div>
+
+                    <ul class="check-list">
+
+                        <li>
+                            Business websites
+                        </li>
+
+                        <li>
+                            E-commerce websites
+                        </li>
+
+                        <li>
+                            Landing pages
+                        </li>
+
+                        <li>
+                            Mobile-friendly design
+                        </li>
+
+                        <li>
+                            SEO-ready structure
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <div class="service-block">
+
+                    <div class="service-heading">
+
+                        <div class="service-icon">
+                            📱
+                        </div>
+
+                        Apps & Software
+
+                    </div>
+
+                    <ul class="check-list">
+
+                        <li>
+                            Android / iOS applications
+                        </li>
+
+                        <li>
+                            Custom business software
+                        </li>
+
+                        <li>
+                            Internal tools & dashboards
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <div class="service-block">
+
+                    <div class="service-heading">
+
+                        <div class="service-icon">
+                            🎨
+                        </div>
+
+                        Branding
+
+                    </div>
+
+                    <ul class="check-list">
+
+                        <li>
+                            Logo & brand identity
+                        </li>
+
+                        <li>
+                            Social media creatives
+                        </li>
+
+                        <li>
+                            Digital marketing assets
+                        </li>
+
+                        <li>
+                            Print-ready artwork
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <div class="highlight" style="border-left-color:#7c5cfc;background:#f7f5ff;">
+
+                    <p>
+                        <strong>Simple Process:</strong>
+                        Requirement → Design → Demo →
+                        Development → Launch → Support.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================================================
+         PAGE 3 — INSIDE
+         PRINT | COVER | RECLAIM
+         ========================================================= -->
+
+    <section class="brochure">
+
+        <div class="side">
+
+
+            <!-- =================================================
+                 PRINT
+                 ================================================= -->
+
+            <div class="panel print-panel">
+
+                <span class="section-tag">
+                    🖨️ SHAUNIX PRINT
+                </span>
+
+                <h2 class="section-title">
+                    Complete Printing
+                    Solutions
+                </h2>
+
+                <div class="accent-line" style="background:#ec4899;">
+                </div>
+
+
+                <div class="print-intro">
+
+                    <strong>
+                        From 10 cards to 100,000+ prints.
+                    </strong>
+
+                    <span>
+                        Digital printing for short runs,
+                        offset printing for economical
+                        bulk production.
+                    </span>
+
+                </div>
+
+
+                <div class="print-grid">
+
+
+                    <div class="print-card">
+
+                        <span class="emoji">
+                            🪪
+                        </span>
+
+                        <h4>
+                            Business & Corporate
+                        </h4>
+
+                        <p>
+                            Visiting cards, letterheads,
+                            envelopes, folders & forms.
+                        </p>
+
+                    </div>
+
+
+                    <div class="print-card">
+
+                        <span class="emoji">
+                            📦
+                        </span>
+
+                        <h4>
+                            Packaging & Labels
+                        </h4>
+
+                        <p>
+                            Product labels, packaging,
+                            hang tags & stickers.
+                        </p>
+
+                    </div>
+
+
+                    <div class="print-card">
+
+                        <span class="emoji">
+                            📚
+                        </span>
+
+                        <h4>
+                            Books & Education
+                        </h4>
+
+                        <p>
+                            Books, workbooks, notes,
+                            certificates & prospectus.
+                        </p>
+
+                    </div>
+
+
+                    <div class="print-card">
+
+                        <span class="emoji">
+                            💍
+                        </span>
+
+                        <h4>
+                            Wedding & Events
+                        </h4>
+
+                        <p>
+                            Invitations, welcome boards,
+                            cards & event stationery.
+                        </p>
+
+                    </div>
+
+
+                    <div class="print-card">
+
+                        <span class="emoji">
+                            📢
+                        </span>
+
+                        <h4>
+                            Marketing
+                        </h4>
+
+                        <p>
+                            Brochures, flyers, posters,
+                            catalogues & promotional material.
+                        </p>
+
+                    </div>
+
+
+                    <div class="print-card">
+
+                        <span class="emoji">
+                            🏷️
+                        </span>
+
+                        <h4>
+                            Stickers & Signage
+                        </h4>
+
+                        <p>
+                            Vinyl, decals, shop boards,
+                            standees & display material.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="finish">
+
+                    <strong>
+                        Premium Finishes:
+                    </strong>
+
+                    <span>
+                        Matte · Gloss · Spot UV · Foil ·
+                        Emboss · Textured
+                    </span>
+
+                </div>
+
+
+                <div class="highlight" style="border-left-color:#ec4899;background:#fff4fa;">
+
+                    <p>
+                        <strong>Design Support:</strong>
+                        Print-ready artwork can be prepared
+                        for your project through SHAUNIX DIGITAL.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- =================================================
+                             RECLAIM
+                             ================================================= -->
+
+            <div class="panel reclaim">
+
+                <span class="section-tag">
+                    ♻️ SHAUNIX RECLAIM
+                </span>
+
+                <h2 class="section-title">
+                    IT Asset Recovery
+                    & E-Waste Management
+                </h2>
+
+                <div class="accent-line" style="background:#12b76a;">
+                </div>
+
+                <p class="section-description">
+                    Responsible end-of-life management
+                    for computers, printers and IT equipment.
+                </p>
+
+
+                <div class="service-block">
+
+                    <div class="service-heading">
+
+                        <div class="service-icon">
+                            ♻️
+                        </div>
+
+                        Collection
+
+                    </div>
+
+                    <ul class="check-list">
+
+                        <li>
+                            Laptop & desktop collection
+                        </li>
+
+                        <li>
+                            Printer & peripheral collection
+                        </li>
+
+                        <li>
+                            Office IT asset collection
+                        </li>
+
+                        <li>
+                            Doorstep collection
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <div class="service-block">
+
+                    <div class="service-heading">
+
+                        <div class="service-icon">
+                            🔐
+                        </div>
+
+                        Data & Asset Handling
+
+                    </div>
+
+                    <ul class="check-list">
+
+                        <li>
+                            Secure data destruction
+                        </li>
+
+                        <li>
+                            Asset evaluation
+                        </li>
+
+                        <li>
+                            Refurbishment where possible
+                        </li>
+
+                        <li>
+                            Responsible recycling
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <div class="service-block">
+
+                    <div class="service-heading">
+
+                        <div class="service-icon">
+                            🌍
+                        </div>
+
+                        Sustainability
+
+                    </div>
+
+                    <p>
+                        Recover usable equipment, reduce
+                        unnecessary waste and promote
+                        responsible IT asset disposal.
+                    </p>
+
+                </div>
+
+
+                <div class="highlight" style="border-left-color:#12b76a;background:#eefbf5;">
+
+                    <p>
+                        <strong>Sustainability First:</strong>
+                        Recover → Reuse → Refurbish →
+                        Recycle responsibly.
+                    </p>
+
+                </div>
+
+
+                <div class="divider"></div>
+
+
+                <div class="section-tag" style="background:#f0faf4;color:#12b76a;">
+                    🌱 Our Promise
+                </div>
+
+                <p class="section-description">
+                    Technology should create value today
+                    without becoming tomorrow's waste.
+                </p>
+
+            </div>
+            <!-- =================================================
+                 COVER (MIDDLE PANEL - FILLED)
+                 ================================================= -->
+
+            <div class="panel cover">
+
+                <div class="cover-content">
+
+                    <img src="shaunix-group-logo.png" alt="SHAUNIX GROUP Logo" class="logo-img"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';">
+                    <div class="logo-fallback" style="display:none;">SG</div>
+
+                    <h1>
+                        SHAUNIX <span>GROUP</span>
+                    </h1>
+
+                    <div class="cover-tagline">
+                        Technology · Solutions · Growth
+                    </div>
+
+                    <div class="cover-line"></div>
+
+                    <div class="cover-title">
+                        COMPLETE BUSINESS SOLUTIONS
+                    </div>
+
+
+                    <div class="verticals">
+
+                        <span>💻 TECH</span>
+                        <span>🔧 CARE</span>
+                        <span>🌐 DIGITAL</span>
+                        <span>🖨️ PRINT</span>
+                        <span>🎓 ACADEMY</span>
+                        <span>♻️ RECLAIM</span>
+
+                    </div>
+
+
+                    <div class="cover-contact">
+
+                        📞 +91 98211 86889<br>
+
+                        ✉️ shaunixgroup@gmail.com<br>
+
+                        🌐 www.shaunixgroup.com
+
+                    </div>
+
+
+                    <div class="cover-bottom">
+                        From technology to printing,
+                        digital solutions to sustainability.
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <script>
+        // Handle logo loading fallback
+        document.querySelectorAll('.logo-img, .logo-img-small, .logo-img-back').forEach(img => {
+            img.onerror = function () {
+                this.style.display = 'none';
+                const fallback = this.nextElementSibling;
+                if (fallback && fallback.classList.contains('logo-fallback')) {
+                    fallback.style.display = 'grid';
+                }
+                if (fallback && fallback.classList.contains('logo-fallback-small')) {
+                    fallback.style.display = 'grid';
+                }
+            };
+        });
+    </script>
+
+</body>
+
+</html>
