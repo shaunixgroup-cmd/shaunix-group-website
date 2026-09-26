@@ -1,0 +1,207 @@
+/home/c2m/Desktop/shaunix_games/Megaman X4 [SLUS-00561] /home/c2m/Desktop/shaunix_games/Mortal Kombat 4 [NTSC-U] [SLUS-00605] /home/c2m/Desktop/shaunix_games/playzone_kiosk_coding /home/c2m/Desktop/shaunix_games/Street Fighter Alpha 3 (USA) /home/c2m/Desktop/shaunix_games/tekken /home/c2m/Desktop/shaunix_games/Contra (USA).nes /home/c2m/Desktop/shaunix_games/Super Mario Bros. (Japan, USA).nes /home/c2m/Desktop/shaunix_games/Super Bomberman 5 Gold Cartridge (J) [!].smc /home/c2m/Desktop/shaunix_games/Gran Turismo 2 (Europe) (En,Fr,De,Es,It) (Disc 1) (Arcade Mode) (Beta) (1999-12-22).bin
+
+/media/c2m/ANTIX-LIVE/shaunix_games/Megaman X4 [SLUS-00561] /media/c2m/ANTIX-LIVE/shaunix_games/Mortal Kombat 4 [NTSC-U] [SLUS-00605] /media/c2m/ANTIX-LIVE/shaunix_games/mslug3 /media/c2m/ANTIX-LIVE/shaunix_games/mvscur1 /media/c2m/ANTIX-LIVE/shaunix_games/Street Fighter Alpha 3 (USA) /media/c2m/ANTIX-LIVE/shaunix_games/tekken /media/c2m/ANTIX-LIVE/shaunix_games/validator /media/c2m/ANTIX-LIVE/shaunix_games/Contra (USA).nes /media/c2m/ANTIX-LIVE/shaunix_games/Super Mario Bros. (Japan, USA).nes /media/c2m/ANTIX-LIVE/shaunix_games/Super Bomberman 5 Gold Cartridge (J) [!].smc /media/c2m/ANTIX-LIVE/shaunix_games/Gran Turismo 2 (Europe) (En,Fr,De,Es,It) (Disc 1) (Arcade Mode) (Beta) (1999-12-22).bin
+ye maine files apne pendrive mein daal di h.
+
+ab problem ye h ki main ye data jaha bhi copy karunga files ka path change ho jayega.
+toh aise mein launcher.py kya set karu.
+
+ye h current launcher.py
+# validator/launcher.py
+# Shaunix Playzone - Game Launcher (RetroArch Flatpak)
+
+import os
+import sys
+import time
+import signal
+import subprocess
+
+# ============================================================
+# RETROARCH CONFIG (Flatpak)
+# ============================================================
+RETROARCH_CMD = ["flatpak", "run", "org.libretro.RetroArch"]
+
+CORES_DIR = "/home/c2m/.var/app/org.libretro.RetroArch/config/retroarch/cores"
+
+CORES = {
+    "NES":  f"{CORES_DIR}/quicknes_libretro.so",
+    "SNES": f"{CORES_DIR}/snes9x_libretro.so",
+    "PS1":  f"{CORES_DIR}/pcsx_rearmed_libretro.so",
+}
+
+# ============================================================
+# GAMES CONFIG (8 games only)
+# ============================================================
+GAMES = {
+    # ---------- NES ----------
+    "CONTRA": {
+        "name": "Contra",
+        "core": CORES["NES"],
+        "rom": "/home/c2m/Desktop/shaunix_games/Contra (USA).nes",
+    },
+    "SMB": {
+        "name": "Super Mario Bros.",
+        "core": CORES["NES"],
+        "rom": "/home/c2m/Desktop/shaunix_games/Super Mario Bros. (Japan, USA).nes",
+    },
+
+    # ---------- SNES ----------
+    "BOMB5": {
+        "name": "Super Bomberman 5",
+        "core": CORES["SNES"],
+        "rom": "/home/c2m/Desktop/shaunix_games/Super Bomberman 5 Gold Cartridge (J) [!].smc",
+    },
+
+    # ---------- PS1 ----------
+    "MMX4": {
+        "name": "Mega Man X4",
+        "core": CORES["PS1"],
+        "rom": "/home/c2m/Desktop/shaunix_games/Megaman X4 [SLUS-00561]/Megaman X4.cue",
+    },
+    "MK4": {
+        "name": "Mortal Kombat 4",
+        "core": CORES["PS1"],
+        "rom": "/home/c2m/Desktop/shaunix_games/Mortal Kombat 4 [NTSC-U] [SLUS-00605]/Mortal Kombat 4 (USA).cue",
+    },
+    "SFA3": {
+        "name": "Street Fighter Alpha 3",
+        "core": CORES["PS1"],
+        "rom": "/home/c2m/Desktop/shaunix_games/Street Fighter Alpha 3 (USA)/Street Fighter Alpha 3 (USA).cue",
+    },
+    "TEK3": {
+        "name": "Tekken 3",
+        "core": CORES["PS1"],
+        # ⚠️ Confirm karo — Tekken 3 (USA) folder ke andar kya files hain
+        "rom": "/home/c2m/Desktop/shaunix_games/tekken/Tekken 3 (USA)/Tekken 3 (USA).cue",
+    },
+    "GT2": {
+        "name": "Gran Turismo 2",
+        "core": CORES["PS1"],
+        "rom": "/home/c2m/Desktop/shaunix_games/Gran Turismo 2 (Europe) (En,Fr,De,Es,It) (Disc 1) (Arcade Mode) (Beta) (1999-12-22).bin",
+    },
+}
+
+
+# ============================================================
+# LAUNCH LOGIC
+# ============================================================
+def launch_game(game_code, playtime_minutes):
+    if game_code not in GAMES:
+        print(f"\n\033[31m❌ Game '{game_code}' not configured\033[0m")
+        return False
+
+    game = GAMES[game_code]
+
+    if not os.path.exists(game["rom"]):
+        print(f"\n\033[31m❌ ROM not found:\033[0m")
+        print(f"   {game['rom']}")
+        return False
+
+    if not os.path.exists(game["core"]):
+        print(f"\n\033[31m❌ Core not found: {game['core']}\033[0m")
+        return False
+
+    cmd = RETROARCH_CMD + ["-L", game["core"], game["rom"]]
+    playtime_sec = playtime_minutes * 60
+
+    print(f"\n\033[36m🎮 Launching: {game['name']} ({game_code})\033[0m")
+    print(f"\033[36m⏱️  Duration : {playtime_minutes} min\033[0m")
+    print(f"\033[36m🧩 Core     : {os.path.basename(game['core'])}\033[0m")
+    print(f"\033[36m📁 ROM      : {os.path.basename(game['rom'])}\033[0m")
+    print("")
+
+    try:
+        proc = subprocess.Popen(
+            cmd,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            stdin=subprocess.DEVNULL,
+            preexec_fn=os.setsid,
+        )
+    except FileNotFoundError:
+        print(f"\n\033[31m❌ Flatpak not found\033[0m")
+        return False
+    except Exception as e:
+        print(f"\n\033[31m❌ Launch failed: {e}\033[0m")
+        return False
+
+    start_time = time.time()
+
+    try:
+        while True:
+            elapsed = time.time() - start_time
+            remaining = playtime_sec - elapsed
+
+            if remaining <= 0:
+                break
+
+            if proc.poll() is not None:
+                print("\n\033[33m⚠️  RetroArch closed early by user\033[0m")
+                return True
+
+            mins = int(remaining // 60)
+            secs = int(remaining % 60)
+            bar_width = 30
+            filled = int((elapsed / playtime_sec) * bar_width)
+            bar = "█" * filled + "░" * (bar_width - filled)
+
+            sys.stdout.write(
+                f"\r\033[35m⏳ [{bar}] \033[33m{mins:02d}:{secs:02d}\033[0m  "
+            )
+            sys.stdout.flush()
+            time.sleep(1)
+
+    except KeyboardInterrupt:
+        print("\n\n\033[33m⚠️  Interrupted by operator\033[0m")
+
+    print("\n\n\033[31m⏰ Time up! Closing game...\033[0m")
+    kill_process_tree(proc)
+    time.sleep(2)
+
+    print("\033[32m✅ Session ended.\033[0m")
+    return True
+
+
+def kill_process_tree(proc):
+    if proc.poll() is not None:
+        return
+
+    try:
+        os.killpg(os.getpgid(proc.pid), signal.SIGTERM)
+    except ProcessLookupError:
+        return
+    except Exception as e:
+        print(f"  (SIGTERM failed: {e})")
+
+    for _ in range(50):
+        if proc.poll() is not None:
+            return
+        time.sleep(0.1)
+
+    try:
+        os.killpg(os.getpgid(proc.pid), signal.SIGKILL)
+    except ProcessLookupError:
+        pass
+    except Exception as e:
+        print(f"  (SIGKILL failed: {e})")
+
+
+if __name__ == "__main__":
+    if len(sys.argv) < 3:
+        print("Usage: python3 launcher.py <GAME_CODE> <PLAYTIME_MIN>")
+        print("")
+        print("Available games:")
+        for code, info in GAMES.items():
+            rom_ok = "✅" if os.path.exists(info["rom"]) else "❌"
+            core_ok = "✅" if os.path.exists(info["core"]) else "❌"
+            print(f"  ROM {rom_ok}  CORE {core_ok}  {code:<8} → {info['name']}")
+        sys.exit(1)
+
+    code = sys.argv[1].upper()
+    mins = int(sys.argv[2])
+    launch_game(code, mins)
+
+
+Aur system mein kya kya install karna padega uska readme.txt bana ke de do.
+
+

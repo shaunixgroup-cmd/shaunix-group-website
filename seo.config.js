@@ -135,6 +135,17 @@ const PAGES = {
     canonical: '/feedback',
     schemaName: 'SHAUNIX GROUP',
     crumbs: [{ name: 'Home', url: '/' }, { name: 'Feedback', url: '/feedback' }]
+  },
+
+  /* SHAUNIX PLAYZONE — private admin page (hidden, noindex) */
+  'playzone.html': {
+    title: 'SHAUNIX PLAYZONE — Admin',
+    description: 'SHAUNIX PLAYZONE gaming station admin panel.',
+    keywords: 'SHAUNIX PLAYZONE',
+    canonical: '/playzone_key',
+    robots: 'noindex, nofollow',
+    schemaName: 'SHAUNIX PLAYZONE',
+    crumbs: []
   }
 };
 

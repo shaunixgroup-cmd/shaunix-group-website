@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {{SEO}}
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <style>
+    /* Same styles jo playzone.html mein hain */
+    .pz-wrap { max-width: 760px; margin: 0 auto; }
+    .pz-panel { background: #fff; border: 1px solid #e6e9ef; border-radius: 16px; padding: 28px; box-shadow: 0 8px 30px rgba(15,23,42,.07); }
+    .pz-panel h3 { margin: 0 0 14px; font-family: 'Sora', sans-serif; }
+    .pz-field { margin-bottom: 16px; }
+    .pz-field label { display: block; font-weight: 600; font-size: .9rem; margin-bottom: 6px; color: #0f172a; }
+    .pz-field select, .pz-field input { width: 100%; padding: 11px 12px; border: 1px solid #d7dbe3; border-radius: 10px; font: inherit; font-size: 1rem; background: #fff; color: #0f172a; box-sizing: border-box; }
+    .pz-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .pz-btn { display: inline-block; width: 100%; padding: 13px 18px; border: 0; border-radius: 10px; background: #1d4ed8; color: #fff; font: 700 1rem 'Sora', sans-serif; cursor: pointer; }
+    .pz-btn:hover { background: #1a40af; }
+    .pz-btn[disabled] { opacity: .6; cursor: not-allowed; }
+    .pz-btn.ghost { background: #fff; color: #1d4ed8; border: 1.5px solid #1d4ed8; }
+    .pz-btn.ghost:hover { background: #eef2ff; }
+    .pz-status { min-height: 1.4em; margin-top: 12px; font-weight: 600; }
+    .pz-status.err { color: #b91c1c; }
+    .pz-status.ok { color: #15803d; }
+    .pz-key-card { display: none; text-align: center; background: #0f172a; color: #fff; border-radius: 16px; padding: 30px 24px; margin-top: 18px; box-shadow: 0 12px 34px rgba(15,23,42,.35); }
+    .pz-key-card.show { display: block; }
+    .pz-key-card h3 { font-family: 'Sora', sans-serif; letter-spacing: .08em; color: #93c5fd; margin: 0 0 6px; }
+    .pz-key-sub { color: #cbd5e1; margin: 0 0 14px; }
+    .pz-meta { display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; max-width: 340px; margin: 0 auto 18px; text-align: left; }
+    .pz-meta span { color: #cbd5e1; }
+    .pz-meta b { color: #fff; }
+    .pz-key { font-family: 'Sora', monospace; font-size: clamp(2rem, 8vw, 3rem); font-weight: 800; letter-spacing: .18em; color: #4ade80; margin: 8px 0 18px; user-select: all; }
+    .pz-key-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .pz-key-actions .pz-btn { width: auto; padding: 11px 20px; }
+  </style>
+</head>
+<body>
+  {{HEADER}}
+
+  <section class="page-hero">
+    <div class="container">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a><i>›</i><b>Playstation</b>
+      </nav>
+      <span class="eyebrow eyebrow-light">Gaming Station</span>
+      <h1>SHAUNIX <em>PLAYSTATION</em></h1>
+      <p class="ph-sub">Generate a PLAY KEY for the gaming PC.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container pz-wrap">
+
+      <div id="pzGate">
+        <div class="pz-panel" style="max-width:420px; margin:0 auto; text-align:center;">
+          <h3>🔐 Admin Access</h3>
+          <div class="pz-field">
+            <label for="pzPass">Password</label>
+            <input type="password" id="pzPass" placeholder="Enter admin password">
+          </div>
+          <button class="pz-btn" id="pzGateBtn" type="button">UNLOCK</button>
+          <p class="pz-status err" id="pzGateStatus"></p>
+        </div>
+      </div>
+
+      <div id="pzApp" style="display:none;">
+        <div class="pz-panel">
+          <h3>🎮 Generate PLAY KEY</h3>
+          <form id="pzForm" novalidate>
+
+            <div class="pz-field">
+              <label for="pzGame">Game</label>
+              <select id="pzGame" required>
+                <option value="" selected disabled>Select game…</option>
+                <option>Tekken 3</option>
+                <option>Street Fighter Alpha 3</option>
+                <option>Mortal Kombat 4</option>
+                <option>Contra</option>
+                <option>Super Mario Bros.</option>
+                <option>Super Bomberman 5</option>
+                <option>Megaman X4</option>
+              </select>
+            </div>
+
+            <div class="pz-row">
+              <div class="pz-field">
+                <label for="pzDuration">Duration (minutes)</label>
+                <input type="number" id="pzDuration" min="1" step="1" value="30" required>
+              </div>
+              <div class="pz-field">
+                <label for="pzPrice">Price (₹)</label>
+                <input type="number" id="pzPrice" min="0" step="1" value="60">
+              </div>
+            </div>
+
+            <div class="pz-row">
+              <div class="pz-field">
+                <label for="pzPayment">Payment Method</label>
+                <select id="pzPayment" required>
+                  <option value="" selected disabled>Select payment…</option>
+                  <option>Cash</option>
+                  <option>UPI</option>
+                </select>
+              </div>
+              <div class="pz-field">
+                <label for="pzIncharge">Incharge Name</label>
+                <input type="text" id="pzIncharge" placeholder="Your name" maxlength="60">
+              </div>
+            </div>
+
+            <button class="pz-btn" type="submit" id="pzSubmitBtn">⚡ GENERATE PLAY KEY</button>
+            <p class="pz-status" id="pzStatus"></p>
+          </form>
+
+          <div class="pz-key-card" id="pzKeyCard">
+            <h3>🎉 PLAY KEY GENERATED!</h3>
+            <p class="pz-key-sub">Here's your PLAY KEY:</p>
+            <div class="pz-key" id="pzKeyText">----</div>
+            <div class="pz-meta">
+              <span>GAME:</span><b id="pzRGame"></b>
+              <span>TIME:</span><b id="pzRTime"></b>
+              <span>PRICE:</span><b id="pzRPrice"></b>
+              <span>PAYMENT:</span><b id="pzRPay"></b>
+              <span>INCHARGE:</span><b id="pzRIncharge"></b>
+            </div>
+            <div class="pz-key-actions">
+              <button class="pz-btn" type="button" id="pzCopyBtn">📋 COPY KEY</button>
+              <button class="pz-btn ghost" type="button" id="pzAgainBtn">＋ ANOTHER KEY</button>
+            </div>
+            <p class="pz-status ok" id="pzKeyStatus" style="margin-top:14px;"></p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  {{FOOTER}}
+
+  <script>
+    (function () {
+      'use strict';
+
+      var PASS = 'playzone2026';   // ★ Change this
+      var gate = document.getElementById('pzGate');
+      var app = document.getElementById('pzApp');
+      var gateBtn = document.getElementById('pzGateBtn');
+      var gateStatus = document.getElementById('pzGateStatus');
+      var gateInput = document.getElementById('pzPass');
+
+      gateBtn.addEventListener('click', unlock);
+      gateInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') unlock();
+      });
+
+      function unlock() {
+        if (gateInput.value === PASS) {
+          gate.style.display = 'none';
+          app.style.display = '';
+          gateStatus.textContent = '';
+          gateInput.value = '';
+        } else {
+          gateStatus.textContent = 'Wrong password.';
+          gateInput.value = '';
+          gateInput.focus();
+        }
+      }
+
+      var form = document.getElementById('pzForm');
+      var submitBtn = document.getElementById('pzSubmitBtn');
+      var statusEl = document.getElementById('pzStatus');
+      var keyCard = document.getElementById('pzKeyCard');
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        generate();
+      });
+
+      function generate() {
+        var game = document.getElementById('pzGame').value;
+        var minutes = document.getElementById('pzDuration').value;
+        var price = document.getElementById('pzPrice').value;
+        var payment = document.getElementById('pzPayment').value;
+        var incharge = document.getElementById('pzIncharge').value.trim();
+
+        if (!game || !payment) {
+          setStatus('Please select game and payment.', true);
+          return;
+        }
+        if (incharge === '') {
+          setStatus('Please enter incharge name.', true);
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Generating…';
+        setStatus('Sending…', false);
+        keyCard.classList.remove('show');
+
+        fetch('/playzone_key/api', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            pc_id: 'PC-01',
+            game: game,
+            duration_minutes: Number(minutes),
+            price: Number(price),
+            payment_method: payment,
+            incharge_name: incharge
+          })
+        })
+          .then(function (r) { return r.json().then(function (d) { return { status: r.status, data: d }; }); })
+          .then(function (res) {
+            if (!res.data.ok) throw new Error(res.data.error || 'Could not generate key.');
+            showKey(res.data.key);
+          })
+          .catch(function (err) {
+            setStatus(err.message || 'Something went wrong.', true);
+          })
+          .then(function () {
+            submitBtn.disabled = false;
+            submitBtn.textContent = '⚡ GENERATE PLAY KEY';
+          });
+      }
+
+      function showKey(key) {
+        document.getElementById('pzRGame').textContent = document.getElementById('pzGame').value;
+        document.getElementById('pzRTime').textContent = document.getElementById('pzDuration').value + ' minutes';
+        document.getElementById('pzRPrice').textContent = '₹' + document.getElementById('pzPrice').value;
+        document.getElementById('pzRPay').textContent = document.getElementById('pzPayment').value;
+        document.getElementById('pzRIncharge').textContent = document.getElementById('pzIncharge').value.trim();
+        document.getElementById('pzKeyText').textContent = key;
+        document.getElementById('pzKeyStatus').textContent = 'STATUS: ACTIVE';
+        keyCard.classList.add('show');
+        keyCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setStatus('', false);
+      }
+
+      document.getElementById('pzAgainBtn').addEventListener('click', function () {
+        keyCard.classList.remove('show');
+        form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+
+      document.getElementById('pzCopyBtn').addEventListener('click', function () {
+        var key = document.getElementById('pzKeyText').textContent.trim();
+        var btn = this;
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(key).then(function () {
+            btn.textContent = '✅ COPIED!';
+            setTimeout(function () { btn.textContent = '📋 COPY KEY'; }, 2000);
+          });
+        }
+      });
+
+      function setStatus(msg, isErr) {
+        statusEl.textContent = msg;
+        statusEl.className = 'pz-status' + (isErr ? ' err' : ' ok');
+      }
+    })();
+  </script>
+</body>
+</html>

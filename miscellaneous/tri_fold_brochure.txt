@@ -1,0 +1,57 @@
+Bhaiya mujhe **A4 Landscape Tri-Fold Brochure** print karwana hai.
+
+**Size:** A4 — 297 × 210 mm
+**Type:** 3-panel / Tri-Fold
+**Sides:** Front & Back, total **6 panels**
+**Printing:** Full colour, both sides
+**Paper:** 170–200 GSM matte/gloss art paper
+**Finish:** Matte lamination preferred
+**Folding:** 2 vertical folds, brochure ko 3 equal panels mein fold karna hai.
+
+Mujhe **proper tri-fold brochure folding layout** chahiye, normal 3-page print nahi.
+
+Final folded size approximately **99 × 210 mm** hoga.
+
+Please fold positions aur panel order CorelDRAW mein properly set kar dena. Bleed aur safe margin bhi rakhna.
+
+Final output: **CDR + print-ready PDF**.
+
+Band hone par
+       ┌───────────────────────┐
+       │                       │
+       │     SHAUNIX GROUP     │
+       │                       │
+       │ Technology · Solutions│
+       │       · Growth        │
+       │                       │
+       └───────────────────────┘
+              99 × 210 mm
+
+Kholne par
+┌─────────────┬─────────────┬─────────────┐
+│             │             │             │
+│    BACK     │   FOLD-IN   │    COVER    │
+│             │             │             │
+│ Contact     │ Why         │ SHAUNIX     │
+│ QR          │ SHAUNIX     │ GROUP       │
+│ Address     │ GROUP       │             │
+│             │             │ TECH CARE   │
+│             │             │ DIGITAL...  │
+└─────────────┴─────────────┴─────────────┘
+                 297 mm              
+
+Aur andar kholne par:
+┌─────────────┬─────────────┬─────────────┐
+│    TECH     │     CARE    │   DIGITAL   │
+│             │             │             │
+│ Products    │ Repairs     │ Websites    │
+│ Accessories │ AMC         │ Apps        │
+│ Setup       │ Printers    │ Branding    │
+├─────────────┼─────────────┼─────────────┤
+│    PRINT    │   ACADEMY   │   RECLAIM   │
+│             │             │             │
+│ Digital     │ MERN        │ E-Waste     │
+│ Offset      │ Python      │ IT Assets   │
+│ Packaging   │ Data        │ Recycling   │
+└─────────────┴─────────────┴─────────────┘
+

@@ -151,7 +151,7 @@ function renderPage(res, viewFile) {
       '{{TITLE}}': seo.title,
       '{{DESCRIPTION}}': seo.description,
       '{{KEYWORDS}}': seo.keywords || SEO.brand.defaultKeywords,
-      '{{ROBOTS}}': SEO.brand.robots,
+      '{{ROBOTS}}': ownSeo.robots || SEO.brand.robots,
       '{{CANONICAL}}': pageUrl,
       '{{OG_TITLE}}': seo.ogTitle || seo.title,
       '{{OG_DESCRIPTION}}': seo.ogDescription || seo.description,

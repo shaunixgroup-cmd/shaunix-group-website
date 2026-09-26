@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {{SEO}}
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+
+  <style>
+    /* ---------- PLAYZONE page styles ---------- */
+    .pz-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .pz-panel {
+      background: #fff;
+      border: 1px solid #e6e9ef;
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 8px 30px rgba(15, 23, 42, .07);
+    }
+
+    .pz-panel h3 {
+      margin: 0 0 14px;
+      font-family: 'Sora', sans-serif;
+    }
+
+    .pz-field {
+      margin-bottom: 16px;
+    }
+
+    .pz-field label {
+      display: block;
+      font-weight: 600;
+      font-size: .9rem;
+      margin-bottom: 6px;
+      color: #0f172a;
+    }
+
+    .pz-field select,
+    .pz-field input {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid #d7dbe3;
+      border-radius: 10px;
+      font: inherit;
+      font-size: 1rem;
+      background: #fff;
+      color: #0f172a;
+      box-sizing: border-box;
+    }
+
+    .pz-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .pz-btn {
+      display: inline-block;
+      width: 100%;
+      padding: 13px 18px;
+      border: 0;
+      border-radius: 10px;
+      background: #1d4ed8;
+      color: #fff;
+      font: 700 1rem 'Sora', sans-serif;
+      cursor: pointer;
+    }
+
+    .pz-btn:hover {
+      background: #1a40af;
+    }
+
+    .pz-btn[disabled] {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
+    .pz-btn.ghost {
+      background: #fff;
+      color: #1d4ed8;
+      border: 1.5px solid #1d4ed8;
+    }
+
+    .pz-btn.ghost:hover {
+      background: #eef2ff;
+    }
+
+    .pz-status {
+      min-height: 1.4em;
+      margin-top: 12px;
+      font-weight: 600;
+    }
+
+    .pz-status.err {
+      color: #b91c1c;
+    }
+
+    .pz-status.ok {
+      color: #15803d;
+    }
+
+    /* PLAY KEY result card */
+    .pz-key-card {
+      display: none;
+      text-align: center;
+      background: #0f172a;
+      color: #fff;
+      border-radius: 16px;
+      padding: 30px 24px;
+      margin-top: 18px;
+      box-shadow: 0 12px 34px rgba(15, 23, 42, .35);
+    }
+
+    .pz-key-card.show {
+      display: block;
+    }
+
+    .pz-key-card h3 {
+      font-family: 'Sora', sans-serif;
+      letter-spacing: .08em;
+      color: #93c5fd;
+      margin: 0 0 6px;
+    }
+
+    .pz-key-sub {
+      color: #cbd5e1;
+      margin: 0 0 14px;
+    }
+
+    .pz-meta {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 4px 16px;
+      max-width: 340px;
+      margin: 0 auto 18px;
+      text-align: left;
+    }
+
+    .pz-meta span {
+      color: #cbd5e1;
+    }
+
+    .pz-meta b {
+      color: #fff;
+    }
+
+    .pz-key {
+      font-family: 'Sora', monospace;
+      font-size: clamp(2rem, 8vw, 3rem);
+      font-weight: 800;
+      letter-spacing: .18em;
+      color: #4ade80;
+      margin: 8px 0 18px;
+      user-select: all;
+    }
+
+    .pz-key-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .pz-key-actions .pz-btn {
+      width: auto;
+      padding: 11px 20px;
+    }
+
+    /* Recent keys table */
+    .pz-table-wrap {
+      overflow-x: auto;
+    }
+
+    .pz-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .9rem;
+      min-width: 720px;
+    }
+
+    .pz-table th,
+    .pz-table td {
+      padding: 9px 12px;
+      text-align: left;
+      border-bottom: 1px solid #e6e9ef;
+      white-space: nowrap;
+    }
+
+    .pz-table th {
+      font-family: 'Sora', sans-serif;
+      font-size: .78rem;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: #475569;
+      background: #f8fafc;
+    }
+
+    .pz-table td.pz-k {
+      font-family: 'Sora', monospace;
+      font-weight: 700;
+      color: #1d4ed8;
+    }
+
+    .pz-badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 999px;
+      background: #dcfce7;
+      color: #15803d;
+      font-weight: 600;
+      font-size: .78rem;
+    }
+
+    .pz-empty {
+      color: #64748b;
+      font-style: italic;
+      padding: 14px 4px;
+    }
+
+    @media (max-width: 560px) {
+      .pz-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  {{HEADER}}
+
+  <section class="page-hero">
+    <div class="container">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a><i>›</i><b>Playzone</b>
+      </nav>
+      <span class="eyebrow eyebrow-light">Gaming Station Admin</span>
+      <h1>SHAUNIX <em>PLAYZONE</em></h1>
+      <p class="ph-sub">Generate a temporary PLAY KEY for a gaming PC and give it to the customer.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container pz-wrap">
+
+      <!-- ========================================================
+           1) PASSWORD GATE
+           ======================================================== -->
+      <div id="pzGate">
+        <div class="pz-panel" style="max-width:420px; margin:0 auto; text-align:center;">
+          <h3>🔐 Admin Access</h3>
+          <div class="pz-field">
+            <label for="pzPass">Password</label>
+            <input type="password" id="pzPass" autocomplete="current-password" placeholder="Enter admin password">
+          </div>
+          <button class="pz-btn" id="pzGateBtn" type="button">UNLOCK PLAYZONE</button>
+          <p class="pz-status err" id="pzGateStatus" role="alert"></p>
+        </div>
+      </div>
+
+      <!-- ========================================================
+           2) AUTHENTICATED PANEL
+           ======================================================== -->
+      <div id="pzApp" style="display:none;">
+
+        <!-- GENERATOR FORM -->
+        <div class="pz-panel" id="pzFormCard">
+          <h3>🎮 Generate PLAY KEY</h3>
+
+          <form id="pzForm" novalidate>
+
+            <div class="pz-row">
+              <div class="pz-field">
+                <label for="pzPc">PC</label>
+                <select id="pzPc" required>
+                  <option value="" selected disabled>Select PC…</option>
+                  <option>PC-01</option>
+                  <option>PC-02</option>
+                  <option>PC-03</option>
+                </select>
+              </div>
+
+              <div class="pz-field">
+                <label for="pzGame">Game</label>
+                <select id="pzGame" required>
+                  <option value="" selected disabled>Select game…</option>
+                  <option>Tekken 3</option>
+                  <option>Street Fighter Alpha 3</option>
+                  <option>Mortal Kombat 4</option>
+                  <option>Marvel vs. Capcom</option>
+                  <option>Metal Slug 3</option>
+                  <option>Contra</option>
+                  <option>Super Mario Bros.</option>
+                  <option>Road Rash</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="pz-row">
+              <div class="pz-field">
+                <label for="pzDuration">Duration (minutes)</label>
+                <input type="number" id="pzDuration" min="1" step="1" value="30" placeholder="e.g. 30" required>
+              </div>
+
+              <div class="pz-field">
+                <label for="pzPrice">Price (₹)</label>
+                <input type="number" id="pzPrice" min="0" step="1" value="0" placeholder="0">
+              </div>
+            </div>
+
+            <div class="pz-row">
+              <div class="pz-field">
+                <label for="pzPayment">Payment Method</label>
+                <select id="pzPayment" required>
+                  <option value="" selected disabled>Select payment…</option>
+                  <option>Cash</option>
+                  <option>UPI</option>
+                </select>
+              </div>
+
+              <div class="pz-field">
+                <label for="pzIncharge">Incharge Name</label>
+                <input type="text" id="pzIncharge" placeholder="Your name" maxlength="60">
+              </div>
+            </div>
+
+            <button class="pz-btn" type="submit" id="pzSubmitBtn">⚡ GENERATE PLAY KEY</button>
+            <p class="pz-status" id="pzStatus" role="status"></p>
+          </form>
+
+          <!-- SUCCESS / KEY CARD -->
+          <div class="pz-key-card" id="pzKeyCard" aria-live="polite">
+            <h3>🎉 PLAY KEY GENERATED SUCCESSFULLY!</h3>
+            <p class="pz-key-sub">Here's your PLAY KEY:</p>
+            <div class="pz-key" id="pzKeyText">----</div>
+
+            <div class="pz-meta">
+              <span>PC:</span><b id="pzRPc"></b>
+              <span>GAME:</span><b id="pzRGame"></b>
+              <span>TIME:</span><b id="pzRTime"></b>
+              <span>PRICE:</span><b id="pzRPrice"></b>
+              <span>PAYMENT:</span><b id="pzRPay"></b>
+              <span>INCHARGE:</span><b id="pzRIncharge"></b>
+            </div>
+
+            <div class="pz-key-actions">
+              <button class="pz-btn" type="button" id="pzCopyBtn">📋 COPY KEY</button>
+              <button class="pz-btn ghost" type="button" id="pzAgainBtn">＋ GENERATE ANOTHER KEY</button>
+            </div>
+            <p class="pz-status ok" id="pzKeyStatus" style="margin-top:14px;"></p>
+          </div>
+        </div><!-- /#pzFormCard -->
+
+        <!-- RECENT PLAY KEYS -->
+        <div class="pz-panel" style="margin-top:18px;">
+          <h3>🕐 Recent PLAY Keys (This Session)</h3>
+          <div class="pz-table-wrap">
+            <table class="pz-table">
+              <thead>
+                <tr>
+                  <th>Key</th>
+                  <th>PC</th>
+                  <th>Game</th>
+                  <th>Duration</th>
+                  <th>Price</th>
+                  <th>Payment</th>
+                  <th>Incharge</th>
+                  <th>Created At</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="pzTableBody">
+                <tr>
+                  <td colspan="9" class="pz-empty">No keys generated yet in this session.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div><!-- /#pzApp -->
+
+    </div>
+  </section>
+
+  {{FOOTER}}
+
+  <script>
+    (function () {
+      'use strict';
+
+      /* ==============================
+         1) PASSWORD GATE
+         ============================== */
+      var PASS = 'playzone2026';   // ⚠️ change this
+      var gate = document.getElementById('pzGate');
+      var app = document.getElementById('pzApp');
+      var gateBtn = document.getElementById('pzGateBtn');
+      var gateStatus = document.getElementById('pzGateStatus');
+      var gateInput = document.getElementById('pzPass');
+
+      gateBtn.addEventListener('click', unlock);
+      gateInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') unlock();
+      });
+
+      function unlock() {
+        if (gateInput.value === PASS) {
+          gate.style.display = 'none';
+          app.style.display = '';
+          gateStatus.textContent = '';
+          gateInput.value = '';
+        } else {
+          gateStatus.textContent = 'Wrong password — please try again.';
+          gateInput.value = '';
+          gateInput.focus();
+        }
+      }
+
+      /* ==============================
+         2) FORM → GENERATE KEY
+         ============================== */
+      var form = document.getElementById('pzForm');
+      var submitBtn = document.getElementById('pzSubmitBtn');
+      var statusEl = document.getElementById('pzStatus');
+      var keyCard = document.getElementById('pzKeyCard');
+      var recent = [];
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        generate();
+      });
+
+      function generate() {
+        var pc = document.getElementById('pzPc').value;
+        var game = document.getElementById('pzGame').value;
+        var minutes = document.getElementById('pzDuration').value;
+        var price = document.getElementById('pzPrice').value;
+        var payment = document.getElementById('pzPayment').value;
+        var incharge = document.getElementById('pzIncharge').value.trim();
+
+        /* --- validate --- */
+        if (!pc || !game || !payment) {
+          setStatus('Please fill every field — PC, Game and Payment.', true);
+          return;
+        }
+        if (minutes === '' || !/^\d+$/.test(String(minutes).trim()) || Number(minutes) < 1) {
+          setStatus('Duration must be a whole number of 1 minute or more.', true);
+          return;
+        }
+        if (incharge === '') {
+          setStatus('Please enter the incharge name.', true);
+          return;
+        }
+        if (price === '' || !/^\d+(\.\d+)?$/.test(String(price).trim()) || Number(price) < 0) {
+          setStatus('Price must be 0 or greater.', true);
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Generating…';
+        setStatus('Sending to Playzone service…', false);
+        hideKeyCard();
+
+        fetch('/playzone_key/api', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            pc_id: pc,
+            game: game,
+            duration_minutes: Number(minutes),
+            price: Number(price),
+            payment_method: payment,
+            incharge_name: incharge
+          })
+        })
+          .then(function (r) {
+            return r.json()
+              .catch(function () { throw new Error('Unexpected server response.'); })
+              .then(function (d) { return { status: r.status, data: d }; });
+          })
+          .then(function (res) {
+            if (!res.data.ok) throw new Error(res.data.error || 'Key could not be generated.');
+            showKey(res.data.key);
+          })
+          .catch(function (err) {
+            var msg = err && err.message ? err.message : 'Something went wrong. Please try again.';
+            if (err instanceof TypeError || /fetch|network/i.test(msg)) {
+              msg = 'Network problem — check the internet connection and try again.';
+            }
+            setStatus(msg, true);
+          })
+          .then(function () {
+            submitBtn.disabled = false;
+            submitBtn.textContent = '⚡ GENERATE PLAY KEY';
+          });
+      }
+
+      /* ==============================
+          PRICE AUTO-FILL: duration × ₹2
+          (duration daalte hi price auto
+          barta hai — edit bhi kar sakte ho)
+          ============================== */
+      var priceTouched = false;
+      var priceEl = document.getElementById('pzPrice');
+      var durEl = document.getElementById('pzDuration');
+
+      durEl.addEventListener('input', function () {
+        if (!priceTouched && /^\d+$/.test(durEl.value.trim())) {
+          priceEl.value = Number(durEl.value.trim()) * 2;
+        }
+      });
+
+      /* User ne price khud edit kiya toh auto-fill band */
+      priceEl.addEventListener('input', function () {
+        priceTouched = true;
+      });
+
+      /* Reset price flag whenever duration changes manually cleared */
+      durEl.addEventListener('change', function () {
+        if (durEl.value.trim() === '') {
+          priceTouched = false;
+          priceEl.value = '';
+        }
+      });
+
+      /* ==============================
+         3) SUCCESS CARD
+         ============================== */
+      function showKey(data) {
+        var pcEl = document.getElementById('pzPc');
+        var gameEl = document.getElementById('pzGame');
+        var payEl = document.getElementById('pzPayment');
+        var durVal = document.getElementById('pzDuration').value;
+        var priceVal = document.getElementById('pzPrice').value;
+        var inchargeVal = document.getElementById('pzIncharge').value.trim();
+        var created = fmtDate(new Date(data.created_at || Date.now()));
+
+        document.getElementById('pzRPc').textContent = pcEl.value;
+        document.getElementById('pzRGame').textContent = gameEl.value;
+        document.getElementById('pzRTime').textContent = durVal + ' minutes';
+        document.getElementById('pzRPrice').textContent = '₹' + priceVal;
+        document.getElementById('pzRPay').textContent = payEl.value;
+        document.getElementById('pzRIncharge').textContent = inchargeVal;
+        document.getElementById('pzKeyText').textContent = data.key;
+        document.getElementById('pzKeyStatus').textContent =
+          'STATUS: ' + (data.status || 'CREATED') + ' · ' + created;
+
+        keyCard.classList.add('show');
+        keyCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setStatus('', false);
+
+        /* Recent table update */
+        recent.unshift({
+          key: data.key,
+          pc: pcEl.value,
+          game: gameEl.value,
+          time: durVal + ' minutes',
+          price: '₹' + priceVal,
+          payment: payEl.value,
+          incharge: inchargeVal,
+          created: created,
+          status: (data.status || 'CREATED')
+        });
+        renderRecent();
+
+        /* Reset form (PC aur incharge handy rehte hain) */
+        gameEl.selectedIndex = 0;
+        durEl.value = '30';
+        priceEl.value = '60';
+        priceTouched = false;
+        payEl.selectedIndex = 0;
+      }
+
+      function hideKeyCard() {
+        keyCard.classList.remove('show');
+      }
+
+      /* GENERATE ANOTHER */
+      document.getElementById('pzAgainBtn').addEventListener('click', function () {
+        hideKeyCard();
+        form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+
+      /* COPY KEY */
+      document.getElementById('pzCopyBtn').addEventListener('click', function () {
+        var key = document.getElementById('pzKeyText').textContent.trim();
+        var btn = this;
+        var done = function () {
+          btn.textContent = '✅ COPIED!';
+          setTimeout(function () { btn.textContent = '📋 COPY KEY'; }, 2000);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(key).then(done).catch(function () {
+            fallbackCopy(key); done();
+          });
+        } else {
+          fallbackCopy(key); done();
+        }
+      });
+
+      function fallbackCopy(text) {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); } catch (e) { /* ignore */ }
+        document.body.removeChild(ta);
+      }
+
+      /* ==============================
+         4) RECENT KEYS TABLE
+         ============================== */
+      function renderRecent() {
+        var tbody = document.getElementById('pzTableBody');
+        if (!recent.length) {
+          tbody.innerHTML = '<tr><td colspan="9" class="pz-empty">No keys generated yet in this session.</td></tr>';
+          return;
+        }
+        tbody.innerHTML = recent.map(function (k) {
+          return '<tr>' +
+            '<td class="pz-k">' + esc(k.key) + '</td><td>' + esc(k.pc) + '</td>' +
+            '<td>' + esc(k.game) + '</td><td>' + esc(k.time) + '</td>' +
+            '<td>' + esc(k.price) + '</td><td>' + esc(k.payment) + '</td>' +
+            '<td>' + esc(k.incharge) + '</td><td>' + esc(k.created) + '</td>' +
+            '<td><span class="pz-badge">' + esc(k.status) + '</span></td></tr>';
+        }).join('');
+      }
+
+      function setStatus(msg, isError) {
+        statusEl.textContent = msg;
+        statusEl.className = 'pz-status' + (isError ? ' err' : ' ok');
+      }
+
+      function esc(s) {
+        return String(s == null ? '' : s)
+          .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+
+      /* Date format: "25 Sep 2026, 07:46:44 am" */
+      var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      function fmtDate(d) {
+        if (!d || isNaN(d.getTime())) d = new Date();
+        var h = d.getHours();
+        var ampm = h >= 12 ? 'pm' : 'am';
+        var h12 = h % 12; if (h12 === 0) h12 = 12;
+        var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+        return d.getDate() + ' ' + MONTHS[d.getMonth()] + ' ' + d.getFullYear() +
+          ', ' + pad(h12) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds()) + ' ' + ampm;
+      }
+    })();
+  </script>
+</body>
+
+</html>

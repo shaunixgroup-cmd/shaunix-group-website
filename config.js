@@ -52,5 +52,19 @@ module.exports = {
       Jab tak URL paste nahi hota, feedback feedback.log me backup
       hota rehta hai — form kabhi fail nahi hota.
       ============================================================ */
-   feedbackWebAppUrl: 'https://script.google.com/macros/s/AKfycby-W2HnSG4t7qiCaf15BtQN8G5ctUeG_ZgzyRBK9qGq9NjTxpnQxIbMIq0OqcveJZ3A/exec'
+   feedbackWebAppUrl: 'https://script.google.com/macros/s/AKfycby-W2HnSG4t7qiCaf15BtQN8G5ctUeG_ZgzyRBK9qGq9NjTxpnQxIbMIq0OqcveJZ3A/exec',
+
+   /* ============================================================
+      🎮 SHAUNIX PLAYZONE — PLAY KEY GENERATOR (ADMIN)
+      ------------------------------------------------------------
+      Google Apps Script Web App URL (Playzone Google Sheet behind it).
+      1) Paste the deployed Web App URL below (between quotes):
+
+         playzoneWebAppUrl: 'https://script.google.com/macros/s/XXXX/exec',
+
+      2) Ya .env me PLAYZONE_WEB_APP_URL=... (env zyada priority).
+      Jab tak URL set nahi hai, PLAYZONE page error dikhayega —
+      koi key generate nahi hogi.
+      ============================================================ */
+   playzoneWebAppUrl: 'https://script.google.com/macros/s/AKfycbzZA2apOkP87RY8VmBYCz8Ng6dSBXE8ytc1MVvd9evsfDeFnpZPvCRjqRQTTfWq3dov/exec'
 };
