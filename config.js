@@ -66,5 +66,5 @@ module.exports = {
       Jab tak URL set nahi hai, PLAYZONE page error dikhayega —
       koi key generate nahi hogi.
       ============================================================ */
-   playzoneWebAppUrl: 'https://script.google.com/macros/s/AKfycbzZA2apOkP87RY8VmBYCz8Ng6dSBXE8ytc1MVvd9evsfDeFnpZPvCRjqRQTTfWq3dov/exec'
+   playzoneWebAppUrl: 'https://script.google.com/macros/s/AKfycbwiIq714LQXJAoGKMzIM9_3hGY_691z7-rs_qXYItJA3RL0KPNBbFWysanBg4LYMV8e/exec'
 };

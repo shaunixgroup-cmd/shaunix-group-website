@@ -15,7 +15,6 @@ const aboutRouter = require('./routes/about');
 const contactRouter = require('./routes/contact');
 const feedbackRouter = require('./routes/feedback');
 const servicesRouter = require('./routes/services');
-const playzoneRouter = require('./routes/playzone');
 const playstationRouter = require('./routes/playstation');
 
 const app = express();
@@ -34,7 +33,6 @@ app.use('/', servicesRouter); /* /tech /care /digital /print /academy /reclaim *
 app.use('/about', aboutRouter);    /* /about */
 app.use('/contact', contactRouter);  /* /contact + form submit */
 app.use('/feedback', feedbackRouter);  /* /feedback + form submit → Google Sheet */
-app.use('/', playzoneRouter);
 app.use(require('./routes/playstation'));          /* /playzone_key (hidden admin) + key generate → Google Sheet */
 
 /* 3b) Private tool — "Send to Client" (standalone page, project root)

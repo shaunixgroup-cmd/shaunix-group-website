@@ -9,32 +9,153 @@
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/responsive.css">
   <style>
-    /* Same styles jo playzone.html mein hain */
-    .pz-wrap { max-width: 760px; margin: 0 auto; }
-    .pz-panel { background: #fff; border: 1px solid #e6e9ef; border-radius: 16px; padding: 28px; box-shadow: 0 8px 30px rgba(15,23,42,.07); }
-    .pz-panel h3 { margin: 0 0 14px; font-family: 'Sora', sans-serif; }
+    :root {
+      --pz-primary: #1d4ed8;
+      --pz-primary-dark: #1a40af;
+      --pz-primary-light: #eef2ff;
+      --pz-success: #15803d;
+      --pz-danger: #b91c1c;
+      --pz-dark: #0f172a;
+      --pz-border: #e6e9ef;
+      --pz-muted: #64748b;
+      --pz-voucher: #7c3aed;
+    }
+    .pz-wrap { max-width: 820px; margin: 0 auto; }
+    .pz-panel {
+      background: #fff; border: 1px solid var(--pz-border); border-radius: 18px;
+      padding: 32px; box-shadow: 0 10px 40px rgba(15,23,42,.08);
+    }
+    .pz-panel h3 { margin: 0 0 6px; font-family: 'Sora', sans-serif; font-size: 1.4rem; color: var(--pz-dark); }
+    .pz-panel .pz-sub { color: var(--pz-muted); font-size: .9rem; margin: 0 0 22px; }
+
+    .pz-section-title {
+      font-family: 'Sora', sans-serif; font-size: .78rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase; color: var(--pz-primary);
+      margin: 24px 0 12px; padding-bottom: 6px;
+      border-bottom: 2px solid var(--pz-primary-light);
+    }
+    .pz-section-title:first-of-type { margin-top: 0; }
+
     .pz-field { margin-bottom: 16px; }
-    .pz-field label { display: block; font-weight: 600; font-size: .9rem; margin-bottom: 6px; color: #0f172a; }
-    .pz-field select, .pz-field input { width: 100%; padding: 11px 12px; border: 1px solid #d7dbe3; border-radius: 10px; font: inherit; font-size: 1rem; background: #fff; color: #0f172a; box-sizing: border-box; }
+    .pz-field label {
+      display: block; font-weight: 600; font-size: .88rem;
+      margin-bottom: 7px; color: var(--pz-dark);
+    }
+    .pz-field label .opt { color: var(--pz-muted); font-weight: 500; font-size: .78rem; margin-left: 4px; }
+    .pz-field label .req { color: var(--pz-danger); margin-left: 2px; }
+
+    .pz-field input, .pz-field select {
+      width: 100%; padding: 12px 14px; border: 1.5px solid #d7dbe3;
+      border-radius: 10px; font: inherit; font-size: .98rem;
+      background: #fff; color: var(--pz-dark); box-sizing: border-box;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .pz-field input:focus, .pz-field select:focus {
+      outline: none; border-color: var(--pz-primary);
+      box-shadow: 0 0 0 3px rgba(29,78,216,.12);
+    }
+    .pz-field input.err, .pz-field select.err {
+      border-color: var(--pz-danger); box-shadow: 0 0 0 3px rgba(185,28,28,.1);
+    }
+    .pz-field .field-err { font-size: .78rem; color: var(--pz-danger); margin-top: 5px; display: none; }
+    .pz-field.has-err .field-err { display: block; }
+
     .pz-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .pz-btn { display: inline-block; width: 100%; padding: 13px 18px; border: 0; border-radius: 10px; background: #1d4ed8; color: #fff; font: 700 1rem 'Sora', sans-serif; cursor: pointer; }
-    .pz-btn:hover { background: #1a40af; }
+    @media (max-width: 560px) { .pz-row { grid-template-columns: 1fr; } }
+
+    .pz-players { display: flex; align-items: center; gap: 10px; }
+    .pz-players button {
+      width: 44px; height: 44px; flex: 0 0 auto;
+      border: 1.5px solid #d7dbe3; background: #fff; border-radius: 10px;
+      font: 800 1.4rem 'Sora', sans-serif; color: var(--pz-dark);
+      cursor: pointer; line-height: 1; transition: all .15s; user-select: none;
+    }
+    .pz-players button:hover { border-color: var(--pz-primary); color: var(--pz-primary); background: var(--pz-primary-light); }
+    .pz-players button:active { transform: scale(.95); }
+    .pz-players button[disabled] { opacity: .4; cursor: not-allowed; }
+    .pz-players input {
+      flex: 1 1 auto; text-align: center;
+      font-family: 'Sora', sans-serif; font-weight: 800; font-size: 1.3rem;
+      padding: 10px 8px; min-width: 0;
+    }
+    .pz-players input::-webkit-outer-spin-button,
+    .pz-players input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    .pz-players input[type=number] { -moz-appearance: textfield; }
+
+    .pz-quick { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+    .pz-quick button {
+      padding: 6px 12px; border: 1.5px solid #d7dbe3; background: #fff;
+      border-radius: 8px; font: 600 .8rem 'Inter', sans-serif; color: var(--pz-dark);
+      cursor: pointer; transition: all .15s;
+    }
+    .pz-quick button:hover { border-color: var(--pz-primary); color: var(--pz-primary); background: var(--pz-primary-light); }
+
+    .pz-price-box {
+      background: linear-gradient(135deg, #f0f9ff 0%, #eef2ff 100%);
+      border: 1.5px solid #c7d2fe; border-radius: 12px;
+      padding: 14px 16px; margin-bottom: 16px; transition: all .2s;
+    }
+    .pz-price-box.voucher { background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); border-color: #d8b4fe; }
+    .pz-price-box .pz-price-row {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: .9rem; color: #3730a3; margin-bottom: 4px;
+    }
+    .pz-price-box.voucher .pz-price-row { color: var(--pz-voucher); }
+    .pz-price-box .pz-price-row b { font-family: 'Sora', sans-serif; font-size: 1.25rem; }
+    .pz-price-box .pz-price-note { font-size: .78rem; color: #6366f1; margin-top: 6px; line-height: 1.5; }
+    .pz-price-box.voucher .pz-price-note { color: var(--pz-voucher); }
+    .pz-price-box .pz-voucher-tag {
+      display: none; background: var(--pz-voucher); color: #fff;
+      font: 700 .7rem 'Sora', sans-serif; padding: 3px 8px;
+      border-radius: 999px; letter-spacing: .06em; margin-left: 8px; vertical-align: middle;
+    }
+    .pz-price-box.voucher .pz-voucher-tag { display: inline-block; }
+
+    .pz-btn {
+      display: inline-block; width: 100%; padding: 14px 18px;
+      border: 0; border-radius: 11px; background: var(--pz-primary);
+      color: #fff; font: 700 1rem 'Sora', sans-serif;
+      cursor: pointer; transition: background .15s, transform .1s;
+    }
+    .pz-btn:hover { background: var(--pz-primary-dark); }
+    .pz-btn:active { transform: scale(.99); }
     .pz-btn[disabled] { opacity: .6; cursor: not-allowed; }
-    .pz-btn.ghost { background: #fff; color: #1d4ed8; border: 1.5px solid #1d4ed8; }
-    .pz-btn.ghost:hover { background: #eef2ff; }
-    .pz-status { min-height: 1.4em; margin-top: 12px; font-weight: 600; }
-    .pz-status.err { color: #b91c1c; }
-    .pz-status.ok { color: #15803d; }
-    .pz-key-card { display: none; text-align: center; background: #0f172a; color: #fff; border-radius: 16px; padding: 30px 24px; margin-top: 18px; box-shadow: 0 12px 34px rgba(15,23,42,.35); }
+    .pz-btn.ghost { background: #fff; color: var(--pz-primary); border: 1.5px solid var(--pz-primary); }
+    .pz-btn.ghost:hover { background: var(--pz-primary-light); }
+
+    .pz-status { min-height: 1.4em; margin-top: 12px; font-weight: 600; font-size: .9rem; }
+    .pz-status.err { color: var(--pz-danger); }
+    .pz-status.ok { color: var(--pz-success); }
+
+    .pz-key-card {
+      display: none; text-align: center; background: var(--pz-dark);
+      color: #fff; border-radius: 18px; padding: 34px 24px;
+      margin-top: 20px; box-shadow: 0 14px 40px rgba(15,23,42,.35);
+      animation: pzSlideIn .4s ease;
+    }
+    @keyframes pzSlideIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
     .pz-key-card.show { display: block; }
-    .pz-key-card h3 { font-family: 'Sora', sans-serif; letter-spacing: .08em; color: #93c5fd; margin: 0 0 6px; }
-    .pz-key-sub { color: #cbd5e1; margin: 0 0 14px; }
-    .pz-meta { display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; max-width: 340px; margin: 0 auto 18px; text-align: left; }
+    .pz-key-card h3 {
+      font-family: 'Sora', sans-serif; letter-spacing: .08em;
+      color: #93c5fd; margin: 0 0 6px; font-size: 1.1rem;
+    }
+    .pz-key-sub { color: #cbd5e1; margin: 0 0 14px; font-size: .9rem; }
+    .pz-meta {
+      display: grid; grid-template-columns: auto 1fr; gap: 6px 18px;
+      max-width: 420px; margin: 0 auto 18px; text-align: left; font-size: .9rem;
+    }
     .pz-meta span { color: #cbd5e1; }
     .pz-meta b { color: #fff; }
-    .pz-key { font-family: 'Sora', monospace; font-size: clamp(2rem, 8vw, 3rem); font-weight: 800; letter-spacing: .18em; color: #4ade80; margin: 8px 0 18px; user-select: all; }
+    .pz-meta b.voucher { color: #c4b5fd; }
+    .pz-key {
+      font-family: 'Sora', monospace; font-size: clamp(1.8rem, 7vw, 2.6rem);
+      font-weight: 800; letter-spacing: .16em; color: #4ade80;
+      margin: 8px 0 18px; user-select: all; word-break: break-all;
+    }
     .pz-key-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
     .pz-key-actions .pz-btn { width: auto; padding: 11px 20px; }
+
+    .pz-gate { max-width: 420px; margin: 0 auto; text-align: center; }
   </style>
 </head>
 <body>
@@ -54,77 +175,149 @@
   <section class="section">
     <div class="container pz-wrap">
 
+      <!-- GATE -->
       <div id="pzGate">
-        <div class="pz-panel" style="max-width:420px; margin:0 auto; text-align:center;">
+        <div class="pz-panel pz-gate">
           <h3>🔐 Admin Access</h3>
+          <p class="pz-sub">Enter password to generate PLAY KEYs</p>
           <div class="pz-field">
             <label for="pzPass">Password</label>
-            <input type="password" id="pzPass" placeholder="Enter admin password">
+            <input type="password" id="pzPass" placeholder="Enter admin password" autocomplete="off">
           </div>
           <button class="pz-btn" id="pzGateBtn" type="button">UNLOCK</button>
           <p class="pz-status err" id="pzGateStatus"></p>
         </div>
       </div>
 
+      <!-- APP -->
       <div id="pzApp" style="display:none;">
         <div class="pz-panel">
           <h3>🎮 Generate PLAY KEY</h3>
+          <p class="pz-sub">Fill client details and select game session</p>
+
           <form id="pzForm" novalidate>
 
-            <div class="pz-field">
-              <label for="pzGame">Game</label>
-              <select id="pzGame" required>
-                <option value="" selected disabled>Select game…</option>
-                <option>Tekken 3</option>
-                <option>Street Fighter Alpha 3</option>
-                <option>Mortal Kombat 4</option>
-                <option>Contra</option>
-                <option>Super Mario Bros.</option>
-                <option>Super Bomberman 5</option>
-                <option>Megaman X4</option>
+            <!-- CLIENT INFO -->
+            <div class="pz-section-title">Client Information</div>
+
+            <div class="pz-row">
+              <div class="pz-field" id="fClient">
+                <label for="pzClient">Client Name <span class="req">*</span></label>
+                <input type="text" id="pzClient" placeholder="Enter client's full name" maxlength="60" autocomplete="off">
+                <div class="field-err">Client name is required.</div>
+              </div>
+              <div class="pz-field" id="fIncharge">
+                <label for="pzIncharge">Incharge Name <span class="req">*</span></label>
+                <input type="text" id="pzIncharge" placeholder="Staff / admin name" maxlength="60" autocomplete="off">
+                <div class="field-err">Incharge name is required.</div>
+              </div>
+            </div>
+
+            <div class="pz-row">
+              <div class="pz-field" id="fWhatsapp">
+                <label for="pzWhatsapp">WhatsApp <span class="opt">(optional)</span></label>
+                <input type="tel" id="pzWhatsapp" placeholder="10-digit number" maxlength="15" inputmode="numeric" autocomplete="off">
+                <div class="field-err">Enter a valid 10-digit number.</div>
+              </div>
+              <div class="pz-field" id="fEmail">
+                <label for="pzEmail">Email <span class="opt">(optional)</span></label>
+                <input type="email" id="pzEmail" placeholder="client@example.com" maxlength="80" autocomplete="off">
+                <div class="field-err">Enter a valid email address.</div>
+              </div>
+            </div>
+
+            <!-- GAME SESSION -->
+            <div class="pz-section-title">Game Session</div>
+
+            <div class="pz-field" id="fGame">
+              <label for="pzGame">Game <span class="req">*</span></label>
+              <select id="pzGame">
+                <option value="Tekken 3" selected>Tekken 3</option>
+                <option value="Street Fighter Alpha 3">Street Fighter Alpha 3</option>
+                <option value="Mortal Kombat 4">Mortal Kombat 4</option>
+                <option value="Contra">Contra</option>
+                <option value="Super Mario Bros.">Super Mario Bros.</option>
+                <option value="Super Bomberman 5">Super Bomberman 5</option>
               </select>
+              <div class="field-err">Please select a valid game.</div>
             </div>
 
             <div class="pz-row">
-              <div class="pz-field">
-                <label for="pzDuration">Duration (minutes)</label>
-                <input type="number" id="pzDuration" min="1" step="1" value="30" required>
+              <div class="pz-field" id="fPlayers">
+                <label for="pzPlayers">No. of Players <span class="req">*</span></label>
+                <div class="pz-players">
+                  <button type="button" id="pzPlayersMinus" aria-label="Decrease players">−</button>
+                  <input type="number" id="pzPlayers" min="1" max="10" step="1" value="1" inputmode="numeric">
+                  <button type="button" id="pzPlayersPlus" aria-label="Increase players">+</button>
+                </div>
+                <div class="field-err">Players must be between 1 and 10.</div>
               </div>
-              <div class="pz-field">
-                <label for="pzPrice">Price (₹)</label>
-                <input type="number" id="pzPrice" min="0" step="1" value="60">
+              <div class="pz-field" id="fDuration">
+                <label for="pzDuration">Duration (minutes) <span class="req">*</span></label>
+                <input type="number" id="pzDuration" min="1" max="1440" step="1" value="10" inputmode="numeric">
+                <div class="pz-quick" id="pzQuick">
+                  <button type="button" data-min="10">10 min</button>
+                  <button type="button" data-min="15">15 min</button>
+                  <button type="button" data-min="30">30 min</button>
+                  <button type="button" data-min="60">1 hr</button>
+                  <button type="button" data-min="120">2 hr</button>
+                </div>
+                <div class="field-err">Duration must be between 1 and 1440 minutes.</div>
               </div>
             </div>
 
-            <div class="pz-row">
-              <div class="pz-field">
-                <label for="pzPayment">Payment Method</label>
-                <select id="pzPayment" required>
-                  <option value="" selected disabled>Select payment…</option>
-                  <option>Cash</option>
-                  <option>UPI</option>
-                </select>
+            <div class="pz-field" id="fRate">
+              <label for="pzRate">Rate (₹ / player / minute) <span class="req">*</span></label>
+              <input type="number" id="pzRate" min="1" step="1" value="2" inputmode="numeric">
+              <div class="field-err">Rate must be a positive number.</div>
+            </div>
+
+            <!-- PRICE BOX -->
+            <div class="pz-price-box" id="pzPriceBox">
+              <div class="pz-price-row">
+                <span>Total Price <span class="pz-voucher-tag">VOUCHER</span></span>
+                <b>₹<span id="pzTotalPrice">20</span></b>
               </div>
-              <div class="pz-field">
-                <label for="pzIncharge">Incharge Name</label>
-                <input type="text" id="pzIncharge" placeholder="Your name" maxlength="60">
-              </div>
+              <div class="pz-price-note" id="pzPriceNote">1 player × 10 min × ₹2/min = ₹20</div>
+            </div>
+
+            <div class="pz-field" id="fPrice">
+              <label for="pzPrice">Final Price (₹) <span class="opt">(editable)</span></label>
+              <input type="number" id="pzPrice" min="0" step="1" value="20" inputmode="numeric">
+              <div class="field-err">Enter a valid price.</div>
+            </div>
+
+            <!-- PAYMENT -->
+            <div class="pz-section-title">Payment</div>
+
+            <div class="pz-field" id="fPayment">
+              <label for="pzPayment">Payment Method <span class="req">*</span></label>
+              <select id="pzPayment">
+                <option value="" selected disabled>Select payment…</option>
+                <option value="Cash">Cash</option>
+                <option value="UPI">UPI</option>
+                <option value="Voucher">🎟️ Voucher (Free / Promo)</option>
+              </select>
+              <div class="field-err">Please select a payment method.</div>
             </div>
 
             <button class="pz-btn" type="submit" id="pzSubmitBtn">⚡ GENERATE PLAY KEY</button>
             <p class="pz-status" id="pzStatus"></p>
           </form>
 
+          <!-- KEY CARD -->
           <div class="pz-key-card" id="pzKeyCard">
             <h3>🎉 PLAY KEY GENERATED!</h3>
-            <p class="pz-key-sub">Here's your PLAY KEY:</p>
+            <p class="pz-key-sub">Share this key with the gaming PC</p>
             <div class="pz-key" id="pzKeyText">----</div>
             <div class="pz-meta">
+              <span>CLIENT:</span><b id="pzRClient"></b>
+              <span>INCHARGE:</span><b id="pzRIncharge"></b>
+              <span>PLAYERS:</span><b id="pzRPlayers"></b>
               <span>GAME:</span><b id="pzRGame"></b>
               <span>TIME:</span><b id="pzRTime"></b>
               <span>PRICE:</span><b id="pzRPrice"></b>
               <span>PAYMENT:</span><b id="pzRPay"></b>
-              <span>INCHARGE:</span><b id="pzRIncharge"></b>
             </div>
             <div class="pz-key-actions">
               <button class="pz-btn" type="button" id="pzCopyBtn">📋 COPY KEY</button>
@@ -144,12 +337,45 @@
     (function () {
       'use strict';
 
-      var PASS = 'playzone2026';   // ★ Change this
-      var gate = document.getElementById('pzGate');
-      var app = document.getElementById('pzApp');
-      var gateBtn = document.getElementById('pzGateBtn');
+      var PASS = 'playzone2026';
+      var MAX_PLAYERS = 10;
+
+      var VALID_GAMES = [
+        'Tekken 3', 'Street Fighter Alpha 3', 'Mortal Kombat 4',
+        'Contra', 'Super Mario Bros.', 'Super Bomberman 5', 'Megaman X4'
+      ];
+
+      var gate       = document.getElementById('pzGate');
+      var app        = document.getElementById('pzApp');
+      var gateBtn    = document.getElementById('pzGateBtn');
       var gateStatus = document.getElementById('pzGateStatus');
-      var gateInput = document.getElementById('pzPass');
+      var gateInput  = document.getElementById('pzPass');
+
+      var form       = document.getElementById('pzForm');
+      var submitBtn  = document.getElementById('pzSubmitBtn');
+      var statusEl   = document.getElementById('pzStatus');
+      var keyCard    = document.getElementById('pzKeyCard');
+
+      var elClient   = document.getElementById('pzClient');
+      var elIncharge = document.getElementById('pzIncharge');
+      var elWhatsapp = document.getElementById('pzWhatsapp');
+      var elEmail    = document.getElementById('pzEmail');
+      var elGame     = document.getElementById('pzGame');
+      var elPlayers  = document.getElementById('pzPlayers');
+      var elDuration = document.getElementById('pzDuration');
+      var elRate     = document.getElementById('pzRate');
+      var elPrice    = document.getElementById('pzPrice');
+      var elPayment  = document.getElementById('pzPayment');
+
+      var elPlayersMinus = document.getElementById('pzPlayersMinus');
+      var elPlayersPlus  = document.getElementById('pzPlayersPlus');
+
+      var elTotalPrice = document.getElementById('pzTotalPrice');
+      var elPriceNote  = document.getElementById('pzPriceNote');
+      var elPriceBox   = document.getElementById('pzPriceBox');
+      var elQuick      = document.getElementById('pzQuick');
+
+      var priceManuallyEdited = false;
 
       gateBtn.addEventListener('click', unlock);
       gateInput.addEventListener('keydown', function (e) {
@@ -162,63 +388,196 @@
           app.style.display = '';
           gateStatus.textContent = '';
           gateInput.value = '';
+          elClient.focus();
         } else {
-          gateStatus.textContent = 'Wrong password.';
+          gateStatus.textContent = '❌ Wrong password.';
           gateInput.value = '';
           gateInput.focus();
         }
       }
 
-      var form = document.getElementById('pzForm');
-      var submitBtn = document.getElementById('pzSubmitBtn');
-      var statusEl = document.getElementById('pzStatus');
-      var keyCard = document.getElementById('pzKeyCard');
+      function clampPlayers(val) {
+        var n = parseInt(val, 10);
+        if (!Number.isInteger(n) || n < 1) n = 1;
+        if (n > MAX_PLAYERS) n = MAX_PLAYERS;
+        return n;
+      }
 
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        generate();
+      function updatePlayerButtons() {
+        var v = clampPlayers(elPlayers.value);
+        elPlayersMinus.disabled = (v <= 1);
+        elPlayersPlus.disabled  = (v >= MAX_PLAYERS);
+      }
+
+      elPlayersMinus.addEventListener('click', function () {
+        elPlayers.value = clampPlayers(parseInt(elPlayers.value, 10) - 1);
+        updatePlayerButtons();
+        priceManuallyEdited = false;
+        recalcPrice(true);
       });
 
-      function generate() {
-        var game = document.getElementById('pzGame').value;
-        var minutes = document.getElementById('pzDuration').value;
-        var price = document.getElementById('pzPrice').value;
-        var payment = document.getElementById('pzPayment').value;
-        var incharge = document.getElementById('pzIncharge').value.trim();
+      elPlayersPlus.addEventListener('click', function () {
+        elPlayers.value = clampPlayers(parseInt(elPlayers.value, 10) + 1);
+        updatePlayerButtons();
+        priceManuallyEdited = false;
+        recalcPrice(true);
+      });
 
-        if (!game || !payment) {
-          setStatus('Please select game and payment.', true);
+      elPlayers.addEventListener('input', function () { updatePlayerButtons(); });
+      elPlayers.addEventListener('blur', function () {
+        elPlayers.value = clampPlayers(elPlayers.value);
+        updatePlayerButtons();
+        recalcPrice(false);
+      });
+
+      function recalcPrice(force) {
+        var players = clampPlayers(elPlayers.value);
+        var mins    = parseInt(elDuration.value, 10);
+        var rate    = parseFloat(elRate.value);
+        var isVoucher = (elPayment.value === 'Voucher');
+
+        if (!Number.isFinite(mins) || mins < 1) mins = 0;
+        if (!Number.isFinite(rate) || rate < 0) rate = 0;
+
+        var total = Math.round(players * mins * rate);
+        elPriceBox.classList.toggle('voucher', isVoucher);
+
+        if (isVoucher) {
+          elTotalPrice.textContent = '0';
+          elPriceNote.textContent = '🎟️ Voucher — ' +
+            players + ' player' + (players > 1 ? 's' : '') +
+            ' × ' + mins + ' min (FREE promotional session)';
+          if (!priceManuallyEdited || force) elPrice.value = 0;
+        } else {
+          elTotalPrice.textContent = total;
+          elPriceNote.textContent =
+            players + ' player' + (players > 1 ? 's' : '') +
+            ' × ' + mins + ' min × ₹' + rate + '/min = ₹' + total;
+          if (!priceManuallyEdited || force) elPrice.value = total;
+        }
+      }
+
+      elPlayers .addEventListener('input', function () { recalcPrice(false); });
+      elDuration.addEventListener('input', function () { recalcPrice(false); });
+      elRate    .addEventListener('input', function () { recalcPrice(false); });
+
+      elPayment.addEventListener('change', function () {
+        priceManuallyEdited = false;
+        recalcPrice(true);
+      });
+
+      elPrice.addEventListener('input', function () { priceManuallyEdited = true; });
+
+      elQuick.addEventListener('click', function (e) {
+        var btn = e.target.closest('button[data-min]');
+        if (!btn) return;
+        elDuration.value = btn.getAttribute('data-min');
+        priceManuallyEdited = false;
+        recalcPrice(true);
+        elDuration.focus();
+      });
+
+      function setFieldError(fieldId, hasError) {
+        var f = document.getElementById(fieldId);
+        if (!f) return;
+        f.classList.toggle('has-err', hasError);
+        var input = f.querySelector('input, select');
+        if (input) input.classList.toggle('err', hasError);
+      }
+
+      function clearAllErrors() {
+        ['fClient','fIncharge','fWhatsapp','fEmail','fGame','fPlayers','fDuration','fRate','fPrice','fPayment']
+          .forEach(function (id) { setFieldError(id, false); });
+      }
+
+      function validate() {
+        clearAllErrors();
+        var ok = true;
+
+        if (elClient.value.trim().length < 2) { setFieldError('fClient', true); ok = false; }
+        if (elIncharge.value.trim().length < 2) { setFieldError('fIncharge', true); ok = false; }
+
+        var wa = elWhatsapp.value.trim().replace(/[\s\-()+]/g, '');
+        if (wa.length > 0 && !/^\d{10,15}$/.test(wa)) { setFieldError('fWhatsapp', true); ok = false; }
+
+        var em = elEmail.value.trim();
+        if (em.length > 0 && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { setFieldError('fEmail', true); ok = false; }
+
+        if (!VALID_GAMES.includes(elGame.value)) { setFieldError('fGame', true); ok = false; }
+
+        var players = parseInt(elPlayers.value, 10);
+        if (!Number.isInteger(players) || players < 1 || players > MAX_PLAYERS) { setFieldError('fPlayers', true); ok = false; }
+
+        var mins = parseInt(elDuration.value, 10);
+        if (!Number.isInteger(mins) || mins < 1 || mins > 1440) { setFieldError('fDuration', true); ok = false; }
+
+        var rate = parseFloat(elRate.value);
+        if (!Number.isFinite(rate) || rate < 0) { setFieldError('fRate', true); ok = false; }
+
+        var price = parseFloat(elPrice.value);
+        if (!Number.isFinite(price) || price < 0) { setFieldError('fPrice', true); ok = false; }
+
+        if (!elPayment.value) { setFieldError('fPayment', true); ok = false; }
+
+        return ok;
+      }
+
+      [elClient, elIncharge, elWhatsapp, elEmail, elGame, elPlayers, elDuration, elRate, elPrice, elPayment]
+        .forEach(function (el) {
+          el.addEventListener('input', function () {
+            var wrap = el.closest('.pz-field');
+            if (wrap) { wrap.classList.remove('has-err'); el.classList.remove('err'); }
+          });
+          el.addEventListener('change', function () {
+            var wrap = el.closest('.pz-field');
+            if (wrap) { wrap.classList.remove('has-err'); el.classList.remove('err'); }
+          });
+        });
+
+      form.addEventListener('submit', function (e) { e.preventDefault(); generate(); });
+
+      function generate() {
+        if (!validate()) {
+          setStatus('Please fix the highlighted fields.', true);
+          var firstErr = document.querySelector('.pz-field.has-err input, .pz-field.has-err select');
+          if (firstErr) firstErr.focus();
           return;
         }
-        if (incharge === '') {
-          setStatus('Please enter incharge name.', true);
-          return;
-        }
+
+        var payload = {
+          pc_id: 'PC-01',
+          game: elGame.value,
+          num_players: Number(elPlayers.value),
+          duration_minutes: Number(elDuration.value),
+          price: Number(elPrice.value),
+          payment_method: elPayment.value,
+          client_name: elClient.value.trim(),
+          incharge_name: elIncharge.value.trim(),
+          client_whatsapp: elWhatsapp.value.trim(),
+          client_email: elEmail.value.trim()
+        };
 
         submitBtn.disabled = true;
-        submitBtn.textContent = 'Generating…';
-        setStatus('Sending…', false);
+        submitBtn.textContent = '⏳ Generating…';
+        setStatus('Sending to server…', false);
         keyCard.classList.remove('show');
 
-        fetch('/playzone_key/api', {
+        fetch('/playstation/api', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            pc_id: 'PC-01',
-            game: game,
-            duration_minutes: Number(minutes),
-            price: Number(price),
-            payment_method: payment,
-            incharge_name: incharge
-          })
+          body: JSON.stringify(payload)
         })
-          .then(function (r) { return r.json().then(function (d) { return { status: r.status, data: d }; }); })
+          .then(function (r) {
+            return r.json().then(function (d) { return { status: r.status, data: d }; });
+          })
           .then(function (res) {
-            if (!res.data.ok) throw new Error(res.data.error || 'Could not generate key.');
+            if (!res.data || !res.data.ok) {
+              throw new Error((res.data && res.data.error) || 'Could not generate key.');
+            }
             showKey(res.data.key);
           })
           .catch(function (err) {
-            setStatus(err.message || 'Something went wrong.', true);
+            setStatus('❌ ' + (err.message || 'Something went wrong.'), true);
           })
           .then(function () {
             submitBtn.disabled = false;
@@ -227,13 +586,25 @@
       }
 
       function showKey(key) {
-        document.getElementById('pzRGame').textContent = document.getElementById('pzGame').value;
-        document.getElementById('pzRTime').textContent = document.getElementById('pzDuration').value + ' minutes';
-        document.getElementById('pzRPrice').textContent = '₹' + document.getElementById('pzPrice').value;
-        document.getElementById('pzRPay').textContent = document.getElementById('pzPayment').value;
-        document.getElementById('pzRIncharge').textContent = document.getElementById('pzIncharge').value.trim();
-        document.getElementById('pzKeyText').textContent = key;
+        var isVoucher = (elPayment.value === 'Voucher');
+
+        document.getElementById('pzRClient').textContent   = elClient.value.trim();
+        document.getElementById('pzRIncharge').textContent = elIncharge.value.trim();
+        document.getElementById('pzRPlayers').textContent  = elPlayers.value + ' player' + (parseInt(elPlayers.value,10) > 1 ? 's' : '');
+        document.getElementById('pzRGame').textContent     = elGame.value;
+        document.getElementById('pzRTime').textContent     = elDuration.value + ' minutes';
+
+        var priceEl = document.getElementById('pzRPrice');
+        priceEl.textContent = '₹' + elPrice.value;
+        priceEl.className = isVoucher ? 'voucher' : '';
+
+        var payEl = document.getElementById('pzRPay');
+        payEl.textContent = isVoucher ? '🎟️ Voucher' : elPayment.value;
+        payEl.className = isVoucher ? 'voucher' : '';
+
+        document.getElementById('pzKeyText').textContent   = key;
         document.getElementById('pzKeyStatus').textContent = 'STATUS: ACTIVE';
+
         keyCard.classList.add('show');
         keyCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
         setStatus('', false);
@@ -241,6 +612,16 @@
 
       document.getElementById('pzAgainBtn').addEventListener('click', function () {
         keyCard.classList.remove('show');
+        elClient.value = '';
+        elIncharge.value = '';
+        elWhatsapp.value = '';
+        elEmail.value = '';
+        elPayment.value = '';
+        elPlayers.value = 1;
+        priceManuallyEdited = false;
+        updatePlayerButtons();
+        recalcPrice(true);
+        elClient.focus();
         form.scrollIntoView({ behavior: 'smooth', block: 'center' });
       });
 
@@ -251,14 +632,35 @@
           navigator.clipboard.writeText(key).then(function () {
             btn.textContent = '✅ COPIED!';
             setTimeout(function () { btn.textContent = '📋 COPY KEY'; }, 2000);
-          });
+          }).catch(function () { fallbackCopy(key, btn); });
+        } else {
+          fallbackCopy(key, btn);
         }
       });
+
+      function fallbackCopy(text, btn) {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+          document.execCommand('copy');
+          btn.textContent = '✅ COPIED!';
+          setTimeout(function () { btn.textContent = '📋 COPY KEY'; }, 2000);
+        } catch (e) {}
+        document.body.removeChild(ta);
+      }
 
       function setStatus(msg, isErr) {
         statusEl.textContent = msg;
         statusEl.className = 'pz-status' + (isErr ? ' err' : ' ok');
       }
+
+      updatePlayerButtons();
+      recalcPrice(true);
+
     })();
   </script>
 </body>

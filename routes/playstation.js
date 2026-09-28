@@ -1,8 +1,3 @@
-/* ============================================================
-   playstation.js — SHAUNIX PLAYSTATION
-   Sirf key generate karta hai (PC ka koi chakkar nahi)
-   ============================================================ */
-
 const express = require('express');
 const crypto  = require('crypto');
 const { renderPage } = require('./render');
@@ -12,43 +7,68 @@ const CFG = require('../config');
 const PLAYZONE_WEB_APP_URL = process.env.PLAYZONE_WEB_APP_URL || CFG.playzoneWebAppUrl || '';
 
 const GAMES = ['Tekken 3', 'Street Fighter Alpha 3', 'Mortal Kombat 4', 'Contra', 'Super Mario Bros.', 'Super Bomberman 5', 'Megaman X4'];
-const PAYMENT_METHODS = ['Cash', 'UPI'];
+const PAYMENT_METHODS = ['Cash', 'UPI', 'Voucher'];
 const KEY_CHARS = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+const MAX_PLAYERS = 10;
 
-/* ---- Page ---- */
 router.get('/playstation', (req, res) => {
   renderPage(res, 'playstation.html');
 });
 
-/* ---- API ---- */
 router.post('/playstation/api', async (req, res) => {
   if (!PLAYZONE_WEB_APP_URL) {
     return res.status(503).json({ ok: false, error: 'Playstation not configured.' });
   }
 
   const body = req.body || {};
-  const game = String(body.game || '').trim();
-  const minutes = parseInt(body.duration_minutes, 10);
-  const price = Number(body.price);
-  const payment = String(body.payment_method || '').trim();
-  const incharge = String(body.incharge_name || '').trim().slice(0, 60);
+  const game           = String(body.game || '').trim();
+  const numPlayers     = parseInt(body.num_players, 10);
+  const minutes        = parseInt(body.duration_minutes, 10);
+  const price          = Number(body.price);
+  const payment        = String(body.payment_method || '').trim();
+  const clientName     = String(body.client_name || '').trim().slice(0, 60);
+  const incharge       = String(body.incharge_name || '').trim().slice(0, 60);
+  const clientWhatsapp = String(body.client_whatsapp || '').trim().slice(0, 15);
+  const clientEmail    = String(body.client_email    || '').trim().slice(0, 80);
 
-  if (!GAMES.includes(game)) return res.status(400).json({ ok: false, error: 'Invalid game.' });
-  if (!Number.isInteger(minutes) || minutes < 1 || minutes > 1440) return res.status(400).json({ ok: false, error: 'Invalid duration.' });
-  if (!Number.isFinite(price) || price < 0) return res.status(400).json({ ok: false, error: 'Invalid price.' });
-  if (!PAYMENT_METHODS.includes(payment)) return res.status(400).json({ ok: false, error: 'Invalid payment.' });
-  if (!incharge) return res.status(400).json({ ok: false, error: 'Incharge name required.' });
+  if (!GAMES.includes(game))
+    return res.status(400).json({ ok: false, error: 'Invalid game.' });
+  if (!Number.isInteger(numPlayers) || numPlayers < 1 || numPlayers > MAX_PLAYERS)
+    return res.status(400).json({ ok: false, error: 'Invalid number of players.' });
+  if (!Number.isInteger(minutes) || minutes < 1 || minutes > 1440)
+    return res.status(400).json({ ok: false, error: 'Invalid duration.' });
+  if (!Number.isFinite(price) || price < 0)
+    return res.status(400).json({ ok: false, error: 'Invalid price.' });
+  if (!PAYMENT_METHODS.includes(payment))
+    return res.status(400).json({ ok: false, error: 'Invalid payment.' });
+  if (!clientName)
+    return res.status(400).json({ ok: false, error: 'Client name required.' });
+  if (!incharge)
+    return res.status(400).json({ ok: false, error: 'Incharge name required.' });
+
+  if (clientWhatsapp && !/^\d{10,15}$/.test(clientWhatsapp.replace(/[\s\-()+]/g, '')))
+    return res.status(400).json({ ok: false, error: 'Invalid WhatsApp number.' });
+  if (clientEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(clientEmail))
+    return res.status(400).json({ ok: false, error: 'Invalid email.' });
 
   let lastError = 'Could not generate key.';
   for (let i = 0; i < 5; i++) {
     const key = generatePlayKey();
     try {
       const result = await sendToSheet({
-        key, pc_id: 'PC-01', game,
+        key,
+        pc_id: 'PC-01',
+        game,
+        num_players: numPlayers,
         duration_minutes: minutes,
-        price, payment_method: payment,
-        incharge_name: incharge
+        price,
+        payment_method: payment,
+        client_name: clientName,
+        incharge_name: incharge,
+        client_whatsapp: clientWhatsapp,
+        client_email: clientEmail
       });
+
       if (result.success) return res.json({ ok: true, key: result.data });
       if (result.duplicate) { lastError = 'Duplicate key, retrying…'; continue; }
       lastError = result.error || 'Rejected.';
