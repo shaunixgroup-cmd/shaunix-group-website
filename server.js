@@ -43,6 +43,12 @@ app.get(['/send-to-client.html', '/send-to-client'], (req, res) => {
   res.sendFile(SEND_TO_CLIENT_FILE);
 });
 
+/* 3c) SHAUNIX SKILL BUILDERS — school programs page (/skill-builders) */
+app.use('/', require('./routes/skillbuilders'));
+
+/* 3d) SHAUNIX SKILL BUILDERS — private admin print kit (/sb-admin, password protected) */
+app.use(require('./routes/sb-admin'));
+
 /* 4) Redirect invalid URLs to home */
 app.use((req, res) => res.redirect('/'));
 

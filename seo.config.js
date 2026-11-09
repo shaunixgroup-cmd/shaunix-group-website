@@ -62,6 +62,15 @@ const BRAND = {
    twitterDescription (default = title / description)
    ============================================================ */
 const PAGES = {
+
+  /* SHAUNIX SKILL BUILDERS — school programs page */
+  'skill-builders.html': {
+    title: "School Skill Programs in Delhi NCR — Hands-on AI, Coding, PC & Electronics Workshops | SHAUNIX SKILL BUILDERS",
+    description: "SHAUNIX SKILL BUILDERS brings a 7+3 day hands-on skill program to schools: AI, coding, PC hardware, electronics, green energy and cyber safety, with live student projects, showcase and participation certificates.",
+    keywords: "school workshops Delhi, STEM program for schools, AI workshop for school students, coding classes for schools, robotics workshop schools Delhi, skill development program schools, SHAUNIX SKILL BUILDERS, school activity program Delhi NCR",
+    canonical: '/skill-builders',
+    schemaName: 'SHAUNIX SKILL BUILDERS'
+  },
   'index.html': {
     title: 'SHAUNIX GROUP — IT Solutions, Repair, Printing, Digital, Academy & E-Waste in Delhi',
     description: 'Complete IT solutions under one roof — laptops, desktops, accessories, repair, printing, website development, digital marketing, tech courses & e-waste management in Delhi. Call +91 98211 86889.',

@@ -20,3 +20,9 @@ Thumbs.db
 # npm logs
 npm-debug.log*
 
+data/
+.sb_*backup_*/
+deepseek.txt
+extract.js
+deepseek.txt
+extract.js
